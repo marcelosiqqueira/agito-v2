@@ -1,28 +1,35 @@
 type ListItemProps = {
-    children?: React.ReactNode
+    id: string,
+    name: string,
+    date: Date,
+    local: string,
+    clicks: number | null,
+    handleSelectedEvent: (value: string) => void,
 }
 
-export function ListItem({ }: ListItemProps) {
+export function ListItem({ id, name, date, local, clicks, handleSelectedEvent }: ListItemProps) {
     return (
         <li>
-            <div>
-                <img src="" alt="" />
-                <span>Festa</span>
-            </div>
-            <div>
+            <button onClick={() => handleSelectedEvent(id)}>
                 <div>
                     <img src="" alt="" />
-                    <span>11 fev 2020</span>
+                    <span>{name}</span>
+                </div>
+                <div>
+                    <div>
+                        <img src="" alt="" />
+                        <span>{date.toLocaleString('pt-BR')}</span>
+                    </div>
+                    <div>
+                        <img src="" alt="" />
+                        <span>{local}</span>
+                    </div>
                 </div>
                 <div>
                     <img src="" alt="" />
-                    <span>Local</span>
+                    <span>{clicks ?? 'N/A'}</span>
                 </div>
-            </div>
-            <div>
-                <img src="" alt="" />
-                <span>3000</span>
-            </div>
+            </button>
         </li>
     )
 }
