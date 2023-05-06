@@ -1,10 +1,11 @@
 type ButtonProps = {
-    selected: boolean
+    selected: boolean,
+    children: string,
 }
 
-export function Button({ selected }: ButtonProps) {
+export function Button({ selected, children }: ButtonProps) {
 
     return (
-        <button className={selected ? ` bg-light-orange` : `bg-orange`}></button>
+        <button className={selected ? ` bg-light-orange` : `bg-orange`}>{children}</button>
     )
 }
