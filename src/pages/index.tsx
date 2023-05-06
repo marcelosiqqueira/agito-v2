@@ -7,10 +7,10 @@ export function Index() {
         <>
             <header>
                 <div>
-                    <Button selected={false}></Button>
-                    <Button selected={false}></Button>
-                    <Button selected={false}></Button>
-                    <Button selected={false}></Button>
+                    <Button selected={false}>a</Button>
+                    <Button selected={false}>b</Button>
+                    <Button selected={false}>c</Button>
+                    <Button selected={false}>d</Button>
                 </div>
                 <div className="bg-white"></div>
             </header>
