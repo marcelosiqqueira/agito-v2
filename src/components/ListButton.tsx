@@ -4,6 +4,10 @@ type ListButtonProps = {
 
 export function ListButton({ children }: ListButtonProps) {
     return (
-        <li className="bg-white">{children}</li>
+        <li className="bg-white">
+            <button>
+                {children}
+            </button>
+        </li>
     )
 }
