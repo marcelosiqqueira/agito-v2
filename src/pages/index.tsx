@@ -107,20 +107,20 @@ export function Index() {
     return (
         <>
             <header>
-                <div className=" hidden"></div>
-                <div>
+                <div className="bg-orange drop-shadow-md h-14"></div>
+                <div className="hidden">
                     <Button buttonClick={handleButtonClick}>início</Button>
                     <Button buttonClick={handleButtonClick}>coberturas</Button>
                     <Button buttonClick={handleButtonClick}>agenda</Button>
                     <Button buttonClick={handleButtonClick}>sobre</Button>
                 </div>
-                <div className="bg-white"></div>
+                <div className="bg-gray h-5 shadow-inner"></div>
             </header>
             <main>
-                <section>
+                <section className="bg-light-purple">
                     <div>
                         <ImageCarousel imagesUrl={null}></ImageCarousel>
-                        <div>
+                        <div className="bg-gray h-16 rounded-b-lg flex gap-1.5 justify-around">
                             <div>
                                 <img src="" alt="" />
                                 Evento
@@ -139,14 +139,14 @@ export function Index() {
                             </div>
                         </div>
                     </div>
-                    <p>
+                    <p className="mx-auto my-0 w-4/5 text-white text-lg p-5">
                         Seja bem-vindo ao meu site de eventos, onde você encontrará uma seleção das minhas melhores fotos de eventos recentes.
                         Estou sempre buscando capturar as emoções e momentos mais significativos de cada ocasião,
                         de forma que essas imagens se tornem uma recordação inesquecível.
                         Obrigado por visitar e espero que goste das minhas fotos tanto quanto eu gostei de capturá-las!
                     </p>
                 </section>
-                <section>
+                <section className="bg-medium-purple">
                     <div>
                         <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null}></ImageCarousel>
                     </div>
@@ -159,18 +159,18 @@ export function Index() {
                             handleSelectedEvent={handleSelectedEvent}></ListItem>)}
                     </List>
                 </section>
-                <section>
+                <section className="bg-dark-purple">
                     <img src="" alt="" />
-                    <div>
-                        <span>Sobre mim</span>
-                        <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    <div className="bg-light-purple text-white rounded-3xl w-4/5 mx-auto my-6 p-5 flex flex-col gap-5 drop-shadow-md">
+                        <span className="font-bold text-3xl">Sobre mim</span>
+                        <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                             Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
                     </div>
-                    <img src="" alt="" />
+                    <img src="" alt="Foto de perfil" />
                 </section>
             </main>
-            <footer>
-                <span>© 2023 - GABRIEL AGITO - TODOS OS DIREITOS RESERVADOS</span>
+            <footer className="bg-light-purple h-12">
+                <span className="text-white text-sm">© 2023 - GABRIEL AGITO - TODOS OS DIREITOS RESERVADOS</span>
             </footer>
             <div className="hidden">
                 <img src="" alt="" />

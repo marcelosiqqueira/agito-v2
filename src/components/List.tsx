@@ -7,9 +7,9 @@ type ListProps = {
 
 export function List({ handleCoverageSelected, children }: ListProps) {
     return (
-        <div>
-            <div>
-                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value='Coberturas'>Coberturas</button>
+        <div className="bg-gray">
+            <div className="text-xl">
+                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value='Coberturas' className="w-1/2">Coberturas</button>
                 <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value='Agenda'>Agenda</button>
             </div>
             <div>
@@ -18,7 +18,7 @@ export function List({ handleCoverageSelected, children }: ListProps) {
                 </ul>
             </div>
             <div>
-                <ul>
+                <ul className="flex gap-1.5 justify-around">
                     <ListButton>{'|<'}</ListButton>
                     <ListButton>{'<'}</ListButton>
                     <ListButton>1</ListButton>
