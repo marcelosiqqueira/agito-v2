@@ -1,6 +1,6 @@
 export enum UrlEnum {
-  BASE = "http://localhost:3333/",
-  EVENTS = "http://localhost:3333/events/",
-  CUSTOM = "http://localhost:3333/custom/",
-  IMAGE = "http://localhost:3333/image/",
+  BASE = "http://181.215.135.241:3333/",
+  EVENTS = "http://181.215.135.241:3333/events/",
+  CUSTOM = "http://181.215.135.241:3333/custom/",
+  IMAGE = "http://181.215.135.241:3333/image/",
 }
