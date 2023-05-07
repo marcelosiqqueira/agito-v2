@@ -1,14 +1,15 @@
 type ButtonProps = {
-    buttonClick: ((value: string) => void) | null,
+    value: string,
     children: string,
+    buttonClick: ((value: string) => void) | null,
 }
 
-export function Button({ buttonClick, children }: ButtonProps) {
+export function Button({ buttonClick, children, value }: ButtonProps) {
     return (
         <button className={`bg-orange`} onClick={buttonClick ?
             ((e) => buttonClick(e.currentTarget.value)) :
-            (() => console.log(`Button error. Button Click does not exist. Value : ${children}`))}
-            value={children}
+            (() => console.log(`Button error. Button onClick does not exist. Value : ${children}`))}
+            value={value}
         >{children}</button>
     )
 }
