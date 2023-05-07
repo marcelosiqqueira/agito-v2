@@ -1,4 +1,5 @@
 import { ListButton } from "./ListButton"
+import { EventsEnum } from "../const/Enums/eventsEnum"
 
 type ListProps = {
     children: React.ReactNode
@@ -9,8 +10,8 @@ export function List({ handleCoverageSelected, children }: ListProps) {
     return (
         <div className="bg-gray">
             <div className="text-xl">
-                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value='Coberturas' className="w-1/2">Coberturas</button>
-                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value='Agenda'>Agenda</button>
+                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.COVERAGES} className="w-1/2">Coberturas</button>
+                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.SCHEDULE}>Agenda</button>
             </div>
             <div>
                 <ul>
