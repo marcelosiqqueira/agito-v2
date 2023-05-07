@@ -3,9 +3,11 @@ import { Button } from "../components/Button";
 import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { miniFetch } from "../functions/util";
-import { Url } from "../const/url";
+import { UrlEnum } from "../const/Enums/urlEnum";
 import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
+import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
+import { EventsEnum } from "../const/Enums/eventsEnum";
 
 
 export function Index() {
@@ -14,7 +16,9 @@ export function Index() {
     const [coverageSelected, setCoverageSelected] = useState(true)
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
 
-    const events: AgitoEvent[] = coverageSelected ? coverages : schedule
+    const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
+        { data: coverages, type: EventsEnum.COVERAGES } :
+        { data: schedule, type: EventsEnum.SCHEDULE }
 
     useEffect(() => {
         const sortEvents = (eventArray: AgitoEvent[]) => {
@@ -34,20 +38,25 @@ export function Index() {
         }
 
         const getData = async () => {
-            const data: ResponseEvent[] = await miniFetch(Url.EVENTS)
+            const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
             const eventArray: AgitoEvent[] = []
             data.forEach((element: ResponseEvent) => {
                 const stringArray = element.name.split('--')
-                const event: AgitoEvent = {
-                    id: element.id,
-                    date: new Date(stringArray[0].replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2-$1-$3')),
-                    time: stringArray[1],
-                    name: stringArray[2],
-                    local: stringArray[3],
-                    clicks: null
-                    // pageId: 1,
+                try {
+                    const event: AgitoEvent = {
+                        id: element.id,
+                        date: new Date(stringArray[0].replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2-$1-$3')),
+                        time: stringArray[1],
+                        name: stringArray[2],
+                        local: stringArray[3],
+                        clicks: null
+                        // pageId: 1,
+                    }
+                    eventArray.push(event)
+                } catch (e) {
+                    console.error(e)
                 }
-                eventArray.push(event)
+
             })
             sortEvents(eventArray)
         }
@@ -55,46 +64,62 @@ export function Index() {
     }, [])
 
     const homeRef = useRef<HTMLButtonElement | null>(null)
-    const coveragesRef = useRef<HTMLButtonElement | null>(null)
-    const scheduleRef = useRef<HTMLButtonElement | null>(null)
+    const listRef = useRef<HTMLButtonElement | null>(null)
     const aboutRef = useRef<HTMLButtonElement | null>(null)
+    const returnRef = useRef<HTMLButtonElement | null>(null)
 
     function handleButtonClick(value: string) {
-        switch (value) {
-            case 'início':
-                homeRef.current?.scrollIntoView(true)
-                break;
-            case 'coberturas':
-                coveragesRef.current?.scrollIntoView(true)
-                break;
-            case 'agenda':
-                scheduleRef.current?.scrollIntoView(true)
-                break;
-            case 'sobre':
-                aboutRef.current?.scrollIntoView(true)
-                break;
+        const getImagesUrlByEvent = async () => {
+            const data = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
+            const auxArray: string[] = []
+            data.forEach((element: any) => {
+                auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
+            })
+            setSelectedEvent({
+                id: schedule[0].id, imagesUrl: auxArray
+            })
+            switch (value) {
+                case HeaderButtonEnum.START:
+                    homeRef.current?.scrollIntoView(true)
+                    break;
+                case HeaderButtonEnum.COVERAGES:
+                    listRef.current?.scrollIntoView(true)
+                    setCoverageSelected(true)
+                    if (coverages.length > 0)
+                        getImagesUrlByEvent()
+                    break;
+                case HeaderButtonEnum.SCHEDULE:
+                    listRef.current?.scrollIntoView(true)
+                    setCoverageSelected(false)
+                    if (schedule.length > 0)
+                        getImagesUrlByEvent()
+                    break;
+                case HeaderButtonEnum.ABOUT:
+                    aboutRef.current?.scrollIntoView(true)
+                    break;
+            }
         }
     }
 
     function handleCoverageSelected(value: string) {
         switch (value) {
-            case 'Coberturas':
+            case EventsEnum.COVERAGES:
                 setCoverageSelected(true)
                 break;
-            case 'Agenda':
+            case EventsEnum.SCHEDULE:
                 setCoverageSelected(false)
                 break
             default:
-                console.error('Error selecting event type. Error location : handleCoverageSelected()')
+                console.error('Error selecting event type. Error location : index.tsx, handleCoverageSelected()')
         }
     }
 
     async function handleSelectedEvent(value: string) {
         if (value) {
-            const data = await miniFetch(Url.EVENTS + value)
+            const data = await miniFetch(UrlEnum.EVENTS + value)
             const auxArray: string[] = []
             data.forEach((element: any) => {
-                auxArray.push(`${Url.IMAGE}?id=${element.id}`)
+                auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
             })
             const event: SelectedEvent = {
                 id: value,
@@ -106,14 +131,16 @@ export function Index() {
 
     return (
         <>
-            <header>
-                <div className="bg-orange drop-shadow-md h-14"></div>
-                <div className="hidden">
-                    <Button buttonClick={handleButtonClick}>início</Button>
-                    <Button buttonClick={handleButtonClick}>coberturas</Button>
-                    <Button buttonClick={handleButtonClick}>agenda</Button>
-                    <Button buttonClick={handleButtonClick}>sobre</Button>
+            <header ref={homeRef}>
+                <div className="bg-orange drop-shadow-md h-14 text-white">
+                    <div >
+                        <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
+                        <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
+                        <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
+                        <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
+                    </div>
                 </div>
+                <div className="hidden"></div>
                 <div className="bg-gray h-5 shadow-inner"></div>
             </header>
             <main>
@@ -146,34 +173,42 @@ export function Index() {
                         Obrigado por visitar e espero que goste das minhas fotos tanto quanto eu gostei de capturá-las!
                     </p>
                 </section>
-                <section className="bg-medium-purple">
+                <section ref={listRef} className="bg-medium-purple">
                     <div>
-                        <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null}></ImageCarousel>
+                        <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
                     </div>
                     <List handleCoverageSelected={handleCoverageSelected}>
-                        {events.map((element, index) => <ListItem key={index}
+                        {events.data.map((element, index) => <ListItem key={index}
                             id={element.id}
                             name={element.name}
-                            date={element.date} local={element.local}
+                            date={element.date}
+                            time={element.time}
+                            local={element.local}
+                            type={events.type}
                             clicks={element.clicks}
                             handleSelectedEvent={handleSelectedEvent}></ListItem>)}
                     </List>
                 </section>
-                <section className="bg-dark-purple">
-                    <img src="" alt="" />
+                <section className="bg-dark-purple" ref={aboutRef}>
+                    <img src="" alt="Foto de perfil" />
                     <div className="bg-light-purple text-white rounded-3xl w-4/5 mx-auto my-6 p-5 flex flex-col gap-5 drop-shadow-md">
                         <span className="font-bold text-3xl">Sobre mim</span>
                         <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                             Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
                     </div>
-                    <img src="" alt="Foto de perfil" />
+                    <a href="">
+                        <img src="" alt="" />
+                    </a>
                 </section>
             </main>
             <footer className="bg-light-purple h-12">
                 <span className="text-white text-sm">© 2023 - GABRIEL AGITO - TODOS OS DIREITOS RESERVADOS</span>
             </footer>
             <div className="hidden">
-                <img src="" alt="" />
+                <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START}>
+                    <img src="" alt="" />
+                    <span>SUBIR</span>
+                </button>
             </div>
         </>
     )
