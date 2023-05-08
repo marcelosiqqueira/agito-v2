@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Modal } from "./Modal"
 import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
 
@@ -12,7 +12,15 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
     const [index, setIndex] = useState<number>(0)
     const [subIndex, setSubIndex] = useState<number>(0)
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const maxMultipleSize = imagesUrl ? ((imagesUrl.length <= 4) ? (imagesUrl?.length - 1) : 4) : 4
+
+    const maxMultipleSize = (): number => {
+        if (imagesUrl) {
+            if (imagesUrl.length < 4)
+                return imagesUrl.length
+            return 4
+        }
+        return 0
+    }
 
     function handleIndex(stringValue: string, id?: number) {
         if (imagesUrl) {
@@ -40,7 +48,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                         setSubIndex(subIndex - 1)
                     break
                 case CarouselButtonAction.NEXT:
-                    if ((subIndex + 1 < imagesUrl.length))
+                    if ((subIndex + 4 < imagesUrl.length))
                         setSubIndex(subIndex + 1)
                     break
             }
@@ -51,6 +59,11 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
         setIsOpen(!isOpen)
     }
 
+    useEffect(() => {
+        setIndex(0)
+        setSubIndex(0)
+    }, [imagesUrl])
+
     return (
         //text-white -> temporario
         <div className="text-white bg-black/50">
@@ -58,7 +71,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                 <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} className="bg-black/40 max-w-full max-h-[415px] object-contain aspect-[3-2]" />
             </button>
             <div className="flex justify-evenly">
-                {multiple && (imagesUrl && imagesUrl.slice(subIndex, maxMultipleSize + subIndex).map((_, elementIndex) =>
+                {multiple && (imagesUrl && imagesUrl.slice(subIndex, maxMultipleSize() + subIndex).map((_, elementIndex) =>
                     <button
                         key={elementIndex}
                         value={CarouselButtonAction.SELECT}
