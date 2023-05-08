@@ -4,6 +4,7 @@ export default {
   theme: {
     colors: {
       white: "#FFFFFF",
+      black: "#000000",
       orange: "#FC6728",
       "light-orange": "#FFAA86",
       gray: "#D9D9D9",
@@ -24,7 +25,7 @@ export default {
         'close': "url('./src/assets/close.svg')",
         'clock': "url('./src/assets/clock.svg')",
         'location': "url('./src/assets/location.svg')",
-      }
+      },
     },
   },
   plugins: [],

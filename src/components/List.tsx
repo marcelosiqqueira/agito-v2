@@ -9,12 +9,12 @@ type ListProps = {
 export function List({ handleCoverageSelected, children }: ListProps) {
     return (
         <div className="bg-gray">
-            <div className="text-xl">
-                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.COVERAGES} className="w-1/2">Coberturas</button>
-                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.SCHEDULE}>Agenda</button>
+            <div className="text-xl pb-5">
+                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.COVERAGES} className="w-1/2 h-16 rounded-br-lg">Coberturas</button>
+                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.SCHEDULE} className="w-1/2 h-16 bg-dark-gray rounded-bl-lg">Agenda</button>
             </div>
             <div>
-                <ul>
+                <ul className="flex flex-col gap-3 justify-evenly">
                     {children}
                 </ul>
             </div>

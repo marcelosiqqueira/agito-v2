@@ -132,15 +132,17 @@ export function Index() {
     return (
         <>
             <header ref={homeRef}>
-                <div className="bg-orange drop-shadow-md h-14 text-white">
-                    <div >
+                <div className="bg-orange drop-shadow-md h-14 text-white pl-5 py-1">
+                    <div className="h-12 w-12">
+                        <img src="src/assets/menu.svg" alt="Ícone Menu" />
+                    </div>
+                    <div className="hidden">
                         <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
                         <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
                         <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
                         <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
                     </div>
                 </div>
-                <div className="hidden"></div>
                 <div className="bg-gray h-5 shadow-inner"></div>
             </header>
             <main>

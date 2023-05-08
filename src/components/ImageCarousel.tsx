@@ -37,16 +37,16 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
 
     return (
         //text-white -> temporario
-        <div className="text-white">
+        <div className="text-white bg-black/50">
             <button>
-                <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} />
+                <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} className="bg-black/40 max-w-full max-h-[415px] object-contain aspect-[3-2]"/>
             </button>
-            <div>
+            <div className="flex justify-evenly">
                 {multiple && (imagesUrl && imagesUrl.slice(index, maxMultipleSize + index).map((element, elementIndex) =>
                     <button
                         value={CarouselButtonAction.SELECT}
-                        onClick={(e) => handleIndex(e.currentTarget.value, elementIndex + index)}>
-                        <img src={element ?? '/error'} alt="" height={240} width={240} className="" />
+                        onClick={(e) => handleIndex(e.currentTarget.value, elementIndex + index)} className="bg-black/40">
+                        <img src={element ?? '/error'} alt="" height={55} width={83} className="h-20 w-22 object-contain aspect-[3-2]" />
                     </button>))
                 }
             </div>
