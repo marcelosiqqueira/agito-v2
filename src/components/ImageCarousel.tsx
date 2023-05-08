@@ -10,6 +10,7 @@ type ImageCarouselProps = {
 
 export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouselProps) {
     const [index, setIndex] = useState<number>(0)
+    const [subIndex, setSubIndex] = useState<number>(0)
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const maxMultipleSize = imagesUrl ? ((imagesUrl.length <= 4) ? (imagesUrl?.length - 1) : 4) : 4
 
@@ -21,12 +22,27 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                         setIndex(index - 1)
                     break
                 case CarouselButtonAction.NEXT:
-                    if ((index + 1 <= imagesUrl.length))
+                    if ((index + 1 < imagesUrl.length))
                         setIndex(index + 1)
                     break
                 case CarouselButtonAction.SELECT:
-                    if (id)
+                    if (id || id === 0)
                         setIndex(id)
+            }
+        }
+    }
+
+    function handleSubIndex(stringValue: string) {
+        if (imagesUrl) {
+            switch (stringValue) {
+                case CarouselButtonAction.PREV:
+                    if ((subIndex - 1) >= 0)
+                        setSubIndex(subIndex - 1)
+                    break
+                case CarouselButtonAction.NEXT:
+                    if ((subIndex + 1 < imagesUrl.length))
+                        setSubIndex(subIndex + 1)
+                    break
             }
         }
     }
@@ -39,15 +55,27 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
         //text-white -> temporario
         <div className="text-white bg-black/50">
             <button>
-                <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} className="bg-black/40 max-w-full max-h-[415px] object-contain aspect-[3-2]"/>
+                <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} className="bg-black/40 max-w-full max-h-[415px] object-contain aspect-[3-2]" />
             </button>
             <div className="flex justify-evenly">
-                {multiple && (imagesUrl && imagesUrl.slice(index, maxMultipleSize + index).map((element, elementIndex) =>
+                {multiple && (imagesUrl && imagesUrl.slice(subIndex, maxMultipleSize + subIndex).map((_, elementIndex) =>
                     <button
+                        key={elementIndex}
                         value={CarouselButtonAction.SELECT}
-                        onClick={(e) => handleIndex(e.currentTarget.value, elementIndex + index)} className="bg-black/40">
-                        <img src={element ?? '/error'} alt="" height={55} width={83} className="h-20 w-22 object-contain aspect-[3-2]" />
+                        onClick={(e) => handleIndex(e.currentTarget.value, elementIndex + subIndex)} className="bg-black/40">
+                        <img src={imagesUrl ? imagesUrl[elementIndex + subIndex] ?? '/error' : '/error'}
+                            alt="" height={55} width={83} className="h-20 w-22 object-contain aspect-[3-2]" />
                     </button>))
+                }
+                {multiple &&
+                    <>
+                        <button value={CarouselButtonAction.PREV} onClick={(e) => handleSubIndex(e.currentTarget.value)}>
+                            {'<'}
+                        </button>
+                        <button value={CarouselButtonAction.NEXT} onClick={(e) => handleSubIndex(e.currentTarget.value)}>
+                            {'>'}
+                        </button>
+                    </>
                 }
             </div>
             {buttonStyle ?
