@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Modal } from "./Modal"
 import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
 
@@ -12,7 +12,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
     const [index, setIndex] = useState<number>(0)
     const [subIndex, setSubIndex] = useState<number>(0)
     const [isOpen, setIsOpen] = useState<boolean>(false)
-
+    const divRef = useRef<any>(null)
     const maxMultipleSize = (): number => {
         if (imagesUrl) {
             if (imagesUrl.length < 4)
@@ -30,7 +30,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                         setIndex(index - 1)
                     break
                 case CarouselButtonAction.NEXT:
-                    if ((index + 1 < imagesUrl.length))
+                    if ((index + 1) < imagesUrl.length)
                         setIndex(index + 1)
                     break
                 case CarouselButtonAction.SELECT:
@@ -57,6 +57,19 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
 
     function handleOpenModal() {
         setIsOpen(!isOpen)
+        divRef.current?.focus()
+    }
+
+    function imageTimerHandler() {
+        if (imagesUrl && buttonStyle) {
+            const timer = setTimeout(() => {
+                if ((index + 1) < imagesUrl.length)
+                    setIndex(index + 1)
+                else
+                    setIndex(0)
+            }, 5000)
+            return () => clearTimeout(timer)
+        }
     }
 
     useEffect(() => {
@@ -66,9 +79,9 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
 
     return (
         //text-white -> temporario
-        <div className="text-white bg-black/50">
+        <div className="text-white bg-black/50" ref={divRef} tabIndex={1}>
             <button>
-                <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} className="bg-black/40 max-w-full max-h-[415px] object-contain aspect-[3-2]" />
+                <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} onLoad={imageTimerHandler} className="bg-black/40 max-w-full max-h-[415px] object-contain aspect-[3-2]" />
             </button>
             <div className="flex justify-evenly">
                 {multiple && (imagesUrl && imagesUrl.slice(subIndex, maxMultipleSize() + subIndex).map((_, elementIndex) =>
