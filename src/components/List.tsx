@@ -3,17 +3,18 @@ import { EventsEnum } from "../const/Enums/eventsEnum"
 import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
 
 type ListProps = {
+    coverageSelected: boolean | null
     children: React.ReactNode
     handlePage: (value: string) => void,
     handleCoverageSelected: (value: string) => void
 }
 
-export function List({ handlePage, handleCoverageSelected, children }: ListProps) {
+export function List({ coverageSelected, handlePage, handleCoverageSelected, children }: ListProps) {
     return (
         <div className="bg-gray">
             <div className="text-xl pb-5">
-                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.COVERAGES} className="w-1/2 h-16 rounded-br-lg">Coberturas</button>
-                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.SCHEDULE} className="w-1/2 h-16 bg-dark-gray rounded-bl-lg">Agenda</button>
+                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.COVERAGES} className={`w-1/2 h-16 rounded-br-lg ${coverageSelected ? '' : 'bg-dark-gray'}`}>Coberturas</button>
+                <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.SCHEDULE} className={`w-1/2 h-16 rounded-bl-lg ${coverageSelected ? 'bg-dark-gray' : ''}`}>Agenda</button>
             </div>
             <div>
                 <ul className="flex flex-col gap-3 justify-evenly">
