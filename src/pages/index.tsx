@@ -8,13 +8,17 @@ import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
 import { EventsEnum } from "../const/Enums/eventsEnum";
+import { CarouselButtonAction } from "../const/Enums/carouselButtonAction";
 
 
 export function Index() {
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
-    const [coverageSelected, setCoverageSelected] = useState(true)
+    const [coverageSelected, setCoverageSelected] = useState<boolean>(true)
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
+    const [page, setPage] = useState<number>(1)
+
+    const eventsPerPage = 6
 
     const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
         { data: coverages, type: EventsEnum.COVERAGES } :
@@ -114,6 +118,35 @@ export function Index() {
         }
     }
 
+    function handlePage(value: string, index?: number) {
+        if (value) {
+            switch (value) {
+                case CarouselButtonAction.START:
+                    setPage(1)
+                    break
+                case CarouselButtonAction.PREV:
+                    if (page - 1 > 0)
+                        setPage(page - 1)
+                    break
+                case CarouselButtonAction.SELECT:
+                    if (index)
+                        setPage(index)
+                    break
+                case CarouselButtonAction.NEXT:
+                    if (page + 1 < (coverageSelected ?
+                        Math.ceil(coverages.length / eventsPerPage) :
+                        Math.ceil(schedule.length / eventsPerPage)))
+                        setPage(page + 1)
+                    break
+                case CarouselButtonAction.END:
+                    setPage(coverageSelected ?
+                        Math.ceil(coverages.length / eventsPerPage) :
+                        Math.ceil(schedule.length / eventsPerPage))
+                    break
+            }
+        }
+    }
+
     async function handleSelectedEvent(value: string) {
         if (value) {
             const data = await miniFetch(UrlEnum.EVENTS + value)
@@ -179,8 +212,8 @@ export function Index() {
                     <div>
                         <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
                     </div>
-                    <List handleCoverageSelected={handleCoverageSelected}>
-                        {events.data.map((element, index) => <ListItem key={index}
+                    <List handleCoverageSelected={handleCoverageSelected} handlePage={handlePage}>
+                        {events.data.slice((page - 1) * eventsPerPage, (page * eventsPerPage)).map((element, index) => <ListItem key={index}
                             id={element.id}
                             name={element.name}
                             date={element.date}
@@ -215,3 +248,12 @@ export function Index() {
         </>
     )
 }
+
+// page x : ((x-1)*eventsPerPage) - ((x*eventsPerPage) - 1)
+// page 1 : 0 - 5
+// page 2 : 6 - 11
+// page 3 : 12 - 17
+// page 4 : 18 - 23
+
+//1 - 6
+// page x : events.length / (eventsPerPage)
