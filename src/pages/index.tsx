@@ -25,55 +25,26 @@ export function Index() {
         { data: coverages, type: EventsEnum.COVERAGES } :
         { data: schedule, type: EventsEnum.SCHEDULE }
 
-    useEffect(() => {
-        const sortEvents = async (eventArray: AgitoEvent[]) => {
-            const currentDate = new Date()
-            const coveragesArray: AgitoEvent[] = []
-            const scheduleArray: AgitoEvent[] = []
-            eventArray.forEach((element) => {
-                if (currentDate > element.date)
-                    coveragesArray.push(element)
-                else
-                    scheduleArray.push(element)
-            })
-            setCoverages(coveragesArray)
-            setSchedule(scheduleArray)
-            if (coveragesArray.length > 0) {
-                setMainEvent(await handleSelectedEvent(coveragesArray[0].id))
-                setSelectedEvent(await handleSelectedEvent(coveragesArray[0].id))
-            }
-        }
-
-        const getData = async () => {
-            const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
-            const eventArray: AgitoEvent[] = []
-            data.forEach((element: ResponseEvent) => {
-                const stringArray = element.name.split('--')
-                try {
-                    const event: AgitoEvent = {
-                        id: element.id,
-                        date: new Date(stringArray[0].replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2-$1-$3')),
-                        time: stringArray[1],
-                        name: stringArray[2],
-                        local: stringArray[3],
-                        clicks: null
-                        // pageId: 1,
-                    }
-                    eventArray.push(event)
-                } catch (e) {
-                    console.error(e)
-                }
-
-            })
-            sortEvents(eventArray)
-        }
-        getData()
-    }, [])
-
     const homeRef = useRef<HTMLButtonElement | null>(null)
     const listRef = useRef<HTMLButtonElement | null>(null)
     const aboutRef = useRef<HTMLButtonElement | null>(null)
     const returnRef = useRef<HTMLButtonElement | null>(null)
+
+    async function getSelectedEvent(value: string): Promise<SelectedEvent | null> {
+        if (value) {
+            const data = await miniFetch(UrlEnum.EVENTS + value)
+            const auxArray: string[] = []
+            data.forEach((element: any) => {
+                auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
+            })
+            const event: SelectedEvent = {
+                id: value,
+                imagesUrl: auxArray
+            }
+            return event
+        }
+        return null
+    }
 
     function handleButtonClick(value: string) {
         const getImagesUrlByEvent = async () => {
@@ -150,21 +121,54 @@ export function Index() {
         }
     }
 
-    async function handleSelectedEvent(value: string): Promise<SelectedEvent | null> {
-        if (value) {
-            const data = await miniFetch(UrlEnum.EVENTS + value)
-            const auxArray: string[] = []
-            data.forEach((element: any) => {
-                auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
-            })
-            const event: SelectedEvent = {
-                id: value,
-                imagesUrl: auxArray
-            }
-            return event
-        }
-        return null
+    async function handleSelectedEvent(value: string) {
+        setSelectedEvent(await getSelectedEvent(value))
     }
+
+    useEffect(() => {
+        const sortEvents = async (eventArray: AgitoEvent[]) => {
+            const currentDate = new Date()
+            const coveragesArray: AgitoEvent[] = []
+            const scheduleArray: AgitoEvent[] = []
+            eventArray.forEach((element) => {
+                if (currentDate > element.date)
+                    coveragesArray.push(element)
+                else
+                    scheduleArray.push(element)
+            })
+            setCoverages(coveragesArray)
+            setSchedule(scheduleArray)
+            if (coveragesArray.length > 0) {
+                setMainEvent(await getSelectedEvent(coveragesArray[0].id))
+                setSelectedEvent(await getSelectedEvent(coveragesArray[0].id))
+            }
+        }
+
+        const getData = async () => {
+            const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
+            const eventArray: AgitoEvent[] = []
+            data.forEach((element: ResponseEvent) => {
+                const stringArray = element.name.split('--')
+                try {
+                    const event: AgitoEvent = {
+                        id: element.id,
+                        date: new Date(stringArray[0].replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2-$1-$3')),
+                        time: stringArray[1],
+                        name: stringArray[2],
+                        local: stringArray[3],
+                        clicks: null
+                        // pageId: 1,
+                    }
+                    eventArray.push(event)
+                } catch (e) {
+                    console.error(e)
+                }
+
+            })
+            sortEvents(eventArray)
+        }
+        getData()
+    }, [])
 
     return (
         <>
