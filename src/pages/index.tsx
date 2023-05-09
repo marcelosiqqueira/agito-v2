@@ -15,6 +15,7 @@ export function Index() {
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
     const [coverageSelected, setCoverageSelected] = useState<boolean>(true)
+    const [mainEvent, setMainEvent] = useState<SelectedEvent | null>(null)
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
     const [page, setPage] = useState<number>(1)
 
@@ -25,7 +26,7 @@ export function Index() {
         { data: schedule, type: EventsEnum.SCHEDULE }
 
     useEffect(() => {
-        const sortEvents = (eventArray: AgitoEvent[]) => {
+        const sortEvents = async (eventArray: AgitoEvent[]) => {
             const currentDate = new Date()
             const coveragesArray: AgitoEvent[] = []
             const scheduleArray: AgitoEvent[] = []
@@ -37,8 +38,10 @@ export function Index() {
             })
             setCoverages(coveragesArray)
             setSchedule(scheduleArray)
-            if (coveragesArray.length > 0)
-                handleSelectedEvent(coveragesArray[0].id)
+            if (coveragesArray.length > 0) {
+                setMainEvent(await handleSelectedEvent(coveragesArray[0].id))
+                setSelectedEvent(await handleSelectedEvent(coveragesArray[0].id))
+            }
         }
 
         const getData = async () => {
@@ -147,7 +150,7 @@ export function Index() {
         }
     }
 
-    async function handleSelectedEvent(value: string) {
+    async function handleSelectedEvent(value: string): Promise<SelectedEvent | null> {
         if (value) {
             const data = await miniFetch(UrlEnum.EVENTS + value)
             const auxArray: string[] = []
@@ -158,8 +161,9 @@ export function Index() {
                 id: value,
                 imagesUrl: auxArray
             }
-            setSelectedEvent(event)
+            return event
         }
+        return null
     }
 
     return (
@@ -181,7 +185,7 @@ export function Index() {
             <main>
                 <section className="bg-light-purple">
                     <div>
-                        <ImageCarousel imagesUrl={null}></ImageCarousel>
+                        <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} buttonStyle={true}></ImageCarousel>
                         <div className="bg-gray h-16 rounded-b-lg flex gap-1.5 justify-around">
                             <div>
                                 <img src="" alt="" />
@@ -212,7 +216,9 @@ export function Index() {
                     <div>
                         <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
                     </div>
-                    <List handleCoverageSelected={handleCoverageSelected} handlePage={handlePage}>
+                    <List handleCoverageSelected={handleCoverageSelected}
+                        coverageSelected={coverageSelected}
+                        handlePage={handlePage}>
                         {events.data.slice((page - 1) * eventsPerPage, (page * eventsPerPage)).map((element, index) => <ListItem key={index}
                             id={element.id}
                             name={element.name}
