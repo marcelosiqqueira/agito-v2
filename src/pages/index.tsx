@@ -172,12 +172,12 @@ export function Index() {
 
     return (
         <>
-            <header ref={homeRef}>
-                <div className="bg-orange drop-shadow-md h-14 text-white pl-5 py-1">
-                    <div className="h-12 w-12">
+            <header ref={homeRef} className="flex-col justify-center">
+                <div className="bg-orange drop-shadow-md h-14 text-white">
+                    <button className="h-12 w-12 lg:hidden">
                         <img src="src/assets/menu.svg" alt="Ícone Menu" />
-                    </div>
-                    <div className="hidden">
+                    </button>
+                    <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
                         <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
                         <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
                         <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
@@ -187,36 +187,36 @@ export function Index() {
                 <div className="bg-gray h-5 shadow-inner"></div>
             </header>
             <main>
-                <section className="bg-light-purple">
-                    <div>
+                <section className="bg-light-purple pb-20 pt-10 lg:pb-36">
+                    <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto">
                         <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} buttonStyle={true}></ImageCarousel>
                         <div className="bg-gray h-16 rounded-b-lg flex gap-1.5 justify-around">
                             <div>
-                                <img src="" alt="" />
+                                <img src="src/assets/star.svg" alt="" />
                                 Evento
                             </div>
                             <div>
-                                <img src="" alt="" />
+                                <img src="src/assets/location.svg" alt="" />
                                 Local
                             </div>
                             <div>
-                                <img src="" alt="" />
+                                <img src="src/assets/clock.svg" alt="" />
                                 11 fev 2020
                             </div>
                             <div>
-                                <img src="" alt="" />
+                                <img src="src/assets/clicks.svg" alt="" />
                                 10
                             </div>
                         </div>
                     </div>
-                    <p className="mx-auto my-0 w-4/5 text-white text-lg p-5">
+                    <p className="mx-auto mt-14 w-4/5 text-white text-lg lg:max-w-[720px]">
                         Seja bem-vindo ao meu site de eventos, onde você encontrará uma seleção das minhas melhores fotos de eventos recentes.
                         Estou sempre buscando capturar as emoções e momentos mais significativos de cada ocasião,
                         de forma que essas imagens se tornem uma recordação inesquecível.
                         Obrigado por visitar e espero que goste das minhas fotos tanto quanto eu gostei de capturá-las!
                     </p>
                 </section>
-                <section ref={listRef} className="bg-medium-purple">
+                <section ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
                     <div>
                         <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
                     </div>
@@ -234,20 +234,20 @@ export function Index() {
                             handleSelectedEvent={handleSelectedEvent}></ListItem>)}
                     </List>
                 </section>
-                <section className="bg-dark-purple" ref={aboutRef}>
-                    <img src="" alt="Foto de perfil" />
-                    <div className="bg-light-purple text-white rounded-3xl w-4/5 mx-auto my-6 p-5 flex flex-col gap-5 drop-shadow-md">
+                <section className="bg-dark-purple relative pb-20 pt-32" ref={aboutRef}>
+                    <img src="src/assets/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-80 rounded-full relative left-5 lg:left-60"/>
+                    <div className="bg-light-purple text-white rounded-3xl w-[360px] mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md">
                         <span className="font-bold text-3xl">Sobre mim</span>
                         <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                             Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
                     </div>
-                    <a href="">
-                        <img src="" alt="" />
+                    <a href="#" target="_blank" className="bg-ultra-light-purple w-32 h-32 absolute top-80 left-64 flex justify-center items-center drop-shadow-md rounded-xl">
+                        <img src="src/assets/instagram-logo.svg" alt="Ícone do Instagram" className="w-24 h-24"/>
                     </a>
                 </section>
             </main>
-            <footer className="bg-light-purple h-12">
-                <span className="text-white text-sm">© 2023 - GABRIEL AGITO - TODOS OS DIREITOS RESERVADOS</span>
+            <footer className="bg-light-purple h-12 flex justify-center items-center ">
+                <span className="text-white text-sm lg:text-xs">© 2023 - GABRIEL AGITO - TODOS OS DIREITOS RESERVADOS</span>
             </footer>
             <div className="hidden">
                 <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START}>

@@ -79,7 +79,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
 
     return (
         //text-white -> temporario
-        <div className="text-white bg-black/50" ref={divRef} tabIndex={1}>
+        <div className="text-white bg-black/50 flex-col relative lg:w-[720px]" ref={divRef} tabIndex={1}>
             <button>
                 <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} onLoad={imageTimerHandler} className="bg-black/40 max-w-full max-h-[415px] object-contain aspect-[3-2]" />
             </button>
@@ -105,13 +105,13 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                 }
             </div>
             {buttonStyle ?
-                <>
+                <div className="flex w-20 justify-evenly">
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)}>♦</button>
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)}>♦</button>
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)}>♦</button>
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)}>♦</button>
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)}>♦</button>
-                </> :
+                </div> :
                 <>
                     <button value={CarouselButtonAction.PREV} onClick={(e) => handleIndex(e.currentTarget.value)}>{'<'}</button>
                     <button value={CarouselButtonAction.NEXT} onClick={(e) => handleIndex(e.currentTarget.value)}>{'>'}</button>
