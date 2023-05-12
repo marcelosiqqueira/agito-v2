@@ -11,7 +11,7 @@ type ListProps = {
 
 export function List({ coverageSelected, handlePage, handleCoverageSelected, children }: ListProps) {
     return (
-        <div className="bg-gray drop-shadow-md h-[980px] w-full lg:w-[480px] lg:rounded-lg">
+        <div className="bg-gray drop-shadow-md h-830x] w-full lg:w-[480px] lg:rounded-lg">
             <div className="text-xl pb-5">
                 <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.COVERAGES} className={`w-1/2 h-16 rounded-br-lg lg:rounded-tl-lg ${coverageSelected ? '' : 'bg-dark-gray'}`}>Coberturas</button>
                 <button onClick={(e) => handleCoverageSelected(e.currentTarget.value)} value={EventsEnum.SCHEDULE} className={`w-1/2 h-16 rounded-bl-lg lg:rounded-tr-lg ${coverageSelected ? 'bg-dark-gray' : ''}`}>Agenda</button>

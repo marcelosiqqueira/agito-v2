@@ -22,7 +22,7 @@ export function ListItem({ id, name, date, time, local, clicks, type, handleSele
                 <div className="flex gap-1.5 align-center">
                     <img src="src/assets/clock.svg" alt="" />
                     <span>{date.toLocaleDateString('pt-BR')}</span>
-                    {type === EventsEnum.SCHEDULE && <span>Horario : {time}</span>}
+                    {type === EventsEnum.SCHEDULE && <span>{time}</span>}
                 </div>
                 <div className="flex justify-between align-center">
                     <div className="flex gap-1.5 ">

@@ -19,7 +19,7 @@ export function Index() {
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
     const [page, setPage] = useState<number>(1)
 
-    const eventsPerPage = 6
+    const eventsPerPage = 5;
 
     const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
         { data: coverages, type: EventsEnum.COVERAGES } :
@@ -97,26 +97,29 @@ export function Index() {
             switch (value) {
                 case CarouselButtonAction.START:
                     setPage(1)
-                    break
+                break
+
                 case CarouselButtonAction.PREV:
                     if (page - 1 > 0)
                         setPage(page - 1)
-                    break
+                break
+
                 case CarouselButtonAction.SELECT:
+                    console.log(index)
                     if (index)
                         setPage(index)
-                    break
+                break
+
                 case CarouselButtonAction.NEXT:
-                    if (page + 1 < (coverageSelected ?
-                        Math.ceil(coverages.length / eventsPerPage) :
-                        Math.ceil(schedule.length / eventsPerPage)))
+                    
+                    if (page < (coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage)))
                         setPage(page + 1)
-                    break
+                        console.log({tamanhoCoverage: coverages.length, page: page})
+                break
+
                 case CarouselButtonAction.END:
-                    setPage(coverageSelected ?
-                        Math.ceil(coverages.length / eventsPerPage) :
-                        Math.ceil(schedule.length / eventsPerPage))
-                    break
+                    setPage(coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage))
+                break
             }
         }
     }
