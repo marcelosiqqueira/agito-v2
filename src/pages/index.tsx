@@ -154,7 +154,7 @@ export function Index() {
                     const event: AgitoEvent = {
                         id: element.id,
                         date: new Date(year, month - 1, day),
-                        time: stringArray[1],
+                        time: stringArray[1].replace(/\./g, ':'),
                         name: stringArray[2],
                         local: stringArray[3],
                         clicks: null
