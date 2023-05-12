@@ -149,10 +149,11 @@ export function Index() {
             const eventArray: AgitoEvent[] = []
             data.forEach((element: ResponseEvent) => {
                 const stringArray = element.name.split('--')
+                const [day, month, year] = stringArray[0].split('-').map(Number);
                 try {
                     const event: AgitoEvent = {
                         id: element.id,
-                        date: new Date(stringArray[0].replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2-$1-$3')),
+                        date: new Date(year, month - 1, day),
                         time: stringArray[1],
                         name: stringArray[2],
                         local: stringArray[3],
