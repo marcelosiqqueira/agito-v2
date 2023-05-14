@@ -221,9 +221,9 @@ export function Index() {
                 <section className="bg-light-purple pb-20 pt-10 lg:pb-36">
                     <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto">
                         <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} buttonStyle={true}></ImageCarousel>
-                        <div className="bg-gray h-18 rounded-b-lg py-1 px-2">
-                            <div className="flex-col">
-                                <div className="flex gap-1">
+                        <div className="bg-gray h-18 rounded-b-lg py-1 px-2 relative bottom-[6px] drop-shadow-md">
+                            <div className="flex-col font-bold">
+                                <div className="flex gap-1 ">
                                     <img src="/star.svg" alt="" />
                                     <span>Evento</span>
                                 </div>
@@ -244,7 +244,7 @@ export function Index() {
                             </div>
                         </div>
                     </div>
-                    <p className="mx-auto mt-14 w-4/5 text-white text-lg lg:max-w-[720px]">
+                    <p className="bg-medium-purple rounded-lg drop-shadow-md mx-auto mt-10 lg:mt-28 p-5 w-4/5 text-white text-lg lg:max-w-[720px]">
                         Seja bem-vindo ao meu site de eventos, onde você encontrará uma seleção das minhas melhores fotos de eventos recentes.
                         Estou sempre buscando capturar as emoções e momentos mais significativos de cada ocasião,
                         de forma que essas imagens se tornem uma recordação inesquecível.
@@ -252,8 +252,8 @@ export function Index() {
                     </p>
                 </section>
                 <section ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
-                    <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto">
-                        <div className="mb-10">
+                    <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7">
+                        <div className="mb-10 lg:w-[720px] lg:h-[480px]">
                             <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
                         </div>
                         <List handleCoverageSelected={handleCoverageSelected}
@@ -272,19 +272,20 @@ export function Index() {
                     </div>
                 </section>
                 <section className="bg-dark-purple pb-20 pt-32" ref={aboutRef}>
-                    <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 rounded-full relative left-7 lg:left-60 mb-20"/>
-                    <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md">
-                        <span className="font-bold text-3xl">Sobre mim</span>
-                        <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                            Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
-                        <a href="#" target="_blank" className="bg-ultra-light-purple w-32 h-32 absolute -top-[57%] left-[57%] flex justify-center items-center drop-shadow-md rounded-xl">
-                            <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12"/>
-                        </a>
+                    <div className="lg:max-w-7xl lg:mx-auto">
+                        <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 lg:w-3/12 rounded-full relative left-7 lg:left-[30rem] mb-20"/>
+                        <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md lg:w-2/5">
+                            <span className="font-bold text-3xl">Sobre mim</span>
+                            <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                                Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
+                            <a href="#" target="_blank" className="bg-ultra-light-purple w-24 h-24 absolute -top-1/2 right-0 lg:right-24 lg:-top-2/3 flex justify-center items-center drop-shadow-md rounded-xl">
+                                <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12"/>
+                            </a>
+                        </div>
                     </div>
-                    
                 </section>
             </main>
-            <footer className="bg-light-purple h-12 flex justify-center items-center ">
+            <footer className="bg-light-purple h-12 lg:h-8 flex justify-center items-center">
                 <span className="text-white text-sm lg:text-xs">© 2023 - GABRIEL AGITO - TODOS OS DIREITOS RESERVADOS</span>
             </footer>
             <div className="hidden">

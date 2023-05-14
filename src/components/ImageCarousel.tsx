@@ -78,12 +78,11 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
     }, [imagesUrl])
 
     return (
-        //text-white -> temporario
-        <div className="text-white bg-black/50 flex-col justify-center items-center relative lg:w-[720px]" ref={divRef} tabIndex={1}>
-            <button>
-                <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} onLoad={imageTimerHandler} className="bg-black/40 max-w-full max-h-[277px] object-contain aspect-[3-2]" />
+        <div className="text-white bg-black/50 flex-col justify-center items-center relative lg:w-[720px] lg:h-[480px] lg:rounded-lg lg:overflow-hidden" ref={divRef} tabIndex={1}>
+            <button className="object-contain aspect-[3-2]">
+                <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} onLoad={imageTimerHandler} className="lg:max-w-full lg:max-h-full aspect-[3-2]" />
             </button>
-            <div className="flex justify-evenly relative">
+            <div className="flex justify-evenly relative -top-[86px] lg:-bottom-28 bg-black/40">
                 {multiple && (imagesUrl && imagesUrl.slice(subIndex, maxMultipleSize() + subIndex).map((_, elementIndex) =>
                     <button
                         key={elementIndex}
@@ -95,17 +94,17 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                 }
                 {multiple &&
                     <>
-                        <button value={CarouselButtonAction.PREV} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer left-0 bg-arrow-left bg-black/60 bg-center rounded-r-xl">
+                        <button value={CarouselButtonAction.PREV} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-10 w-10 absolute cursor-pointer top-1/3 left-2 bg-arrow-left bg-dark-gray/60 bg-center bg-contain rounded-full hover:bg-white/70 duration-200">
                             {'<'}
                         </button>
-                        <button value={CarouselButtonAction.NEXT} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer right-0 bg-black/60 bg-arrow-right bg-center rounded-l-xl">
+                        <button value={CarouselButtonAction.NEXT} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-10 w-10 absolute cursor-pointer top-1/3 right-2 bg-dark-gray/60 bg-arrow-right bg-center bg-contain rounded-full hover:bg-white/70 duration-200">
                             {'>'}
                         </button>
                     </>
                 }
             </div>
             {buttonStyle ?
-                <div className="flex w-20 justify-evenly absolute bottom-3 left-[40%]">
+                <div className="flex w-20 justify-evenly absolute bottom-3 left-[40%] lg:left-[45%]">
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
@@ -113,8 +112,8 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
                 </div> :
                 <>
-                    <button value={CarouselButtonAction.PREV} onClick={(e) => handleIndex(e.currentTarget.value)}>{'<'}</button>
-                    <button value={CarouselButtonAction.NEXT} onClick={(e) => handleIndex(e.currentTarget.value)}>{'>'}</button>
+                    <button value={CarouselButtonAction.PREV} onClick={(e) => handleIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer left-0 top-[30%] bg-arrow-left bg-black/60 bg-center rounded-r-xl hover:bg-dark-gray/60 duration-200">{'<'}</button>
+                    <button value={CarouselButtonAction.NEXT} onClick={(e) => handleIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer right-0 top-[30%] bg-black/60 bg-arrow-right bg-center rounded-l-xl hover:bg-dark-gray/60 duration-200">{'>'}</button>
                 </>
             }
             {isOpen && <Modal handleIndex={handleIndex} handleOpenModal={handleOpenModal} index={index} imagesUrl={imagesUrl}></Modal>}
