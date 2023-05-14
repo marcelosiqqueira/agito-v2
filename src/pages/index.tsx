@@ -206,7 +206,7 @@ export function Index() {
             <header ref={homeRef} className="flex-col justify-center">
                 <div className="bg-orange drop-shadow-md h-14 text-white">
                     <button className="h-12 w-12 lg:hidden">
-                        <img src="src/assets/menu.svg" alt="Ícone Menu" />
+                        <img src="/menu.svg" alt="Ícone Menu" />
                     </button>
                     <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
                         <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
@@ -224,21 +224,21 @@ export function Index() {
                         <div className="bg-gray h-18 rounded-b-lg py-1 px-2">
                             <div className="flex-col">
                                 <div className="flex gap-1">
-                                    <img src="src/assets/star.svg" alt="" />
+                                    <img src="/star.svg" alt="" />
                                     <span>Evento</span>
                                 </div>
                                 <div className="flex gap-1.5 pl-0.5">
-                                    <img src="src/assets/location.svg" alt="" />
+                                    <img src="/location.svg" alt="" />
                                     <span>Local</span>
                                 </div>
                             </div>
                             <div className="flex justify-end gap-3">
                                 <div className="flex gap-1.5">
-                                    <img src="src/assets/clock.svg" alt="" />
+                                    <img src="/clock.svg" alt="" />
                                     <span>11 fev 2020</span>
                                 </div>
                                 <div className="flex gap-1.5">
-                                    <img src="src/assets/clicks.svg" alt="" />
+                                    <img src="/clicks.svg" alt="" />
                                     <span>100</span>
                                 </div>
                             </div>
@@ -272,13 +272,13 @@ export function Index() {
                     </div>
                 </section>
                 <section className="bg-dark-purple pb-20 pt-32" ref={aboutRef}>
-                    <img src="src/assets/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 rounded-full relative left-7 lg:left-60 mb-20"/>
+                    <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 rounded-full relative left-7 lg:left-60 mb-20"/>
                     <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md">
                         <span className="font-bold text-3xl">Sobre mim</span>
                         <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                             Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
                         <a href="#" target="_blank" className="bg-ultra-light-purple w-32 h-32 absolute -top-[57%] left-[57%] flex justify-center items-center drop-shadow-md rounded-xl">
-                            <img src="src/assets/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12"/>
+                            <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12"/>
                         </a>
                     </div>
                     
@@ -289,7 +289,7 @@ export function Index() {
             </footer>
             <div className="hidden">
                 <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START}>
-                    <img src="src/assets/back-to-top.svg" alt="Voltar ao topo" />
+                    <img src="/back-to-top.svg" alt="Voltar ao topo" />
                     <span>TOPO</span>
                 </button>
             </div>
