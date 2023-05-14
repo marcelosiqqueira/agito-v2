@@ -36,7 +36,9 @@ export function Index() {
             const data:any = await miniFetch(UrlEnum.EVENTS + value)
             const auxArray: string[] = []
             data.forEach((element: any) => {
-                auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
+                // auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
+                 auxArray.unshift(`${UrlEnum.IMAGE}${element.id}`)
+
             })
             const event: SelectedEvent = {
                 id: value,
@@ -44,7 +46,7 @@ export function Index() {
             }
             return event
         }
-        return null
+        return null;
     }
 
     function handleButtonClick(value: string) {
@@ -251,10 +253,11 @@ export function Index() {
                         Obrigado por visitar e espero que goste das minhas fotos tanto quanto eu gostei de capturá-las!
                     </p>
                 </section>
-                <section ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
+                <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
                     <div className="lg:max-w-7xl">
                         <div className="mb-10">
-                            <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
+                            <ImageCarousel 
+                                imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
                         </div>
                         <List handleCoverageSelected={handleCoverageSelected}
                             coverageSelected={coverageSelected}

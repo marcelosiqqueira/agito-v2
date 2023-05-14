@@ -30,6 +30,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                         setIndex(index - 1)
                     break
                 case CarouselButtonAction.NEXT:
+
                     if ((index + 1) < imagesUrl.length)
                         setIndex(index + 1)
                     break
@@ -37,6 +38,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                     if (id || id === 0)
                         setIndex(id)
             }
+            console.log(index)
         }
     }
 
@@ -89,7 +91,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                         key={elementIndex}
                         value={CarouselButtonAction.SELECT}
                         onClick={(e) => handleIndex(e.currentTarget.value, elementIndex + subIndex)} className="bg-black/40">
-                        <img src={imagesUrl ? imagesUrl[elementIndex + subIndex] ?? '/error' : '/error'}
+                        <img src={imagesUrl[elementIndex + subIndex]}
                             alt="" height={55} width={83} className="h-20 w-22 object-contain aspect-[3-2] max-w-full" />
                     </button>))
                 }
@@ -113,8 +115,24 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                     <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
                 </div> :
                 <>
-                    <button value={CarouselButtonAction.PREV} onClick={(e) => handleIndex(e.currentTarget.value)}>{'<'}</button>
-                    <button value={CarouselButtonAction.NEXT} onClick={(e) => handleIndex(e.currentTarget.value)}>{'>'}</button>
+                    <button 
+                        value={CarouselButtonAction.PREV}
+                        onClick={(e) => handleIndex(e.currentTarget.value)}
+                        className="h-20 w-6 absolute cursor-pointer top-[35%] left-0 bg-black/60 bg-arrow-right bg-center rounded-l-xl">{'<'}                       
+                    </button>
+
+                    <button 
+                        value={CarouselButtonAction.NEXT}
+                        onClick={(e) => handleIndex(e.currentTarget.value)}
+                        className="h-20 w-6 absolute cursor-pointer top-[35%] right-0 bg-black/60 bg-arrow-right bg-center rounded-l-xl">{'>'}                       
+                    </button>
+
+                    {/* <button 
+                        value={CarouselButtonAction.NEXT} 
+                        onClick={(e) => handleIndex(e.currentTarget.value)} 
+                        className="h-20 w-9 absolute cursor-pointer top-[45%] right-0 bg-black/60 bg-arrow-right bg-center rounded-l-xl">{'>'}
+                    </button> */}
+            
                 </>
             }
             {isOpen && <Modal handleIndex={handleIndex} handleOpenModal={handleOpenModal} index={index} imagesUrl={imagesUrl}></Modal>}
