@@ -16,3 +16,8 @@ export type ResponseEvent = {
   id: string;
   name: string;
 };
+
+export type MongoEvent = {
+  id: string;
+  clicks: number;
+}

@@ -4,7 +4,7 @@ import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { miniFetch } from "../functions/util";
 import { UrlEnum } from "../const/Enums/urlEnum";
-import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
+import { AgitoEvent, MongoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
 import { EventsEnum } from "../const/Enums/eventsEnum";
@@ -18,6 +18,7 @@ export function Index() {
     const [mainEvent, setMainEvent] = useState<SelectedEvent | null>(null)
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
     const [page, setPage] = useState<number>(1)
+    const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
 
     const eventsPerPage = 5;
 
@@ -32,7 +33,7 @@ export function Index() {
 
     async function getSelectedEvent(value: string): Promise<SelectedEvent | null> {
         if (value) {
-            const data = await miniFetch(UrlEnum.EVENTS + value)
+            const data:any = await miniFetch(UrlEnum.EVENTS + value)
             const auxArray: string[] = []
             data.forEach((element: any) => {
                 auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
@@ -48,7 +49,7 @@ export function Index() {
 
     function handleButtonClick(value: string) {
         const getImagesUrlByEvent = async () => {
-            const data = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
+            const data:any = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
             const auxArray: string[] = []
             data.forEach((element: any) => {
                 auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
@@ -169,9 +170,35 @@ export function Index() {
                 }
 
             })
-            sortEvents(eventArray)
+            await sortEvents(eventArray)
         }
         getData()
+
+        const getAllMongoEvents = async () => {
+            const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
+            setMongoEvents(mongoEvents)
+        }
+
+        getAllMongoEvents();
+    
+        
+        const createAllMongoEvents= () => {
+            
+            coverages.map(coverageEvent => {
+                let flag = 0;
+                mongoEvents.map(mongoEvent => {
+                    if(coverageEvent.id === mongoEvent.id)
+                        flag = 1;
+                })
+                if(flag === 1)
+                    console.log("evento em comum:", coverageEvent);
+            })
+        }
+
+        createAllMongoEvents()
+
+        console.log("aaaa",mongoEvents);
+
     }, [])
 
     return (
