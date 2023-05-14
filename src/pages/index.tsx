@@ -222,7 +222,7 @@ export function Index() {
             <main>
                 <section className="bg-light-purple pb-20 pt-10 lg:pb-36">
                     <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto">
-                        <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} buttonStyle={true}></ImageCarousel>
+                        <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} buttonStyle={false}></ImageCarousel>
                         <div className="bg-gray h-18 rounded-b-lg py-1 px-2 relative bottom-[6px] drop-shadow-md">
                             <div className="flex-col font-bold">
                                 <div className="flex gap-1 ">
