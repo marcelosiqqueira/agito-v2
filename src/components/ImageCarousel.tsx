@@ -95,10 +95,10 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                 }
                 {multiple &&
                     <>
-                        <button value={CarouselButtonAction.PREV} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="bg-black/60 bg-image absolute top-1/3 left-0">
+                        <button value={CarouselButtonAction.PREV} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer left-0 bg-arrow-left bg-black/60 bg-center rounded-r-xl">
                             {'<'}
                         </button>
-                        <button value={CarouselButtonAction.NEXT} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="bg-black/60 absolute top-1/3 right-0">
+                        <button value={CarouselButtonAction.NEXT} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer right-0 bg-black/60 bg-arrow-right bg-center rounded-l-xl">
                             {'>'}
                         </button>
                     </>

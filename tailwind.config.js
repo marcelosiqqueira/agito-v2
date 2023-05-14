@@ -23,8 +23,6 @@ export default {
         'arrow-left': "url('./src/assets/arrow-left.svg')",
         'arrow-right': "url('./src/assets/arrow-right.svg')",
         'close': "url('./src/assets/close.svg')",
-        'clock': "url('./src/assets/clock.svg')",
-        'location': "url('./src/assets/location.svg')",
       },
     },
   },

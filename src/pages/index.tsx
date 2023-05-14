@@ -252,7 +252,7 @@ export function Index() {
                     </p>
                 </section>
                 <section ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
-                    <div className="lg:max-w-7xl">
+                    <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto">
                         <div className="mb-10">
                             <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
                         </div>
