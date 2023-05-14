@@ -221,22 +221,26 @@ export function Index() {
                 <section className="bg-light-purple pb-20 pt-10 lg:pb-36">
                     <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto">
                         <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} buttonStyle={true}></ImageCarousel>
-                        <div className="bg-gray h-16 rounded-b-lg flex gap-1.5 justify-around">
-                            <div>
-                                <img src="src/assets/star.svg" alt="" />
-                                Evento
+                        <div className="bg-gray h-18 rounded-b-lg py-1 px-2">
+                            <div className="flex-col">
+                                <div className="flex gap-1">
+                                    <img src="src/assets/star.svg" alt="" />
+                                    <span>Evento</span>
+                                </div>
+                                <div className="flex gap-1.5 pl-0.5">
+                                    <img src="src/assets/location.svg" alt="" />
+                                    <span>Local</span>
+                                </div>
                             </div>
-                            <div>
-                                <img src="src/assets/location.svg" alt="" />
-                                Local
-                            </div>
-                            <div>
-                                <img src="src/assets/clock.svg" alt="" />
-                                11 fev 2020
-                            </div>
-                            <div>
-                                <img src="src/assets/clicks.svg" alt="" />
-                                10
+                            <div className="flex justify-end gap-3">
+                                <div className="flex gap-1.5">
+                                    <img src="src/assets/clock.svg" alt="" />
+                                    <span>11 fev 2020</span>
+                                </div>
+                                <div className="flex gap-1.5">
+                                    <img src="src/assets/clicks.svg" alt="" />
+                                    <span>100</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -248,33 +252,36 @@ export function Index() {
                     </p>
                 </section>
                 <section ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
-                    <div>
-                        <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
+                    <div className="lg:max-w-7xl">
+                        <div className="mb-10">
+                            <ImageCarousel imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
+                        </div>
+                        <List handleCoverageSelected={handleCoverageSelected}
+                            coverageSelected={coverageSelected}
+                            handlePage={handlePage}>
+                            {events.data.slice((page - 1) * eventsPerPage, (page * eventsPerPage)).map((element, index) => <ListItem key={index}
+                                id={element.id}
+                                name={element.name}
+                                date={element.date}
+                                time={element.time}
+                                local={element.local}
+                                type={events.type}
+                                clicks={element.clicks}
+                                handleSelectedEvent={handleSelectedEvent}></ListItem>)}
+                        </List>
                     </div>
-                    <List handleCoverageSelected={handleCoverageSelected}
-                        coverageSelected={coverageSelected}
-                        handlePage={handlePage}>
-                        {events.data.slice((page - 1) * eventsPerPage, (page * eventsPerPage)).map((element, index) => <ListItem key={index}
-                            id={element.id}
-                            name={element.name}
-                            date={element.date}
-                            time={element.time}
-                            local={element.local}
-                            type={events.type}
-                            clicks={element.clicks}
-                            handleSelectedEvent={handleSelectedEvent}></ListItem>)}
-                    </List>
                 </section>
-                <section className="bg-dark-purple relative pb-20 pt-32" ref={aboutRef}>
-                    <img src="src/assets/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-80 rounded-full relative left-5 lg:left-60"/>
-                    <div className="bg-light-purple text-white rounded-3xl w-[360px] mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md">
+                <section className="bg-dark-purple pb-20 pt-32" ref={aboutRef}>
+                    <img src="src/assets/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 rounded-full relative left-7 lg:left-60 mb-20"/>
+                    <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md">
                         <span className="font-bold text-3xl">Sobre mim</span>
                         <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                             Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
+                        <a href="#" target="_blank" className="bg-ultra-light-purple w-32 h-32 absolute -top-[57%] left-[57%] flex justify-center items-center drop-shadow-md rounded-xl">
+                            <img src="src/assets/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12"/>
+                        </a>
                     </div>
-                    <a href="#" target="_blank" className="bg-ultra-light-purple w-32 h-32 absolute top-80 left-64 flex justify-center items-center drop-shadow-md rounded-xl">
-                        <img src="src/assets/instagram-logo.svg" alt="Ícone do Instagram" className="w-24 h-24"/>
-                    </a>
+                    
                 </section>
             </main>
             <footer className="bg-light-purple h-12 flex justify-center items-center ">
@@ -282,8 +289,8 @@ export function Index() {
             </footer>
             <div className="hidden">
                 <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START}>
-                    <img src="" alt="" />
-                    <span>SUBIR</span>
+                    <img src="src/assets/back-to-top.svg" alt="Voltar ao topo" />
+                    <span>TOPO</span>
                 </button>
             </div>
         </>
