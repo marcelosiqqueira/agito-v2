@@ -133,6 +133,19 @@ export function Index() {
 
     useEffect(() => {
         const sortEvents = async (eventArray: AgitoEvent[]) => {
+            let auxEvent:AgitoEvent = {
+                id: '',
+                name: '',
+                date: new Date(),
+                time: '',
+                local: '',
+                clicks: null
+            }
+
+            eventArray.sort((a:any, b:any) => b.date - a.date);
+
+            console.log(eventArray)
+
             const currentDate = new Date()
             const coveragesArray: AgitoEvent[] = []
             const scheduleArray: AgitoEvent[] = []
@@ -143,6 +156,7 @@ export function Index() {
                     scheduleArray.push(element)
             })
             setCoverages(coveragesArray)
+            
             setSchedule(scheduleArray)
             if (coveragesArray.length > 0) {
                 setMainEvent(await getSelectedEvent(coveragesArray[0].id))
@@ -176,31 +190,6 @@ export function Index() {
         }
         getData()
 
-        const getAllMongoEvents = async () => {
-            const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
-            setMongoEvents(mongoEvents)
-        }
-
-        getAllMongoEvents();
-    
-        
-        const createAllMongoEvents= () => {
-            
-            coverages.map(coverageEvent => {
-                let flag = 0;
-                mongoEvents.map(mongoEvent => {
-                    if(coverageEvent.id === mongoEvent.id)
-                        flag = 1;
-                })
-                if(flag === 1)
-                    console.log("evento em comum:", coverageEvent);
-            })
-        }
-
-        createAllMongoEvents()
-
-        console.log("aaaa",mongoEvents);
-
     }, [])
 
     return (
@@ -227,21 +216,21 @@ export function Index() {
                             <div className="flex-col font-bold">
                                 <div className="flex gap-1 ">
                                     <img src="/star.svg" alt="" />
-                                    <span>Evento</span>
+                                    <span>{coverages[0]?.name}</span>
                                 </div>
                                 <div className="flex gap-1.5 pl-0.5">
                                     <img src="/location.svg" alt="" />
-                                    <span>Local</span>
+                                    <span>{coverages[0]?.local}</span>
                                 </div>
                             </div>
                             <div className="flex justify-end gap-3">
                                 <div className="flex gap-1.5">
                                     <img src="/clock.svg" alt="" />
-                                    <span>11 fev 2020</span>
+                                    <span>{coverages[0]?.date.toLocaleDateString()}</span>
                                 </div>
                                 <div className="flex gap-1.5">
                                     <img src="/clicks.svg" alt="" />
-                                    <span>100</span>
+                                    <span>N/A</span>
                                 </div>
                             </div>
                         </div>
