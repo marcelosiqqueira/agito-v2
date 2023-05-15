@@ -4,7 +4,7 @@ import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { miniFetch } from "../functions/util";
 import { UrlEnum } from "../const/Enums/urlEnum";
-import { AgitoEvent, MongoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
+import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
 import { EventsEnum } from "../const/Enums/eventsEnum";
@@ -18,7 +18,7 @@ export function Index() {
     const [mainEvent, setMainEvent] = useState<SelectedEvent | null>(null)
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
     const [page, setPage] = useState<number>(1)
-    const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
+    // const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
 
     const eventsPerPage = 5;
 
@@ -133,19 +133,7 @@ export function Index() {
 
     useEffect(() => {
         const sortEvents = async (eventArray: AgitoEvent[]) => {
-            let auxEvent:AgitoEvent = {
-                id: '',
-                name: '',
-                date: new Date(),
-                time: '',
-                local: '',
-                clicks: null
-            }
-
             eventArray.sort((a:any, b:any) => b.date - a.date);
-
-            console.log(eventArray)
-
             const currentDate = new Date()
             const coveragesArray: AgitoEvent[] = []
             const scheduleArray: AgitoEvent[] = []
