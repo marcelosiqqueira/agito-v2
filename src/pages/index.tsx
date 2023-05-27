@@ -134,24 +134,29 @@ export function Index() {
 
         const dataEvent = coverages.find(event => event.id === id);
         if(dataEvent?.clicks)
+        {
             dataEvent.clicks = dataEvent.clicks + 1;
+            const newDataEvent = {id: dataEvent?.id, clicks: dataEvent?.clicks};
+            const options = {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newDataEvent)
+              };
+            try{
+                const updatedEvent = await miniFetch(UrlEnum.CLICKS, options)
+                console.log(updatedEvent)
+                } catch (error) {
+                    console.error(error);
+            }
 
-        const newDataEvent = {id: dataEvent?.id, clicks: dataEvent?.clicks};
-
-        const options = {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newDataEvent)
-          };
-
-        try {
-            const updatedEvent = await miniFetch(UrlEnum.CLICKS, options)
-            console.log(updatedEvent)
-        } catch (error) {
-            console.error(error);
         }
+
+
+        
+
+        
     }
 
     useEffect(() => {
