@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { List } from "../components/List";
@@ -51,6 +52,7 @@ export function Index() {
     }
 
     function handleButtonClick(value: string) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const getImagesUrlByEvent = async () => {
             const data:any = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
             const auxArray: string[] = []
@@ -128,6 +130,7 @@ export function Index() {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function handleSelectedEvent(id: string) {
 
         setSelectedEvent(await getSelectedEvent(id))
@@ -152,6 +155,8 @@ export function Index() {
                 console.error(error);
         }    
     }
+    }
+
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -305,7 +310,7 @@ export function Index() {
         </>
     )
 }
-}
+
 // page x : ((x-1)*eventsPerPage) - ((x*eventsPerPage) - 1)
 // page 1 : 0 - 5
 // page 2 : 6 - 11
