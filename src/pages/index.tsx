@@ -4,7 +4,7 @@ import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { miniFetch } from "../functions/util";
 import { UrlEnum } from "../const/Enums/urlEnum";
-import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
+import { AgitoEvent, MongoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
 import { EventsEnum } from "../const/Enums/eventsEnum";
@@ -12,6 +12,7 @@ import { CarouselButtonAction } from "../const/Enums/carouselButtonAction";
 
 
 export function Index() {
+    const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
     const [coverageSelected, setCoverageSelected] = useState<boolean>(true)
@@ -127,8 +128,30 @@ export function Index() {
         }
     }
 
-    async function handleSelectedEvent(value: string) {
-        setSelectedEvent(await getSelectedEvent(value))
+    async function handleSelectedEvent(id: string) {
+
+        setSelectedEvent(await getSelectedEvent(id))
+
+        const dataEvent = coverages.find(event => event.id === id);
+        if(dataEvent?.clicks)
+            dataEvent.clicks = dataEvent.clicks + 1;
+
+        const newDataEvent = {id: dataEvent?.id, clicks: dataEvent?.clicks};
+
+        const options = {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newDataEvent)
+          };
+
+        try {
+            const updatedEvent = await miniFetch(UrlEnum.CLICKS, options)
+            console.log(updatedEvent)
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     useEffect(() => {
@@ -153,9 +176,13 @@ export function Index() {
         }
 
         const getData = async () => {
+            const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
+            setMongoEvents(mongoEvents);
+
             const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
             const eventArray: AgitoEvent[] = []
             data.forEach((element: ResponseEvent) => {
+                const mongoEvent: MongoEvent | undefined = mongoEvents.find(event => event.id === element.id);
                 const stringArray = element.name.split('--')
                 const [day, month, year] = stringArray[0].split('-').map(Number);
                 try {
@@ -165,7 +192,7 @@ export function Index() {
                         time: stringArray[1].replace(/\./g, ':'),
                         name: stringArray[2],
                         local: stringArray[3],
-                        clicks: null
+                        clicks: mongoEvent?.clicks
                         // pageId: 1,
                     }
                     eventArray.push(event)
@@ -246,7 +273,7 @@ export function Index() {
                                 time={element.time}
                                 local={element.local}
                                 type={events.type}
-                                clicks={element.clicks}
+                                clicks={element.clicks ?? null}
                                 handleSelectedEvent={handleSelectedEvent}></ListItem>)}
                         </List>
                     </div>
