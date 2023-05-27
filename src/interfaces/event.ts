@@ -4,7 +4,7 @@ export type AgitoEvent = {
   date: Date;
   time: string;
   local: string;
-  clicks: number | undefined;
+  clicks: number;
 };
 
 export type SelectedEvent = {

@@ -133,32 +133,27 @@ export function Index() {
         setSelectedEvent(await getSelectedEvent(id))
 
         const dataEvent = coverages.find(event => event.id === id);
-        if(dataEvent?.clicks)
-        {
-            dataEvent.clicks = dataEvent.clicks + 1;
-            const newDataEvent = {id: dataEvent?.id, clicks: dataEvent?.clicks};
-            const options = {
-                method: "PATCH",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify(newDataEvent)
-              };
-            try{
-                const updatedEvent = await miniFetch(UrlEnum.CLICKS, options)
-                console.log(updatedEvent)
-                } catch (error) {
-                    console.error(error);
-            }
-
-        }
-
-
         
+        if (dataEvent) {
+            dataEvent.clicks = (dataEvent.clicks || 0) + 1;
 
-        
+        const newDataEvent = {id: dataEvent?.id, clicks: dataEvent?.clicks};
+        const options = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newDataEvent)
+            };
+        try{
+            const updatedEvent = await miniFetch(UrlEnum.CLICKS, options)
+            console.log(updatedEvent)
+            } catch (error) {
+                console.error(error);
+        }    
     }
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         const sortEvents = async (eventArray: AgitoEvent[]) => {
             eventArray.sort((a:any, b:any) => b.date - a.date);
@@ -182,12 +177,13 @@ export function Index() {
 
         const getData = async () => {
             const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
-            // setMongoEvents(mongoEvents);
-
+            
             const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
             const eventArray: AgitoEvent[] = []
             data.forEach((element: ResponseEvent) => {
-                const mongoEvent: MongoEvent | undefined = mongoEvents.find(event => event.id === element.id);
+                const mongoEvent = mongoEvents.find(event => event.id === element.id);
+                const clicks = mongoEvent ? mongoEvent.clicks : 0;
+
                 const stringArray = element.name.split('--')
                 const [day, month, year] = stringArray[0].split('-').map(Number);
                 try {
@@ -197,7 +193,7 @@ export function Index() {
                         time: stringArray[1].replace(/\./g, ':'),
                         name: stringArray[2],
                         local: stringArray[3],
-                        clicks: mongoEvent?.clicks
+                        clicks: clicks
                         // pageId: 1,
                     }
                     eventArray.push(event)
@@ -309,7 +305,7 @@ export function Index() {
         </>
     )
 }
-
+}
 // page x : ((x-1)*eventsPerPage) - ((x*eventsPerPage) - 1)
 // page 1 : 0 - 5
 // page 2 : 6 - 11
@@ -317,4 +313,3 @@ export function Index() {
 // page 4 : 18 - 23
 
 //1 - 6
-// page x : events.length / (eventsPerPage)
