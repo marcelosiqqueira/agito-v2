@@ -251,7 +251,7 @@ export function Index() {
                                 </div>
                                 <div className="flex gap-1.5">
                                     <img src="/clicks.svg" alt="" />
-                                    <span>N/A</span>
+                                    <span>{coverages[0]?.clicks}</span>
                                 </div>
                             </div>
                         </div>
