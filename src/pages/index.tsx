@@ -33,11 +33,11 @@ export function Index() {
 
     async function getSelectedEvent(value: string): Promise<SelectedEvent | null> {
         if (value) {
-            const data:any = await miniFetch(UrlEnum.EVENTS + value)
+            const data: any = await miniFetch(UrlEnum.EVENTS + value)
             const auxArray: string[] = []
             data.forEach((element: any) => {
                 // auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
-                 auxArray.unshift(`${UrlEnum.IMAGE}${element.id}`)
+                auxArray.unshift(`${UrlEnum.IMAGE}${element.id}`)
 
             })
             const event: SelectedEvent = {
@@ -51,7 +51,7 @@ export function Index() {
 
     function handleButtonClick(value: string) {
         const getImagesUrlByEvent = async () => {
-            const data:any = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
+            const data: any = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
             const auxArray: string[] = []
             data.forEach((element: any) => {
                 auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
@@ -100,29 +100,27 @@ export function Index() {
             switch (value) {
                 case CarouselButtonAction.START:
                     setPage(1)
-                break
+                    break
 
                 case CarouselButtonAction.PREV:
                     if (page - 1 > 0)
                         setPage(page - 1)
-                break
+                    break
 
                 case CarouselButtonAction.SELECT:
                     console.log(index)
                     if (index)
                         setPage(index)
-                break
+                    break
 
                 case CarouselButtonAction.NEXT:
-                    
                     if (page < (coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage)))
                         setPage(page + 1)
-                        console.log({tamanhoCoverage: coverages.length, page: page})
-                break
+                    break
 
                 case CarouselButtonAction.END:
                     setPage(coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage))
-                break
+                    break
             }
         }
     }
@@ -133,7 +131,7 @@ export function Index() {
 
     useEffect(() => {
         const sortEvents = async (eventArray: AgitoEvent[]) => {
-            eventArray.sort((a:any, b:any) => b.date - a.date);
+            eventArray.sort((a: any, b: any) => b.date - a.date);
             const currentDate = new Date()
             const coveragesArray: AgitoEvent[] = []
             const scheduleArray: AgitoEvent[] = []
@@ -144,7 +142,7 @@ export function Index() {
                     scheduleArray.push(element)
             })
             setCoverages(coveragesArray)
-            
+
             setSchedule(scheduleArray)
             if (coveragesArray.length > 0) {
                 setMainEvent(await getSelectedEvent(coveragesArray[0].id))
@@ -199,7 +197,7 @@ export function Index() {
             <main>
                 <section className="bg-light-purple pb-20 pt-10 lg:pb-36">
                     <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto">
-                        <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} buttonStyle={false}></ImageCarousel>
+                        <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} autoPlay={true}></ImageCarousel>
                         <div className="bg-gray h-18 rounded-b-lg py-1 px-2 relative bottom-[6px] drop-shadow-md">
                             <div className="flex-col font-bold">
                                 <div className="flex gap-1 ">
@@ -233,11 +231,14 @@ export function Index() {
                 <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
                     <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7">
                         <div className="mb-10 lg:w-[720px] lg:h-[480px]">
-                            <ImageCarousel 
+                            <ImageCarousel
                                 imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
                         </div>
                         <List handleCoverageSelected={handleCoverageSelected}
                             coverageSelected={coverageSelected}
+                            page={page}
+                            eventsLength={events.data.length}
+                            eventsPerPage={eventsPerPage}
                             handlePage={handlePage}>
                             {events.data.slice((page - 1) * eventsPerPage, (page * eventsPerPage)).map((element, index) => <ListItem key={index}
                                 id={element.id}
@@ -253,13 +254,13 @@ export function Index() {
                 </section>
                 <section className="bg-dark-purple pb-20 pt-32" ref={aboutRef}>
                     <div className="lg:max-w-7xl lg:mx-auto">
-                        <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 lg:w-3/12 rounded-full relative left-7 lg:left-[30rem] mb-20"/>
+                        <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 lg:w-3/12 rounded-full relative left-7 lg:left-[30rem] mb-20" />
                         <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md lg:w-2/5">
                             <span className="font-bold text-3xl">Sobre mim</span>
                             <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                                 Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
                             <a href="#" target="_blank" className="bg-ultra-light-purple w-24 h-24 absolute -top-1/2 right-0 lg:right-24 lg:-top-2/3 flex justify-center items-center drop-shadow-md rounded-xl">
-                                <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12"/>
+                                <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12" />
                             </a>
                         </div>
                     </div>
@@ -277,12 +278,3 @@ export function Index() {
         </>
     )
 }
-
-// page x : ((x-1)*eventsPerPage) - ((x*eventsPerPage) - 1)
-// page 1 : 0 - 5
-// page 2 : 6 - 11
-// page 3 : 12 - 17
-// page 4 : 18 - 23
-
-//1 - 6
-// page x : events.length / (eventsPerPage)
