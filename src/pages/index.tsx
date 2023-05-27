@@ -12,14 +12,14 @@ import { CarouselButtonAction } from "../const/Enums/carouselButtonAction";
 
 
 export function Index() {
-    const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
+    // const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
     const [coverageSelected, setCoverageSelected] = useState<boolean>(true)
     const [mainEvent, setMainEvent] = useState<SelectedEvent | null>(null)
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
     const [page, setPage] = useState<number>(1)
-    // const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
+
 
     const eventsPerPage = 5;
 
@@ -177,7 +177,7 @@ export function Index() {
 
         const getData = async () => {
             const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
-            setMongoEvents(mongoEvents);
+            // setMongoEvents(mongoEvents);
 
             const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
             const eventArray: AgitoEvent[] = []
