@@ -4,15 +4,15 @@ import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
 
 type ImageCarouselProps = {
     imagesUrl: string[] | null,
-    buttonStyle?: boolean,
+    autoPlay?: boolean,
     multiple?: boolean,
 }
 
-export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouselProps) {
+export function ImageCarousel({ imagesUrl, autoPlay, multiple }: ImageCarouselProps) {
     const [index, setIndex] = useState<number>(0)
     const [subIndex, setSubIndex] = useState<number>(0)
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const divRef = useRef<any>(null)
+    const divRef = useRef<HTMLDivElement | null>(null)
     const maxMultipleSize = (): number => {
         if (imagesUrl) {
             if (imagesUrl.length < 4)
@@ -63,7 +63,7 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
     }
 
     function imageTimerHandler() {
-        if (imagesUrl && buttonStyle) {
+        if (imagesUrl && autoPlay) {
             const timer = setTimeout(() => {
                 if ((index + 1) < imagesUrl.length)
                     setIndex(index + 1)
@@ -105,19 +105,8 @@ export function ImageCarousel({ imagesUrl, buttonStyle, multiple }: ImageCarouse
                     </>
                 }
             </div>
-            {buttonStyle ?
-                <div className="flex w-20 justify-evenly absolute bottom-3 left-[40%] lg:left-[45%]">
-                    <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
-                    <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
-                    <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
-                    <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
-                    <button value={CarouselButtonAction.SELECT} onClick={(e) => handleIndex(e.currentTarget.value)} className="bg-white h-2.5 w-2.5 rounded-full drop-shadow-md"></button>
-                </div> :
-                <>
-                    <button value={CarouselButtonAction.PREV} onClick={(e) => handleIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer left-0 top-[30%] bg-arrow-left bg-black/60 bg-center rounded-r-xl hover:bg-dark-gray/60 duration-200">{''}</button>
-                    <button value={CarouselButtonAction.NEXT} onClick={(e) => handleIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer right-0 top-[30%] bg-black/60 bg-arrow-right bg-center rounded-l-xl hover:bg-dark-gray/60 duration-200">{''}</button>
-                </>
-            }
+            <button value={CarouselButtonAction.PREV} onClick={(e) => handleIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer left-0 top-[30%] bg-arrow-left bg-black/60 bg-center rounded-r-xl hover:bg-dark-gray/60 duration-200">{''}</button>
+            <button value={CarouselButtonAction.NEXT} onClick={(e) => handleIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer right-0 top-[30%] bg-black/60 bg-arrow-right bg-center rounded-l-xl hover:bg-dark-gray/60 duration-200">{''}</button>
             {isOpen && <Modal handleIndex={handleIndex} handleOpenModal={handleOpenModal} index={index} imagesUrl={imagesUrl}></Modal>}
         </div>
     )
