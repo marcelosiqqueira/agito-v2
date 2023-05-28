@@ -183,7 +183,7 @@ export function Index() {
     return (
         <>
             <header ref={homeRef} className="flex-col justify-center">
-                <div className="bg-orange drop-shadow-md h-14 text-white">
+                <div className="bg- drop-shadow-md h-14 text-white">
                     <button className="h-12 w-12 lg:hidden">
                         <img src="/menu.svg" alt="Ícone Menu" />
                     </button>
@@ -194,10 +194,9 @@ export function Index() {
                         <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
                     </div>
                 </div>
-                <div className="bg-gray h-5 shadow-inner"></div>
             </header>
             <main>
-                <section className="bg-light-purple pb-20 pt-10 lg:pb-36">
+                <section className="bg-black pb-20 pt-10 lg:pb-36">
                     <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto">
                         <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} buttonStyle={false}></ImageCarousel>
                         <div className="bg-gray h-18 rounded-b-lg py-1 px-2 relative bottom-[6px] drop-shadow-md">

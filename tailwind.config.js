@@ -5,14 +5,12 @@ export default {
     colors: {
       white: "#FFFFFF",
       black: "#000000",
-      orange: "#FC6728",
-      "light-orange": "#FFAA86",
-      gray: "#D9D9D9",
-      "dark-gray": "#B4B4B4",
-      "ultra-light-purple": "#6102D5",
-      "light-purple": "#2C0063",
-      "medium-purple": "#1F0044",
-      "dark-purple": "#16002D",
+      orange: "#FF7600",
+      yellow: "FFA900",
+      gray: "#555555",
+      purple: "#52006A",
+      pink: "CD113B",
+      "dark-gray": "#1A1A1A",
     },
     extend: {
       backgroundImage: {
