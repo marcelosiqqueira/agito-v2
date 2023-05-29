@@ -213,7 +213,7 @@ export function Index() {
 
     return (
         <>
-            <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-full p-2 text-white flex items-center justify-between">
+            <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-screen p-2 text-white flex items-center justify-between fixed z-30 m-0">
                     <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
                         <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
                         <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
@@ -221,20 +221,27 @@ export function Index() {
                         <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
                     </div>
 
-                    <img src="/logo-placeholder.svg" alt="Logo do site" className="w-24 h-14"/>
+                    <img src="/logo-placeholder.svg" alt="Logo do site" className="w-20 h-14"/>
 
                     <button className="h-14 w-14  lg:hidden">
                         <img src="/menu.svg" alt="Menu" />
                     </button>
             </header>
             <main>
-                <section className="bg-black pb-20 pt-10 lg:pb-36">
-                    <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto">
+                <section className="bg-black w-full pb-20 pt-10 lg:pb-36">
+                    <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto pt-20">
+                        <div className="relative w-full h-24">
+                            <div className="bg-orange h-14 z-20 absolute w-3/4 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
+                                <span className="uppercase drop-shadow-under">Em destaque</span>
+                            </div>
+                            <div className="bg-pink h-14 w-3/4 z-10 absolute top-6 right-0">
+
+                            </div>
+                        </div>
                         <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} autoPlay={true}></ImageCarousel>
-                        <div className="bg-gray h-18 rounded-b-lg py-1 px-2 relative bottom-[6px] drop-shadow-md">
-                            <div className="flex-col font-bold">
+                        <div className="bg-black/70">
+                            <div className="flex-col font-bold ">
                                 <div className="flex gap-1 ">
-                                    <img src="/star.svg" alt="" />
                                     <span>{coverages[0]?.name}</span>
                                 </div>
                                 <div className="flex gap-1.5 pl-0.5">
@@ -244,11 +251,11 @@ export function Index() {
                             </div>
                             <div className="flex justify-end gap-3">
                                 <div className="flex gap-1.5">
-                                    <img src="/clock.svg" alt="" />
+                                    <img src="/calendar.svg" alt="" />
                                     <span>{coverages[0]?.date.toLocaleDateString()}</span>
                                 </div>
                                 <div className="flex gap-1.5">
-                                    <img src="/clicks.svg" alt="" />
+                                    <img src="/views.svg" alt="" />
                                     <span>{coverages[0]?.clicks}</span>
                                 </div>
                             </div>

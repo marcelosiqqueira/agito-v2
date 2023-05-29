@@ -9,8 +9,11 @@ export default {
       yellow: "FFA900",
       gray: "#555555",
       purple: "#52006A",
-      pink: "CD113B",
+      pink: "#CD113B",
       "dark-gray": "#1A1A1A",
+    },
+    fontFamily: {
+      'title': '"Playfair Display", serif',
     },
     extend: {
       backgroundImage: {
@@ -18,9 +21,12 @@ export default {
         'previous-page': "url('/previous-page.svg')",
         'next-page': "url('/next-page.svg')",
         'last-page': "url('/last-page.svg')",
-        'arrow-left': "url('/arrow-left.svg')",
-        'arrow-right': "url('/arrow-right.svg')",
+        'arrow': "url('/arrow.svg')",
         'close': "url('/close.svg')",
+      },
+      dropShadow: {
+        'under': '4px 5px 0px rgba(205, 17, 59, 1)',
+        'default': '0 4px 4px rgba(0, 0, 0, 0.25)',
       },
     },
   },
