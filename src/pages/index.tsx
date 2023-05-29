@@ -213,18 +213,19 @@ export function Index() {
 
     return (
         <>
-            <header ref={homeRef} className="flex-col justify-center">
-                <div className="bg- drop-shadow-md h-14 text-white">
-                    <button className="h-12 w-12 lg:hidden">
-                        <img src="/menu.svg" alt="Ícone Menu" />
-                    </button>
+            <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-full p-2 text-white flex items-center justify-between">
                     <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
                         <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
                         <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
                         <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
                         <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
                     </div>
-                </div>
+
+                    <img src="/logo-placeholder.svg" alt="Logo do site" className="w-24 h-14"/>
+
+                    <button className="h-14 w-14  lg:hidden">
+                        <img src="/menu.svg" alt="Menu" />
+                    </button>
             </header>
             <main>
                 <section className="bg-black pb-20 pt-10 lg:pb-36">
@@ -253,12 +254,6 @@ export function Index() {
                             </div>
                         </div>
                     </div>
-                    <p className="bg-medium-purple rounded-lg drop-shadow-md mx-auto mt-10 lg:mt-28 p-5 w-4/5 text-white text-lg lg:max-w-[720px]">
-                        Seja bem-vindo ao meu site de eventos, onde você encontrará uma seleção das minhas melhores fotos de eventos recentes.
-                        Estou sempre buscando capturar as emoções e momentos mais significativos de cada ocasião,
-                        de forma que essas imagens se tornem uma recordação inesquecível.
-                        Obrigado por visitar e espero que goste das minhas fotos tanto quanto eu gostei de capturá-las!
-                    </p>
                 </section>
                 <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
                     <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7">
@@ -288,9 +283,7 @@ export function Index() {
                     <div className="lg:max-w-7xl lg:mx-auto">
                         <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 lg:w-3/12 rounded-full relative left-7 lg:left-[30rem] mb-20" />
                         <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md lg:w-2/5">
-                            <span className="font-bold text-3xl">Sobre mim</span>
-                            <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
+                           
                             <a href="#" target="_blank" className="bg-ultra-light-purple w-24 h-24 absolute -top-1/2 right-0 lg:right-24 lg:-top-2/3 flex justify-center items-center drop-shadow-md rounded-xl">
                                 <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12" />
                             </a>
