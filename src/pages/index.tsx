@@ -20,7 +20,7 @@ export function Index() {
     const [mainEvent, setMainEvent] = useState<SelectedEvent | null>(null)
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
     const [page, setPage] = useState<number>(1)
-
+    const [isHovered, setIsHovered] = useState(false);
 
     const eventsPerPage = 5;
 
@@ -128,6 +128,14 @@ export function Index() {
         }
     }
 
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function handleSelectedEvent(id: string) {
 
@@ -213,7 +221,7 @@ export function Index() {
 
     return (
         <>
-            <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-screen p-2 text-white flex items-center justify-between fixed z-30 m-0">
+            <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-screen p-2 text-white flex items-center justify-between fixed z-30 m-0 lg:flex-row-reverse">
                     <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
                         <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
                         <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
@@ -228,41 +236,47 @@ export function Index() {
                     </button>
             </header>
             <main>
-                <section className="bg-black w-full pb-20 pt-10 lg:pb-36">
+                <section className="bg-black w-full  pb-20 pt-10 lg:pb-36">
                     <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto pt-20">
-                        <div className="relative w-full h-24">
-                            <div className="bg-orange h-14 z-20 absolute w-3/4 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
+                        <div className="relative w-full h-24 mb-8">
+                            <div className="bg-orange h-14 z-20 absolute w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
                                 <span className="uppercase drop-shadow-under">Em destaque</span>
                             </div>
-                            <div className="bg-pink h-14 w-3/4 z-10 absolute top-6 right-0">
+                            <div className="bg-pink h-14 w-4/5 z-10  absolute top-6 right-0">
 
                             </div>
                         </div>
-                        <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} autoPlay={true}></ImageCarousel>
-                        <div className="bg-black/70">
-                            <div className="flex-col font-bold ">
-                                <div className="flex gap-1 ">
-                                    <span>{coverages[0]?.name}</span>
+                        <div className="relative mb-8">
+                            <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} autoPlay={true} ></ImageCarousel>
+                            <div className={` text-white absolute w-full h-1/3 bg-gradient-to-b from-black/0 to-black/90 flex items-end px-3 py-2 lg:transition-opacity lg:duration-500 bottom-0 ${isHovered ? 'lg:opacity-1' : 'lg:opacity-0'}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                                <div className="flex-col w-full">
+                                    <div className="font-bold text-2xl capitalize">
+                                        <span>{coverages[0]?.name.toLowerCase()}</span>
+                                    </div>
+                                    <div className="flex gap-3">
+                                        <div className="flex gap-1.5 pl-0.5">
+                                            <img src="/location.svg" alt="" />
+                                            <span>{coverages[0]?.local}</span>
+                                        </div>
+                                        <div className="flex gap-1.5">
+                                            <img src="/calendar.svg" alt="" />
+                                            <span>{coverages[0]?.date.toLocaleDateString()}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex gap-1.5 pl-0.5">
-                                    <img src="/location.svg" alt="" />
-                                    <span>{coverages[0]?.local}</span>
-                                </div>
-                            </div>
-                            <div className="flex justify-end gap-3">
-                                <div className="flex gap-1.5">
-                                    <img src="/calendar.svg" alt="" />
-                                    <span>{coverages[0]?.date.toLocaleDateString()}</span>
-                                </div>
-                                <div className="flex gap-1.5">
-                                    <img src="/views.svg" alt="" />
-                                    <span>{coverages[0]?.clicks}</span>
+                                
+                                <div className="absolute bottom-0 right-0">
+                                    <div className="flex gap-1.5 pr-3">
+                                        <img src="/views.svg" alt="" />
+                                        <span>{coverages[0]?.clicks}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div className="bg-pink h-12 w-1/4"></div>
                     </div>
                 </section>
-                <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-medium-purple py-20 lg:flex lg:justify-between lg:px-10">
+                <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-white py-20 lg:flex lg:justify-between lg:px-10">
                     <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7">
                         <div className="mb-10 lg:w-[720px] lg:h-[480px]">
                             <ImageCarousel
@@ -286,7 +300,7 @@ export function Index() {
                         </List>
                     </div>
                 </section>
-                <section className="bg-dark-purple pb-20 pt-32" ref={aboutRef}>
+                <section className="bg-dark-gray pb-20 pt-32" ref={aboutRef}>
                     <div className="lg:max-w-7xl lg:mx-auto">
                         <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 lg:w-3/12 rounded-full relative left-7 lg:left-[30rem] mb-20" />
                         <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md lg:w-2/5">
@@ -298,10 +312,10 @@ export function Index() {
                     </div>
                 </section>
             </main>
-            <footer className="bg-light-purple h-12 lg:h-8 flex justify-center items-center">
+            <footer className="bg-gray h-12 lg:h-8 flex justify-center items-center">
                 <span className="text-white text-sm lg:text-xs">© 2023 - GABRIEL AGITO - TODOS OS DIREITOS RESERVADOS</span>
             </footer>
-            <div className="hidden">
+            <div className=" hidden absolute right-3 bottom-3">
                 <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START}>
                     <img src="/back-to-top.svg" alt="Voltar ao topo" />
                     <span>TOPO</span>
