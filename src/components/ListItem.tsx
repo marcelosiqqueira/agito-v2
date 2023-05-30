@@ -14,10 +14,10 @@ type ListItemProps = {
 export function ListItem({ id, name, date, time, local, clicks, type, handleSelectedEvent }: ListItemProps) {
     return (
         <li className="px-5 font-bold">
-            <button onClick={() => handleSelectedEvent(id)} className="bg-white border-dark-gray border-4 rounded-lg w-full h-30 p-4 text-xl text-light-purple text-start hover:bg-dark-gray duration-200">
+            <button onClick={() => handleSelectedEvent(id)} className="bg-white border-dark-gray border-4 rounded-lg w-full h-30 p-4 text-xl text-purple text-start hover:bg-purple/40 hover:text-white duration-200">
                 <div className="flex gap-1.5 items-baseline">
                     <img src="/star.svg" alt="" />
-                    <span>{name}</span>
+                    <span className="capitalize">{name.toLowerCase()}</span>
                 </div>
                 <div className="flex gap-1.5 items-baseline">
                     <img src="/clock.svg" alt="" />

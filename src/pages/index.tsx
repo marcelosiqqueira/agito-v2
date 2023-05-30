@@ -221,7 +221,7 @@ export function Index() {
 
     return (
         <>
-            <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-screen p-2 text-white flex items-center justify-between fixed z-30 m-0 lg:flex-row-reverse">
+            <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-full p-2 text-white flex items-center justify-between fixed z-30 m-0 lg:flex-row-reverse">
                     <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
                         <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
                         <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
@@ -276,13 +276,22 @@ export function Index() {
                         <div className="bg-pink h-12 w-1/4"></div>
                     </div>
                 </section>
-                <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-white py-20 lg:flex lg:justify-between lg:px-10">
+                <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-white py-20 lg:flex lg:justify-between lg:px-10 bg-dots-design bg-no-repeat bg-lefttop">
                     <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7">
                         <div className="mb-10 lg:w-[720px] lg:h-[480px]">
-                            <ImageCarousel
-                                imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel>
+                            <div className="relative w-full h-40 mb-8">
+                                <div className="bg-yellow h-14 z-20 absolute w-3/5 top-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
+                                    <span className="uppercase drop-shadow-under">Últimas</span>
+                                </div>
+                                <div className="bg-black h-16 w-4/5 z-10 absolute top-12 right-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
+                                    <span className="uppercase drop-shadow-under">Coberturas</span>
+                                </div>
+                                <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 bottom-0 right-10"/>
+                            </div>
+                            {/* <ImageCarousel
+                                imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel> */}
                         </div>
-                        <List handleCoverageSelected={handleCoverageSelected}
+                        {/* <List handleCoverageSelected={handleCoverageSelected}
                             coverageSelected={coverageSelected}
                             page={page}
                             eventsLength={events.data.length}
@@ -297,17 +306,35 @@ export function Index() {
                                 type={events.type}
                                 clicks={element.clicks ?? null}
                                 handleSelectedEvent={handleSelectedEvent}></ListItem>)}
-                        </List>
+                        </List> */}
+                        <div className="px-3">
+                            <div className="bg-black/90 h-48 rounded-lg">
+                            </div>
+                        </div>
                     </div>
                 </section>
-                <section className="bg-dark-gray pb-20 pt-32" ref={aboutRef}>
-                    <div className="lg:max-w-7xl lg:mx-auto">
-                        <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 lg:w-3/12 rounded-full relative left-7 lg:left-[30rem] mb-20" />
-                        <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md lg:w-2/5">
-                           
-                            <a href="#" target="_blank" className="bg-ultra-light-purple w-24 h-24 absolute -top-1/2 right-0 lg:right-24 lg:-top-2/3 flex justify-center items-center drop-shadow-md rounded-xl">
-                                <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12" />
-                            </a>
+                <section className="bg-black h-96 px-3 py-8">
+                    <div className="bg-white rounded-xl h-4/5">
+                       {/* agenda */} 
+                       <List></List>
+                    </div>
+                </section>
+                <section className="bg-dark-gray pb-10 pt-5 bg-dots-design bg-no-repeat bg-righttop" ref={aboutRef}>
+                    <div className="lg:max-w-7xl lg:mx-auto pt-5">
+                        <div className="relative w-full h-24 mb-8">
+                            <div className="bg-purple h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
+                                <span className="uppercase drop-shadow-under">Contato</span>
+                            </div>
+                            <div className="bg-yellow h-14 w-4/5 z-10 absolute top-6 left-0"></div>
+                        </div>
+                        <div className="mt-32">
+                            <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-1/2 h-1/2 lg:w-2/12 rounded-full  mb-5 mx-auto" />
+                            <div className="bg-black text-white w-full h-16 mx-auto drop-shadow-md">
+                                <a href="#" target="_blank" className="flex items-center justify-center gap-1.5">
+                                    <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-18 h-18" />
+                                    <span>@gabrielagito</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </section>
