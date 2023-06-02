@@ -62,26 +62,27 @@ export function Index() {
             setSelectedEvent({
                 id: schedule[0].id, imagesUrl: auxArray
             })
-            switch (value) {
-                case HeaderButtonEnum.START:
-                    homeRef.current?.scrollIntoView(true)
-                    break;
-                case HeaderButtonEnum.COVERAGES:
-                    listRef.current?.scrollIntoView(true)
-                    setCoverageSelected(true)
-                    if (coverages.length > 0)
-                        getImagesUrlByEvent()
-                    break;
-                case HeaderButtonEnum.SCHEDULE:
-                    listRef.current?.scrollIntoView(true)
-                    setCoverageSelected(false)
-                    if (schedule.length > 0)
-                        getImagesUrlByEvent()
-                    break;
-                case HeaderButtonEnum.ABOUT:
-                    aboutRef.current?.scrollIntoView(true)
-                    break;
-            }
+        }
+
+        switch (value) {
+            case HeaderButtonEnum.START:
+                homeRef.current?.scrollIntoView(true)
+                break;
+            case HeaderButtonEnum.COVERAGES:
+                listRef.current?.scrollIntoView(true)
+                setCoverageSelected(true)
+                if (coverages.length > 0)
+                    getImagesUrlByEvent()
+                break;
+            case HeaderButtonEnum.SCHEDULE:
+                listRef.current?.scrollIntoView(true)
+                setCoverageSelected(false)
+                if (schedule.length > 0)
+                    getImagesUrlByEvent()
+                break;
+            case HeaderButtonEnum.ABOUT:
+                aboutRef.current?.scrollIntoView(true)
+                break;
         }
     }
 
