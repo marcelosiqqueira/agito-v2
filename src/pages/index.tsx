@@ -288,11 +288,13 @@ export function Index() {
                 </section>
                 <section className="bg-dark-purple pb-20 pt-32" ref={aboutRef}>
                     <div className="lg:max-w-7xl lg:mx-auto">
-                        <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 lg:w-3/12 rounded-full relative left-7 lg:left-[30rem] mb-20" />
+                        <img src="/foto-gabriel-agito.jpg" alt="Foto de perfil do Gabriel" className="w-3/4 h-3/4 lg:w-3/12 rounded-full relative left-7 lg:left-[30rem] mb-20" />
                         <div className="bg-light-purple text-white relative rounded-3xl w-4/5 mx-auto mt-10 mb-20 p-5 flex flex-col gap-5 drop-shadow-md lg:w-2/5">
                             <span className="font-bold text-3xl">Sobre mim</span>
-                            <span className="text-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                Phasellus pretium nulla vitae dignissim venenatis. Nulla sit amet tortor sem. Nam a digni</span>
+                            <span className="text-lg">Como fotógrafo, meu objetivo é capturar momentos autênticos e transformá-los em memórias duradouras.
+                                Com habilidade e paixão, busco revelar a beleza única de cada pessoa e lugar que fotografo. Estou aqui para contar histórias
+                                visuais e eternizar instantes preciosos através das minhas lentes.
+                            </span>
                             <a href="#" target="_blank" className="bg-ultra-light-purple w-24 h-24 absolute -top-1/2 right-0 lg:right-24 lg:-top-2/3 flex justify-center items-center drop-shadow-md rounded-xl">
                                 <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-9/12 h-9/12" />
                             </a>
