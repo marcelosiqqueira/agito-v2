@@ -52,7 +52,6 @@ export function Index() {
     }
 
     function handleButtonClick(value: string) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const getImagesUrlByEvent = async () => {
             const data: any = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
             const auxArray: string[] = []
@@ -237,7 +236,7 @@ export function Index() {
             </header>
             <main>
                 <section className="bg-black w-full  pb-20 pt-10 lg:pb-36">
-                    <div className="lg:w-[720px] lg:h-[480px] lg:mx-auto pt-20">
+                    <div className="lg:w-[720px] lg:mx-auto pt-20">
                         <div className="relative w-full h-24 mb-8">
                             <div className="bg-orange h-14 z-20 absolute w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
                                 <span className="uppercase drop-shadow-under">Em destaque</span>
@@ -276,14 +275,14 @@ export function Index() {
                         <div className="bg-pink h-12 w-1/4"></div>
                     </div>
                 </section>
-                <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-white py-20 lg:flex lg:justify-between lg:px-10 bg-dots-design bg-no-repeat bg-lefttop">
-                    <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7">
+                <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-white py-20 lg:flex lg:justify-between lg:px-10 ">
+                    <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop">
                         <div className="mb-10 lg:w-[720px] lg:h-[480px]">
-                            <div className="relative w-full h-40 mb-8">
-                                <div className="bg-yellow h-14 z-20 absolute w-3/5 top-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
+                            <div className="relative w-full h-52 mb-8">
+                                <div className="bg-yellow h-14 z-20 absolute w-3/5 bottom-12 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
                                     <span className="uppercase drop-shadow-under">Últimas</span>
                                 </div>
-                                <div className="bg-black h-16 w-4/5 z-10 absolute top-12 right-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
+                                <div className="bg-black h-16 w-4/5 z-10 absolute bottom-0 right-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
                                     <span className="uppercase drop-shadow-under">Coberturas</span>
                                 </div>
                                 <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 bottom-0 right-10"/>
@@ -330,7 +329,7 @@ export function Index() {
                         <div className="mt-32">
                             <img src="/profile-placeholder.png" alt="Foto de perfil do Gabriel" className="w-1/2 h-1/2 lg:w-2/12 rounded-full  mb-5 mx-auto" />
                             <div className="bg-black text-white w-full h-16 mx-auto drop-shadow-md">
-                                <a href="#" target="_blank" className="flex items-center justify-center gap-1.5">
+                                <a href="https://www.instagram.com/gabrielagito/" target="_blank" className="flex items-center justify-center gap-1.5">
                                     <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-18 h-18" />
                                     <span>@gabrielagito</span>
                                 </a>
@@ -342,10 +341,10 @@ export function Index() {
             <footer className="bg-gray h-12 lg:h-8 flex justify-center items-center">
                 <span className="text-white text-sm lg:text-xs">© 2023 - GABRIEL AGITO - TODOS OS DIREITOS RESERVADOS</span>
             </footer>
-            <div className=" hidden absolute right-3 bottom-3">
-                <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START}>
-                    <img src="/back-to-top.svg" alt="Voltar ao topo" />
-                    <span>TOPO</span>
+            <div className=" invisible lg:visible fixed bottom-4 right-4 p-3 ">
+                <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START} className="h-12 w-12 flex-col items-center justify-center text-white font-bold text-">
+                    <img src="/back-to-top.svg" alt="Voltar ao topo" className="select-"/>
+                    <span className="select-none drop-shadow-default">TOPO</span>
                 </button>
             </div>
         </>
