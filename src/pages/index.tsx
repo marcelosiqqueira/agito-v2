@@ -5,7 +5,7 @@ import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { miniFetch } from "../functions/util";
 import { UrlEnum } from "../const/Enums/urlEnum";
-import { AgitoEvent, MongoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
+import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
 import { EventsEnum } from "../const/Enums/eventsEnum";
@@ -33,26 +33,27 @@ export function Index() {
     const aboutRef = useRef<HTMLButtonElement | null>(null)
     const returnRef = useRef<HTMLButtonElement | null>(null)
 
-    async function getSelectedEvent(value: string): Promise<SelectedEvent | null> {
+    function getSelectedEvent(value: string): SelectedEvent | null {
+        console.log(value)
         if (value) {
-            const data: any = await miniFetch(UrlEnum.EVENTS + value)
+            const index = coverages.findIndex(event => event.id === value);
             const auxArray: string[] = []
-            data.forEach((element: any) => {
-                // auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
-                auxArray.unshift(`${UrlEnum.IMAGE}${element.id}`)
+            coverages[index].photosIds?.forEach((element: any) => {
+                auxArray.unshift(`${UrlEnum.IMAGE}${element}`)
+            } )
+            console.log(auxArray)
 
-            })
             const event: SelectedEvent = {
                 id: value,
                 imagesUrl: auxArray
             }
+            // console.log(event)
             return event
         }
         return null;
     }
 
     function handleButtonClick(value: string) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const getImagesUrlByEvent = async () => {
             const data: any = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
             const auxArray: string[] = []
@@ -63,7 +64,7 @@ export function Index() {
                 id: schedule[0].id, imagesUrl: auxArray
             })
         }
-
+        
         switch (value) {
             case HeaderButtonEnum.START:
                 homeRef.current?.scrollIntoView(true)
@@ -124,7 +125,7 @@ export function Index() {
 
                 case CarouselButtonAction.END:
                     setPage(coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage))
-                    break
+                break
             }
         }
     }
@@ -132,7 +133,7 @@ export function Index() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function handleSelectedEvent(id: string) {
 
-        setSelectedEvent(await getSelectedEvent(id))
+        setSelectedEvent(getSelectedEvent(id))
 
         const dataEvent = coverages.find(event => event.id === id);
 
@@ -156,10 +157,10 @@ export function Index() {
         }
     }
 
-
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        const sortEvents = async (eventArray: AgitoEvent[]) => {
+        
+        const sortEvents = (eventArray: AgitoEvent[]) => {
             eventArray.sort((a: any, b: any) => b.date - a.date);
             const currentDate = new Date()
             const coveragesArray: AgitoEvent[] = []
@@ -174,20 +175,19 @@ export function Index() {
 
             setSchedule(scheduleArray)
             if (coveragesArray.length > 0) {
-                setMainEvent(await getSelectedEvent(coveragesArray[0].id))
-                setSelectedEvent(await getSelectedEvent(coveragesArray[0].id))
+                setMainEvent( getSelectedEvent(coveragesArray[0].id) )                                               
+                setSelectedEvent( getSelectedEvent(coveragesArray[0].id) )
             }
         }
 
+
         const getData = async () => {
-            const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
+            // const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
 
             const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
             const eventArray: AgitoEvent[] = []
             data.forEach((element: ResponseEvent) => {
-                const mongoEvent = mongoEvents.find(event => event.id === element.id);
-                const clicks = mongoEvent ? mongoEvent.clicks : 0;
-
+                const clicks = element.clicks ? element.clicks : 0;
                 const stringArray = element.name.split('--')
                 const [day, month, year] = stringArray[0].split('-').map(Number);
                 try {
@@ -197,6 +197,7 @@ export function Index() {
                         time: stringArray[1].replace(/\./g, ':'),
                         name: stringArray[2],
                         local: stringArray[3],
+                        photosIds: element.photosIds,
                         clicks: clicks
                         // pageId: 1,
                     }
@@ -206,10 +207,11 @@ export function Index() {
                 }
 
             })
-            await sortEvents(eventArray)
+            sortEvents(eventArray)
         }
         getData()
 
+        
     }, [])
 
     return (
