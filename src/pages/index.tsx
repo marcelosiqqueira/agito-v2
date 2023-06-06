@@ -33,15 +33,14 @@ export function Index() {
     function getSelectedEvent(value: string): SelectedEvent | null {
         if (!value)
             return null
-        coverages.forEach((element: AgitoEvent) => {
-            if (element.id === value) {
-                const event: SelectedEvent = {
-                    id: value,
-                    imagesUrl: element.photosIds
-                }
-                return event
+        const foundEvent = coverages.find(event => event.id === value)
+        if (foundEvent) {
+            const event: SelectedEvent = {
+                id: value,
+                imagesUrl: foundEvent.photosIds
             }
-        })
+            return event
+        }
         return null
     }
 
@@ -116,7 +115,6 @@ export function Index() {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function handleSelectedEvent(id: string) {
         setSelectedEvent(getSelectedEvent(id))
         const dataEvent = coverages.find(event => event.id === id);
@@ -131,17 +129,14 @@ export function Index() {
                 body: JSON.stringify(newDataEvent)
             };
             try {
-                const updatedEvent = await miniFetch(UrlEnum.CLICKS, options)
-                console.log(updatedEvent)
+                await miniFetch(UrlEnum.CLICKS, options)
             } catch (error) {
                 console.error(error);
             }
         }
     }
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-
         const sortEvents = (eventArray: AgitoEvent[]) => {
             eventArray.sort((a: any, b: any) => b.date - a.date);
             const currentDate = new Date()
@@ -155,7 +150,6 @@ export function Index() {
             })
             setCoverages(coveragesArray)
             setSchedule(scheduleArray)
-            console.log(coveragesArray[0])
             if (coveragesArray.length > 0) {
                 const newSelectedEvent = {
                     id: coveragesArray[0].id,
@@ -165,7 +159,6 @@ export function Index() {
                 setSelectedEvent(newSelectedEvent)
             }
         }
-
 
         const getData = async () => {
             const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
@@ -188,13 +181,10 @@ export function Index() {
                 } catch (e) {
                     console.error(e)
                 }
-
             })
             sortEvents(eventArray)
         }
         getData()
-
-
     }, [])
 
     return (
