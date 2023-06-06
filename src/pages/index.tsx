@@ -13,7 +13,6 @@ import { CarouselButtonAction } from "../const/Enums/carouselButtonAction";
 
 
 export function Index() {
-    // const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
     const [coverageSelected, setCoverageSelected] = useState<boolean>(true)
@@ -21,36 +20,29 @@ export function Index() {
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
     const [page, setPage] = useState<number>(1)
 
-
-    const eventsPerPage = 5;
-
-    const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
-        { data: coverages, type: EventsEnum.COVERAGES } :
-        { data: schedule, type: EventsEnum.SCHEDULE }
-
     const homeRef = useRef<HTMLButtonElement | null>(null)
     const listRef = useRef<HTMLButtonElement | null>(null)
     const aboutRef = useRef<HTMLButtonElement | null>(null)
     const returnRef = useRef<HTMLButtonElement | null>(null)
 
-    function getSelectedEvent(value: string): SelectedEvent | null {
-        console.log(value)
-        if (value) {
-            const index = coverages.findIndex(event => event.id === value);
-            const auxArray: string[] = []
-            coverages[index].photosIds?.forEach((element: any) => {
-                auxArray.unshift(`${UrlEnum.IMAGE}${element}`)
-            } )
-            console.log(auxArray)
+    const eventsPerPage = 5;
+    const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
+        { data: coverages, type: EventsEnum.COVERAGES } :
+        { data: schedule, type: EventsEnum.SCHEDULE }
 
-            const event: SelectedEvent = {
-                id: value,
-                imagesUrl: auxArray
+    function getSelectedEvent(value: string): SelectedEvent | null {
+        if (!value)
+            return null
+        coverages.forEach((element: AgitoEvent) => {
+            if (element.id === value) {
+                const event: SelectedEvent = {
+                    id: value,
+                    imagesUrl: element.photosIds
+                }
+                return event
             }
-            // console.log(event)
-            return event
-        }
-        return null;
+        })
+        return null
     }
 
     function handleButtonClick(value: string) {
@@ -64,7 +56,7 @@ export function Index() {
                 id: schedule[0].id, imagesUrl: auxArray
             })
         }
-        
+
         switch (value) {
             case HeaderButtonEnum.START:
                 homeRef.current?.scrollIntoView(true)
@@ -78,8 +70,6 @@ export function Index() {
             case HeaderButtonEnum.SCHEDULE:
                 listRef.current?.scrollIntoView(true)
                 setCoverageSelected(false)
-                if (schedule.length > 0)
-                    getImagesUrlByEvent()
                 break;
             case HeaderButtonEnum.ABOUT:
                 aboutRef.current?.scrollIntoView(true)
@@ -106,40 +96,32 @@ export function Index() {
                 case CarouselButtonAction.START:
                     setPage(1)
                     break
-
                 case CarouselButtonAction.PREV:
                     if (page - 1 > 0)
                         setPage(page - 1)
                     break
-
                 case CarouselButtonAction.SELECT:
                     console.log(index)
                     if (index)
                         setPage(index)
                     break
-
                 case CarouselButtonAction.NEXT:
                     if (page < (coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage)))
                         setPage(page + 1)
                     break
-
                 case CarouselButtonAction.END:
                     setPage(coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage))
-                break
+                    break
             }
         }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function handleSelectedEvent(id: string) {
-
         setSelectedEvent(getSelectedEvent(id))
-
         const dataEvent = coverages.find(event => event.id === id);
-
         if (dataEvent) {
             dataEvent.clicks = (dataEvent.clicks || 0) + 1;
-
             const newDataEvent = { id: dataEvent?.id, clicks: dataEvent?.clicks };
             const options = {
                 method: "PATCH",
@@ -159,7 +141,7 @@ export function Index() {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        
+
         const sortEvents = (eventArray: AgitoEvent[]) => {
             eventArray.sort((a: any, b: any) => b.date - a.date);
             const currentDate = new Date()
@@ -172,18 +154,20 @@ export function Index() {
                     scheduleArray.push(element)
             })
             setCoverages(coveragesArray)
-
             setSchedule(scheduleArray)
+            console.log(coveragesArray[0])
             if (coveragesArray.length > 0) {
-                setMainEvent( getSelectedEvent(coveragesArray[0].id) )                                               
-                setSelectedEvent( getSelectedEvent(coveragesArray[0].id) )
+                const newSelectedEvent = {
+                    id: coveragesArray[0].id,
+                    imagesUrl: coveragesArray[0].photosIds
+                }
+                setMainEvent(newSelectedEvent)
+                setSelectedEvent(newSelectedEvent)
             }
         }
 
 
         const getData = async () => {
-            // const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
-
             const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
             const eventArray: AgitoEvent[] = []
             data.forEach((element: ResponseEvent) => {
@@ -197,9 +181,8 @@ export function Index() {
                         time: stringArray[1].replace(/\./g, ':'),
                         name: stringArray[2],
                         local: stringArray[3],
-                        photosIds: element.photosIds,
+                        photosIds: element.photosIds.map((element: string) => UrlEnum.IMAGE + element),
                         clicks: clicks
-                        // pageId: 1,
                     }
                     eventArray.push(event)
                 } catch (e) {
@@ -211,7 +194,7 @@ export function Index() {
         }
         getData()
 
-        
+
     }, [])
 
     return (
