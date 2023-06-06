@@ -45,17 +45,6 @@ export function Index() {
     }
 
     function handleButtonClick(value: string) {
-        const getImagesUrlByEvent = async () => {
-            const data: any = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
-            const auxArray: string[] = []
-            data.forEach((element: any) => {
-                auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
-            })
-            setSelectedEvent({
-                id: schedule[0].id, imagesUrl: auxArray
-            })
-        }
-
         switch (value) {
             case HeaderButtonEnum.START:
                 homeRef.current?.scrollIntoView(true)
@@ -63,8 +52,6 @@ export function Index() {
             case HeaderButtonEnum.COVERAGES:
                 listRef.current?.scrollIntoView(true)
                 setCoverageSelected(true)
-                if (coverages.length > 0)
-                    getImagesUrlByEvent()
                 break;
             case HeaderButtonEnum.SCHEDULE:
                 listRef.current?.scrollIntoView(true)
@@ -100,7 +87,6 @@ export function Index() {
                         setPage(page - 1)
                     break
                 case CarouselButtonAction.SELECT:
-                    console.log(index)
                     if (index)
                         setPage(index)
                     break
