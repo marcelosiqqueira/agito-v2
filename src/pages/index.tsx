@@ -5,7 +5,7 @@ import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { miniFetch } from "../functions/util";
 import { UrlEnum } from "../const/Enums/urlEnum";
-import { AgitoEvent, MongoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
+import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
 import { EventsEnum } from "../const/Enums/eventsEnum";
@@ -13,7 +13,6 @@ import { CarouselButtonAction } from "../const/Enums/carouselButtonAction";
 
 
 export function Index() {
-    // const [mongoEvents, setMongoEvents] = useState<MongoEvent[]>([])
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
     const [coverageSelected, setCoverageSelected] = useState<boolean>(true)
@@ -21,48 +20,31 @@ export function Index() {
     const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
     const [page, setPage] = useState<number>(1)
     const [isHovered, setIsHovered] = useState(false);
-
-    const eventsPerPage = 5;
-
-    const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
-        { data: coverages, type: EventsEnum.COVERAGES } :
-        { data: schedule, type: EventsEnum.SCHEDULE }
-
     const homeRef = useRef<HTMLButtonElement | null>(null)
     const listRef = useRef<HTMLButtonElement | null>(null)
     const aboutRef = useRef<HTMLButtonElement | null>(null)
     const returnRef = useRef<HTMLButtonElement | null>(null)
 
-    async function getSelectedEvent(value: string): Promise<SelectedEvent | null> {
-        if (value) {
-            const data: any = await miniFetch(UrlEnum.EVENTS + value)
-            const auxArray: string[] = []
-            data.forEach((element: any) => {
-                // auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
-                auxArray.unshift(`${UrlEnum.IMAGE}${element.id}`)
+    const eventsPerPage = 5;
+    const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
+        { data: coverages, type: EventsEnum.COVERAGES } :
+        { data: schedule, type: EventsEnum.SCHEDULE }
 
-            })
+    function getSelectedEvent(value: string): SelectedEvent | null {
+        if (!value)
+            return null
+        const foundEvent = coverages.find(event => event.id === value)
+        if (foundEvent) {
             const event: SelectedEvent = {
                 id: value,
-                imagesUrl: auxArray
+                imagesUrl: foundEvent.photosIds
             }
             return event
         }
-        return null;
+        return null
     }
 
     function handleButtonClick(value: string) {
-        const getImagesUrlByEvent = async () => {
-            const data: any = await miniFetch(UrlEnum.EVENTS + schedule[0].id)
-            const auxArray: string[] = []
-            data.forEach((element: any) => {
-                auxArray.unshift(`${UrlEnum.IMAGE}?id=${element.id}`)
-            })
-            setSelectedEvent({
-                id: schedule[0].id, imagesUrl: auxArray
-            })
-        }
-
         switch (value) {
             case HeaderButtonEnum.START:
                 homeRef.current?.scrollIntoView(true)
@@ -70,14 +52,10 @@ export function Index() {
             case HeaderButtonEnum.COVERAGES:
                 listRef.current?.scrollIntoView(true)
                 setCoverageSelected(true)
-                if (coverages.length > 0)
-                    getImagesUrlByEvent()
                 break;
             case HeaderButtonEnum.SCHEDULE:
                 listRef.current?.scrollIntoView(true)
                 setCoverageSelected(false)
-                if (schedule.length > 0)
-                    getImagesUrlByEvent()
                 break;
             case HeaderButtonEnum.ABOUT:
                 aboutRef.current?.scrollIntoView(true)
@@ -104,23 +82,18 @@ export function Index() {
                 case CarouselButtonAction.START:
                     setPage(1)
                     break
-
                 case CarouselButtonAction.PREV:
                     if (page - 1 > 0)
                         setPage(page - 1)
                     break
-
                 case CarouselButtonAction.SELECT:
-                    console.log(index)
                     if (index)
                         setPage(index)
                     break
-
                 case CarouselButtonAction.NEXT:
                     if (page < (coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage)))
                         setPage(page + 1)
                     break
-
                 case CarouselButtonAction.END:
                     setPage(coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage))
                     break
@@ -138,14 +111,10 @@ export function Index() {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function handleSelectedEvent(id: string) {
-
-        setSelectedEvent(await getSelectedEvent(id))
-
+        setSelectedEvent(getSelectedEvent(id))
         const dataEvent = coverages.find(event => event.id === id);
-
         if (dataEvent) {
             dataEvent.clicks = (dataEvent.clicks || 0) + 1;
-
             const newDataEvent = { id: dataEvent?.id, clicks: dataEvent?.clicks };
             const options = {
                 method: "PATCH",
@@ -155,18 +124,15 @@ export function Index() {
                 body: JSON.stringify(newDataEvent)
             };
             try {
-                const updatedEvent = await miniFetch(UrlEnum.CLICKS, options)
-                console.log(updatedEvent)
+                await miniFetch(UrlEnum.CLICKS, options)
             } catch (error) {
                 console.error(error);
             }
         }
     }
 
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        const sortEvents = async (eventArray: AgitoEvent[]) => {
+        const sortEvents = (eventArray: AgitoEvent[]) => {
             eventArray.sort((a: any, b: any) => b.date - a.date);
             const currentDate = new Date()
             const coveragesArray: AgitoEvent[] = []
@@ -178,23 +144,22 @@ export function Index() {
                     scheduleArray.push(element)
             })
             setCoverages(coveragesArray)
-
             setSchedule(scheduleArray)
             if (coveragesArray.length > 0) {
-                setMainEvent(await getSelectedEvent(coveragesArray[0].id))
-                setSelectedEvent(await getSelectedEvent(coveragesArray[0].id))
+                const newSelectedEvent = {
+                    id: coveragesArray[0].id,
+                    imagesUrl: coveragesArray[0].photosIds
+                }
+                setMainEvent(newSelectedEvent)
+                setSelectedEvent(newSelectedEvent)
             }
         }
 
         const getData = async () => {
-            const mongoEvents: MongoEvent[] = await miniFetch(UrlEnum.CLICKS);
-
             const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
             const eventArray: AgitoEvent[] = []
             data.forEach((element: ResponseEvent) => {
-                const mongoEvent = mongoEvents.find(event => event.id === element.id);
-                const clicks = mongoEvent ? mongoEvent.clicks : 0;
-
+                const clicks = element.clicks ? element.clicks : 0;
                 const stringArray = element.name.split('--')
                 const [day, month, year] = stringArray[0].split('-').map(Number);
                 try {
@@ -204,19 +169,17 @@ export function Index() {
                         time: stringArray[1].replace(/\./g, ':'),
                         name: stringArray[2],
                         local: stringArray[3],
+                        photosIds: element.photosIds.map((element: string) => UrlEnum.IMAGE + element),
                         clicks: clicks
-                        // pageId: 1,
                     }
                     eventArray.push(event)
                 } catch (e) {
                     console.error(e)
                 }
-
             })
-            await sortEvents(eventArray)
+            sortEvents(eventArray)
         }
         getData()
-
     }, [])
 
     return (

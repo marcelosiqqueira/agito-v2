@@ -4,6 +4,7 @@ export type AgitoEvent = {
   date: Date;
   time: string;
   local: string;
+  photosIds: string[];
   clicks: number;
 };
 
@@ -15,9 +16,6 @@ export type SelectedEvent = {
 export type ResponseEvent = {
   id: string;
   name: string;
-};
-
-export type MongoEvent = {
-  id: string;
+  photosIds: string[];
   clicks: number;
-}
+};
