@@ -1,34 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/Button";
-import { List } from "../components/List";
-import { ListItem } from "../components/ListItem";
+import { Coverages } from "../components/Coverages";
 import { miniFetch } from "../functions/util";
 import { UrlEnum } from "../const/Enums/urlEnum";
 import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
-import { EventsEnum } from "../const/Enums/eventsEnum";
-import { CarouselButtonAction } from "../const/Enums/carouselButtonAction";
 
 
 export function Index() {
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
-    const [coverageSelected, setCoverageSelected] = useState<boolean>(true)
     const [mainEvent, setMainEvent] = useState<SelectedEvent | null>(null)
-    const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
-    const [page, setPage] = useState<number>(1)
+
     const [isHovered, setIsHovered] = useState(false);
     const homeRef = useRef<HTMLButtonElement | null>(null)
-    const listRef = useRef<HTMLButtonElement | null>(null)
+    const coveragesRef = useRef<HTMLButtonElement | null>(null)
     const aboutRef = useRef<HTMLButtonElement | null>(null)
     const returnRef = useRef<HTMLButtonElement | null>(null)
 
-    const eventsPerPage = 5;
-    const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
-        { data: coverages, type: EventsEnum.COVERAGES } :
-        { data: schedule, type: EventsEnum.SCHEDULE }
+
+    // const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
+    //     { data: coverages, type: EventsEnum.COVERAGES } :
+    //     { data: schedule, type: EventsEnum.SCHEDULE }
 
     function getSelectedEvent(value: string): SelectedEvent | null {
         if (!value)
@@ -50,54 +45,14 @@ export function Index() {
                 homeRef.current?.scrollIntoView(true)
                 break;
             case HeaderButtonEnum.COVERAGES:
-                listRef.current?.scrollIntoView(true)
-                setCoverageSelected(true)
+                coveragesRef.current?.scrollIntoView(true)
                 break;
             case HeaderButtonEnum.SCHEDULE:
-                listRef.current?.scrollIntoView(true)
-                setCoverageSelected(false)
+                coveragesRef.current?.scrollIntoView(true)
                 break;
             case HeaderButtonEnum.ABOUT:
                 aboutRef.current?.scrollIntoView(true)
                 break;
-        }
-    }
-
-    function handleCoverageSelected(value: string) {
-        switch (value) {
-            case EventsEnum.COVERAGES:
-                setCoverageSelected(true)
-                break;
-            case EventsEnum.SCHEDULE:
-                setCoverageSelected(false)
-                break
-            default:
-                console.error('Error selecting event type. Error location : index.tsx, handleCoverageSelected()')
-        }
-    }
-
-    function handlePage(value: string, index?: number) {
-        if (value) {
-            switch (value) {
-                case CarouselButtonAction.START:
-                    setPage(1)
-                    break
-                case CarouselButtonAction.PREV:
-                    if (page - 1 > 0)
-                        setPage(page - 1)
-                    break
-                case CarouselButtonAction.SELECT:
-                    if (index)
-                        setPage(index)
-                    break
-                case CarouselButtonAction.NEXT:
-                    if (page < (coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage)))
-                        setPage(page + 1)
-                    break
-                case CarouselButtonAction.END:
-                    setPage(coverageSelected ? Math.ceil(coverages.length / eventsPerPage) : Math.ceil(schedule.length / eventsPerPage))
-                    break
-            }
         }
     }
 
@@ -110,26 +65,7 @@ export function Index() {
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async function handleSelectedEvent(id: string) {
-        setSelectedEvent(getSelectedEvent(id))
-        const dataEvent = coverages.find(event => event.id === id);
-        if (dataEvent) {
-            dataEvent.clicks = (dataEvent.clicks || 0) + 1;
-            const newDataEvent = { id: dataEvent?.id, clicks: dataEvent?.clicks };
-            const options = {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(newDataEvent)
-            };
-            try {
-                await miniFetch(UrlEnum.CLICKS, options)
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    }
+
 
     useEffect(() => {
         const sortEvents = (eventArray: AgitoEvent[]) => {
@@ -151,7 +87,6 @@ export function Index() {
                     imagesUrl: coveragesArray[0].photosIds
                 }
                 setMainEvent(newSelectedEvent)
-                setSelectedEvent(newSelectedEvent)
             }
         }
 
@@ -185,18 +120,18 @@ export function Index() {
     return (
         <>
             <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-full p-2 text-white flex items-center justify-between fixed z-30 m-0 lg:flex-row-reverse">
-                    <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
-                        <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
-                        <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
-                        <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
-                        <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
-                    </div>
+                <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
+                    <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
+                    <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
+                    <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
+                    <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
+                </div>
 
-                    <img src="/logo-placeholder.svg" alt="Logo do site" className="w-20 h-14"/>
+                <img src="/logo-placeholder.svg" alt="Logo do site" className="w-20 h-14" />
 
-                    <button className="h-14 w-14  lg:hidden">
-                        <img src="/menu.svg" alt="Menu" />
-                    </button>
+                <button className="h-14 w-14  lg:hidden">
+                    <img src="/menu.svg" alt="Menu" />
+                </button>
             </header>
             <main>
                 <section className="bg-black w-full  pb-20 pt-10 lg:pb-36">
@@ -225,7 +160,7 @@ export function Index() {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div className="absolute bottom-0 right-0">
                                     <div className="flex gap-1.5 pr-3">
                                         <img src="/views.svg" alt="" />
@@ -237,11 +172,11 @@ export function Index() {
                         <div className="relative bg-pink h-12 w-1/4">
                             <div className="bg-black absolute transform rotate-45 h-8 w-8 -right-4 top-2"></div>
                         </div>
-                        
+
 
                     </div>
                 </section>
-                <section id={HeaderButtonEnum.COVERAGES} ref={listRef} className="bg-white py-20 lg:flex lg:justify-between lg:px-10 ">
+                <section ref={coveragesRef} className="bg-white py-20 lg:flex lg:justify-between lg:px-10 ">
                     <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop">
                         <div className="mb-10 lg:w-[720px] lg:h-[480px]">
                             <div className="relative w-full h-56 mb-8">
@@ -251,30 +186,11 @@ export function Index() {
                                 <div className="bg-black h-16 w-4/5 z-10 absolute bottom-10 right-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
                                     <span className="uppercase drop-shadow-under">Coberturas</span>
                                 </div>
-                                <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 -bottom-2 right-10"/>
+                                <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 -bottom-2 right-10" />
                             </div>
-                            {/* <ImageCarousel
-                                imagesUrl={selectedEvent?.imagesUrl ? selectedEvent?.imagesUrl : null} multiple={true}></ImageCarousel> */}
                         </div>
                         <div className="px-3">
-                            <div className="bg-black/90 h-48 rounded-lg">
-                                <List handleCoverageSelected={handleCoverageSelected}
-                                    coverageSelected={coverageSelected}
-                                    page={page}
-                                    eventsLength={events.data.length}
-                                    eventsPerPage={eventsPerPage}
-                                    handlePage={handlePage}>
-                                    {events.data.slice((page - 1) * eventsPerPage, (page * eventsPerPage)).map((element, index) => <ListItem key={index}
-                                        id={element.id}
-                                        name={element.name}
-                                        date={element.date}
-                                        time={element.time}
-                                        local={element.local}
-                                        type={events.type}
-                                        clicks={element.clicks ?? null}
-                                        handleSelectedEvent={handleSelectedEvent}></ListItem>)}
-                                </List>
-                            </div>
+                            <Coverages coverages={coverages}></Coverages>
                         </div>
                     </div>
                 </section>
@@ -286,99 +202,99 @@ export function Index() {
                         <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
                     </div>
                     <div className="bg-gray w-full flex-col gap-[1px] py-[1px]">
-                       {/* agenda */} 
+                        {/* agenda */}
 
-                            <ul className="w-full">
-                                <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                    <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                        <div className="flex-col font-bold items-center justify-center text-center">
-                                            <span className="text-3xl block">18</span>
-                                            <span className="">jun</span>
-                                        </div>
-                                        <div className="flex-col font-title">
-                                            <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                            <span className="text-gray text-sm">Uberaba</span>
-                                        </div>
+                        <ul className="w-full">
+                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
+                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
+                                    <div className="flex-col font-bold items-center justify-center text-center">
+                                        <span className="text-3xl block">18</span>
+                                        <span className="">jun</span>
                                     </div>
-                                </li>
-
-
-                        {/* temporários //////////////////////////////// */}
+                                    <div className="flex-col font-title">
+                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
+                                        <span className="text-gray text-sm">Uberaba</span>
+                                    </div>
+                                </div>
+                            </li>
 
 
-                                <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                    <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                        <div className="flex-col font-bold items-center justify-center text-center">
-                                            <span className="text-3xl block">18</span>
-                                            <span className="">jun</span>
-                                        </div>
-                                        <div className="flex-col font-title">
-                                            <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                            <span className="text-gray text-sm">Uberaba</span>
-                                        </div>
+                            {/* temporários //////////////////////////////// */}
+
+
+                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
+                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
+                                    <div className="flex-col font-bold items-center justify-center text-center">
+                                        <span className="text-3xl block">18</span>
+                                        <span className="">jun</span>
                                     </div>
-                                </li>
-                                <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                    <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                        <div className="flex-col font-bold items-center justify-center text-center">
-                                            <span className="text-3xl block">18</span>
-                                            <span className="">jun</span>
-                                        </div>
-                                        <div className="flex-col font-title">
-                                            <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                            <span className="text-gray text-sm">Uberaba</span>
-                                        </div>
+                                    <div className="flex-col font-title">
+                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
+                                        <span className="text-gray text-sm">Uberaba</span>
                                     </div>
-                                </li>
-                                <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                    <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                        <div className="flex-col font-bold items-center justify-center text-center">
-                                            <span className="text-3xl block">18</span>
-                                            <span className="">jun</span>
-                                        </div>
-                                        <div className="flex-col font-title">
-                                            <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                            <span className="text-gray text-sm">Uberaba</span>
-                                        </div>
+                                </div>
+                            </li>
+                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
+                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
+                                    <div className="flex-col font-bold items-center justify-center text-center">
+                                        <span className="text-3xl block">18</span>
+                                        <span className="">jun</span>
                                     </div>
-                                </li>
-                                <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                    <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                        <div className="flex-col font-bold items-center justify-center text-center">
-                                            <span className="text-3xl block">18</span>
-                                            <span className="">jun</span>
-                                        </div>
-                                        <div className="flex-col font-title">
-                                            <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                            <span className="text-gray text-sm">Uberaba</span>
-                                        </div>
+                                    <div className="flex-col font-title">
+                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
+                                        <span className="text-gray text-sm">Uberaba</span>
                                     </div>
-                                </li>
-                                <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                    <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                        <div className="flex-col font-bold items-center justify-center text-center">
-                                            <span className="text-3xl block">18</span>
-                                            <span className="">jun</span>
-                                        </div>
-                                        <div className="flex-col font-title">
-                                            <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                            <span className="text-gray text-sm">Uberaba</span>
-                                        </div>
+                                </div>
+                            </li>
+                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
+                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
+                                    <div className="flex-col font-bold items-center justify-center text-center">
+                                        <span className="text-3xl block">18</span>
+                                        <span className="">jun</span>
                                     </div>
-                                </li>
-                                <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                    <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                        <div className="flex-col font-bold items-center justify-center text-center">
-                                            <span className="text-3xl block">18</span>
-                                            <span className="">jun</span>
-                                        </div>
-                                        <div className="flex-col font-title">
-                                            <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                            <span className="text-gray text-sm">Uberaba</span>
-                                        </div>
+                                    <div className="flex-col font-title">
+                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
+                                        <span className="text-gray text-sm">Uberaba</span>
                                     </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </li>
+                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
+                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
+                                    <div className="flex-col font-bold items-center justify-center text-center">
+                                        <span className="text-3xl block">18</span>
+                                        <span className="">jun</span>
+                                    </div>
+                                    <div className="flex-col font-title">
+                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
+                                        <span className="text-gray text-sm">Uberaba</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
+                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
+                                    <div className="flex-col font-bold items-center justify-center text-center">
+                                        <span className="text-3xl block">18</span>
+                                        <span className="">jun</span>
+                                    </div>
+                                    <div className="flex-col font-title">
+                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
+                                        <span className="text-gray text-sm">Uberaba</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
+                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
+                                    <div className="flex-col font-bold items-center justify-center text-center">
+                                        <span className="text-3xl block">18</span>
+                                        <span className="">jun</span>
+                                    </div>
+                                    <div className="flex-col font-title">
+                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
+                                        <span className="text-gray text-sm">Uberaba</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
 
                     </div>
                 </section>
@@ -407,7 +323,7 @@ export function Index() {
             </footer>
             <div className=" invisible lg:visible fixed bottom-4 right-4 p-3 ">
                 <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START} className="h-12 w-12 flex-col items-center justify-center text-white font-bold text-">
-                    <img src="/back-to-top.svg" alt="Voltar ao topo" className="select-"/>
+                    <img src="/back-to-top.svg" alt="Voltar ao topo" className="select-" />
                     <span className="select-none drop-shadow-default">TOPO</span>
                 </button>
             </div>
