@@ -7,6 +7,8 @@ import { UrlEnum } from "../const/Enums/urlEnum";
 import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
+import { Schedule } from "../components/Schedule";
+import { Header } from "../components/Header";
 
 
 export function Index() {
@@ -15,8 +17,10 @@ export function Index() {
     const [mainEvent, setMainEvent] = useState<SelectedEvent | null>(null)
 
     const [isHovered, setIsHovered] = useState(false);
-    const homeRef = useRef<HTMLButtonElement | null>(null)
+
+    const homeRef = useRef<HTMLHeadingElement | null>(null)
     const coveragesRef = useRef<HTMLButtonElement | null>(null)
+    const scheduleRef = useRef<HTMLButtonElement | null>(null)
     const aboutRef = useRef<HTMLButtonElement | null>(null)
     const returnRef = useRef<HTMLButtonElement | null>(null)
 
@@ -48,7 +52,7 @@ export function Index() {
                 coveragesRef.current?.scrollIntoView(true)
                 break;
             case HeaderButtonEnum.SCHEDULE:
-                coveragesRef.current?.scrollIntoView(true)
+                scheduleRef.current?.scrollIntoView(true)
                 break;
             case HeaderButtonEnum.ABOUT:
                 aboutRef.current?.scrollIntoView(true)
@@ -63,9 +67,6 @@ export function Index() {
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
 
     useEffect(() => {
         const sortEvents = (eventArray: AgitoEvent[]) => {
@@ -119,22 +120,9 @@ export function Index() {
 
     return (
         <>
-            <header ref={homeRef} className="bg-purple drop-shadow-md h-20 w-full p-2 text-white flex items-center justify-between fixed z-30 m-0 lg:flex-row-reverse">
-                <div className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full mx-auto">
-                    <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
-                    <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
-                    <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
-                    <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
-                </div>
-
-                <img src="/logo-placeholder.svg" alt="Logo do site" className="w-20 h-14" />
-
-                <button className="h-14 w-14  lg:hidden">
-                    <img src="/menu.svg" alt="Menu" />
-                </button>
-            </header>
+            <Header handleButtonClick={handleButtonClick}></Header>
             <main>
-                <section className="bg-black w-full  pb-20 pt-10 lg:pb-36">
+                <section ref={homeRef} className="bg-black w-full  pb-20 pt-10 lg:pb-36">
                     <div className="lg:w-[720px] lg:mx-auto pt-20">
                         <div className="relative w-full h-24 mb-8">
                             <div className="bg-orange h-14 z-20 absolute w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
@@ -194,7 +182,7 @@ export function Index() {
                         </div>
                     </div>
                 </section>
-                <section className="bg-dark-gray py-20">
+                <section ref={scheduleRef} className="bg-dark-gray py-20">
                     <div className="relative w-full h-24 mb-8">
                         <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
                             <span className="uppercase drop-shadow-under">Agenda</span>
@@ -202,100 +190,7 @@ export function Index() {
                         <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
                     </div>
                     <div className="bg-gray w-full flex-col gap-[1px] py-[1px]">
-                        {/* agenda */}
-
-                        <ul className="w-full">
-                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                    <div className="flex-col font-bold items-center justify-center text-center">
-                                        <span className="text-3xl block">18</span>
-                                        <span className="">jun</span>
-                                    </div>
-                                    <div className="flex-col font-title">
-                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                        <span className="text-gray text-sm">Uberaba</span>
-                                    </div>
-                                </div>
-                            </li>
-
-
-                            {/* temporários //////////////////////////////// */}
-
-
-                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                    <div className="flex-col font-bold items-center justify-center text-center">
-                                        <span className="text-3xl block">18</span>
-                                        <span className="">jun</span>
-                                    </div>
-                                    <div className="flex-col font-title">
-                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                        <span className="text-gray text-sm">Uberaba</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                    <div className="flex-col font-bold items-center justify-center text-center">
-                                        <span className="text-3xl block">18</span>
-                                        <span className="">jun</span>
-                                    </div>
-                                    <div className="flex-col font-title">
-                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                        <span className="text-gray text-sm">Uberaba</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                    <div className="flex-col font-bold items-center justify-center text-center">
-                                        <span className="text-3xl block">18</span>
-                                        <span className="">jun</span>
-                                    </div>
-                                    <div className="flex-col font-title">
-                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                        <span className="text-gray text-sm">Uberaba</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                    <div className="flex-col font-bold items-center justify-center text-center">
-                                        <span className="text-3xl block">18</span>
-                                        <span className="">jun</span>
-                                    </div>
-                                    <div className="flex-col font-title">
-                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                        <span className="text-gray text-sm">Uberaba</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                    <div className="flex-col font-bold items-center justify-center text-center">
-                                        <span className="text-3xl block">18</span>
-                                        <span className="">jun</span>
-                                    </div>
-                                    <div className="flex-col font-title">
-                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                        <span className="text-gray text-sm">Uberaba</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="bg-dark-gray text-white h-20 py-2 px-2 w-full flex items-center">
-                                <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
-                                    <div className="flex-col font-bold items-center justify-center text-center">
-                                        <span className="text-3xl block">18</span>
-                                        <span className="">jun</span>
-                                    </div>
-                                    <div className="flex-col font-title">
-                                        <span className="block text-2xl font-bold">Carpe beach 2023</span>
-                                        <span className="text-gray text-sm">Uberaba</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-
+                        <Schedule schedule={schedule}></Schedule>
                     </div>
                 </section>
                 <section className="bg-gray pt-8 " ref={aboutRef}>
