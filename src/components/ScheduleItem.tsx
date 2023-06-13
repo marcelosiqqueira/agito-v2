@@ -1,11 +1,10 @@
 type ScheduleItemProps = {
-    id: string,
     name: string,
     date: Date,
     local: string,
 }
 
-export function ScheduleItem({ id, name, date, local }: ScheduleItemProps) {
+export function ScheduleItem({ name, date, local }: ScheduleItemProps) {
     function monthToReducedString(month: number) {
         switch (month) {
             case 0:
