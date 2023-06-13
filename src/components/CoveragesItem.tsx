@@ -1,12 +1,11 @@
 type ListItemProps = {
-    id: string,
     name: string,
     date: Date,
     local: string,
     clicks: number | null,
 }
 
-export function CoveragesItem({ id, name, date, local, clicks }: ListItemProps) {
+export function CoveragesItem({ name, date, local, clicks }: ListItemProps) {
     return (
         <li>
             <button onClick={() => console.log('oi')} className="bg-white text-black border-dark-gray border w-full h-28 px-6 py-2 text-xl text-start hover:bg-purple/40 hover:text-white duration-200">
