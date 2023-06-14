@@ -2,7 +2,7 @@ import { CoveragesButton } from "./CoveragesButton"
 import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
 import { CoveragesItem } from "./CoveragesItem"
 import { AgitoEvent } from "../interfaces/event"
-import { useState } from "react"
+import { useDeferredValue, useState } from "react"
 
 type ListProps = {
     coverages: AgitoEvent[],
@@ -10,27 +10,39 @@ type ListProps = {
 
 export function Coverages({ coverages }: ListProps) {
 
+    const [searchText, setSearchText] = useState<string>('')
+    const deferredSearchText = useDeferredValue(searchText)
     const [page, setPage] = useState<number>(1)
-    const coveragesPerPage = 5;
+
+    const coveragesPerPage = window.innerWidth > 1024 ? 10 : 5;
+    const searchedEvents = deferredSearchText ?
+        coverages.filter(coverage => coverage.local.toLowerCase().includes(deferredSearchText.toLowerCase()) || coverage.name.toLowerCase().includes(deferredSearchText.toLowerCase())) :
+        coverages
 
     function pageLabel(numb: number) {
         switch (numb) {
             case 1:
                 if (page === 1)
                     return 1
-                if (page === Math.ceil(coverages.length / coveragesPerPage))
+                if ((page === Math.ceil(searchedEvents.length / (coveragesPerPage))) && (coveragesPerPage * 3 >= searchedEvents.length))
+                    return 1
+                if (page === Math.ceil(searchedEvents.length / (coveragesPerPage)))
                     return page - 2
                 return page - 1
             case 2:
                 if (page === 1)
                     return page + 1
-                if (page === Math.ceil(coverages.length / coveragesPerPage))
+                if ((page === Math.ceil(searchedEvents.length / (coveragesPerPage))) && (coveragesPerPage * 3 >= searchedEvents.length))
+                    return page
+                if (page === Math.ceil(searchedEvents.length / (coveragesPerPage)))
                     return page - 1
                 return page
             case 3:
                 if (page === 1)
                     return page + 2
-                if (page === Math.ceil(coverages.length / coveragesPerPage))
+                if ((page === Math.ceil(searchedEvents.length / (coveragesPerPage))) && (coveragesPerPage * 3 >= searchedEvents.length))
+                    return page + 1
+                if (page === Math.ceil(searchedEvents.length / (coveragesPerPage)))
                     return page
                 return page + 1
         }
@@ -38,64 +50,50 @@ export function Coverages({ coverages }: ListProps) {
     }
 
     function handlePage(value: string, index?: number) {
-        if (value) {
-            switch (value) {
-                case CarouselButtonAction.START:
-                    setPage(1)
-                    break
-                case CarouselButtonAction.PREV:
-                    if (page - 1 > 0)
-                        setPage(page - 1)
-                    break
-                case CarouselButtonAction.SELECT:
-                    if (index)
-                        setPage(index)
-                    break
-                case CarouselButtonAction.NEXT:
-                    if (page < Math.ceil(coverages.length / coveragesPerPage))
-                        setPage(page + 1)
-                    break
-                case CarouselButtonAction.END:
-                    setPage(Math.ceil(coverages.length / coveragesPerPage))
-                    break
-            }
+        if (!value)
+            return
+        if (index && index > Math.ceil(searchedEvents.length / (coveragesPerPage)))
+            return
+        switch (value) {
+            case CarouselButtonAction.START:
+                setPage(1)
+                break
+            case CarouselButtonAction.PREV:
+                if (page - 1 > 0)
+                    setPage(page - 1)
+                break
+            case CarouselButtonAction.SELECT:
+                if (index)
+                    setPage(index)
+                break
+            case CarouselButtonAction.NEXT:
+                if (page < Math.ceil(searchedEvents.length / coveragesPerPage))
+                    setPage(page + 1)
+                break
+            case CarouselButtonAction.END:
+                setPage(Math.ceil(searchedEvents.length / coveragesPerPage))
+                break
         }
+
     }
 
-    // async function handleSelectedCoverage(id: string) {
-    //     setSelectedCoverage(getSelectedEvent(id))
-    //     const dataEvent = coverages.find(event => event.id === id);
-    //     if (dataEvent) {
-    //         dataEvent.clicks = (dataEvent.clicks || 0) + 1;
-    //         const newDataEvent = { id: dataEvent?.id, clicks: dataEvent?.clicks };
-    //         const options = {
-    //             method: "PATCH",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(newDataEvent)
-    //         };
-    //         try {
-    //             await miniFetch(UrlEnum.CLICKS, options)
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    // }
+    function handleSearchBar(newInputText: string) {
+        setSearchText(newInputText)
+    }
 
 
     return (
-        <div className="w-full min-h-[325px] divide-y divide-gray">
+        <div className="max-w-[56rem] lg:w-[56rem] mx-auto min-h-[325px] divide-y divide-gray">
             <div className="bg-[#D9D9D9] h-12 w-full px-6 rounded-3xl flex justify-start items-center shadow-sm mb-3">
-                <img src="/search.svg" alt="Pesquisar" className="h-1/2"/>
-                <input type="search" name="search-coverage-input" id="search-coverage-input" placeholder="Pesquisar evento..." className="bg-clip-text placeholder:text-dark-gray w-full focus:outline-none" />
+                <img src="/search.svg" alt="Pesquisar" className="h-1/2" />
+                <input type="search" name="search-coverage-input" id="search-coverage-input" placeholder="Pesquisar evento..." className="bg-clip-text placeholder:text-dark-gray w-full focus:outline-none" value={searchText} onChange={e => handleSearchBar(e.currentTarget.value)} />
             </div>
-            <ul className="bg-purple divide-y divide-gray">
-                {coverages.slice((page - 1) * coveragesPerPage, (page * coveragesPerPage)).map((coverage: AgitoEvent, index: number) =>
+            <ul className="divide-y divide-gray w-full lg:h-[36rem] lg:flex lg:flex-col lg:flex-wrap">
+                {searchedEvents.slice((page - 1) * coveragesPerPage, (page * coveragesPerPage)).map((coverage: AgitoEvent, index: number) =>
                     <CoveragesItem {...coverage} key={index}></CoveragesItem>
                 )}
             </ul>
-            <ul className="flex justify-between text-black ">
+            <ul className="flex justify-between text-black">
                 <CoveragesButton value={CarouselButtonAction.START} buttonClick={handlePage}>|&lt;</CoveragesButton>
                 <CoveragesButton value={CarouselButtonAction.PREV} buttonClick={handlePage}>&lt;</CoveragesButton>
                 <CoveragesButton value={CarouselButtonAction.SELECT} buttonClick={handlePage}>{pageLabel(1)?.toString()}</CoveragesButton>
