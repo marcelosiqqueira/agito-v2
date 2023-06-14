@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import { Button } from "../components/Button";
 import { Coverages } from "../components/Coverages";
 import { miniFetch } from "../functions/util";
 import { UrlEnum } from "../const/Enums/urlEnum";
-import { AgitoEvent, ResponseEvent, SelectedEvent } from "../interfaces/event";
+import { AgitoEvent, ResponseEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
 import { Schedule } from "../components/Schedule";
@@ -14,9 +13,6 @@ import { Header } from "../components/Header";
 export function Index() {
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
-    const [mainEvent, setMainEvent] = useState<SelectedEvent | null>(null)
-
-    const [isHovered, setIsHovered] = useState(false);
 
     const homeRef = useRef<HTMLHeadingElement | null>(null)
     const coveragesRef = useRef<HTMLButtonElement | null>(null)
@@ -24,24 +20,7 @@ export function Index() {
     const aboutRef = useRef<HTMLButtonElement | null>(null)
     const returnRef = useRef<HTMLButtonElement | null>(null)
 
-
-    // const events: { data: AgitoEvent[], type: EventsEnum } = coverageSelected ?
-    //     { data: coverages, type: EventsEnum.COVERAGES } :
-    //     { data: schedule, type: EventsEnum.SCHEDULE }
-
-    function getSelectedEvent(value: string): SelectedEvent | null {
-        if (!value)
-            return null
-        const foundEvent = coverages.find(event => event.id === value)
-        if (foundEvent) {
-            const event: SelectedEvent = {
-                id: value,
-                imagesUrl: foundEvent.photosIds
-            }
-            return event
-        }
-        return null
-    }
+    const mainEvent = coverages.length ? coverages[0] : null
 
     function handleButtonClick(value: string) {
         switch (value) {
@@ -60,14 +39,6 @@ export function Index() {
         }
     }
 
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-
     useEffect(() => {
         const sortEvents = (eventArray: AgitoEvent[]) => {
             eventArray.sort((a: any, b: any) => b.date - a.date);
@@ -82,13 +53,6 @@ export function Index() {
             })
             setCoverages(coveragesArray)
             setSchedule(scheduleArray)
-            if (coveragesArray.length > 0) {
-                const newSelectedEvent = {
-                    id: coveragesArray[0].id,
-                    imagesUrl: coveragesArray[0].photosIds
-                }
-                setMainEvent(newSelectedEvent)
-            }
         }
 
         const getData = async () => {
@@ -121,9 +85,9 @@ export function Index() {
     return (
         <>
             <Header handleButtonClick={handleButtonClick}></Header>
-            <main>
-                <section ref={homeRef} className="bg-black w-full  pb-20 pt-10 lg:pb-36">
-                    <div className="lg:w-[720px] lg:mx-auto pt-20">
+            <main className="bg-black">
+                <section ref={homeRef} className="bg-black w-full pb-20 pt-10 lg:pb-36">
+                    <div className="lg:mx-auto pt-20">
                         <div className="relative w-full h-24 mb-8">
                             <div className="bg-orange h-14 z-20 absolute w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
                                 <span className="uppercase drop-shadow-under">Em destaque</span>
@@ -131,42 +95,16 @@ export function Index() {
                             <div className="bg-pink h-14 w-4/5 z-10  absolute top-6 right-0"></div>
                         </div>
                         <div className="relative mb-8">
-                            <ImageCarousel imagesUrl={mainEvent?.imagesUrl ? mainEvent?.imagesUrl : null} autoPlay={true} ></ImageCarousel>
-                            <div className={` text-white absolute w-full h-1/3 bg-gradient-to-b from-black/0 to-black/90 flex items-end px-3 py-2 lg:transition-opacity lg:duration-500 bottom-0 ${isHovered ? 'lg:opacity-1' : 'lg:opacity-0'}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                                <div className="flex-col w-full">
-                                    <div className="font-bold text-2xl capitalize">
-                                        <span>{coverages[0]?.name.toLowerCase()}</span>
-                                    </div>
-                                    <div className="flex gap-3">
-                                        <div className="flex gap-1.5 pl-0.5">
-                                            <img src="/location.svg" alt="" />
-                                            <span>{coverages[0]?.local}</span>
-                                        </div>
-                                        <div className="flex gap-1.5">
-                                            <img src="/calendar.svg" alt="" />
-                                            <span>{coverages[0]?.date.toLocaleDateString()}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="absolute bottom-0 right-0">
-                                    <div className="flex gap-1.5 pr-3">
-                                        <img src="/views.svg" alt="" />
-                                        <span>{coverages[0]?.clicks}</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <ImageCarousel event={mainEvent} autoPlay={true} ></ImageCarousel>
                         </div>
                         <div className="relative bg-pink h-12 w-1/4">
                             <div className="bg-black absolute transform rotate-45 h-8 w-8 -right-4 top-2"></div>
                         </div>
-
-
                     </div>
                 </section>
-                <section ref={coveragesRef} className="bg-white py-20 lg:flex lg:justify-between lg:px-10 ">
-                    <div className="lg:flex lg:justify-between lg:max-w-7xl lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop">
-                        <div className="mb-10 lg:w-[720px] lg:h-[480px]">
+                <section ref={coveragesRef} className="bg-white py-20 w-full lg:flex lg:flex-col lg:items-center ">
+                    <div className="lg:flex lg:justify-between lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop w-full">
+                        <div className="mb-10 w-full">
                             <div className="relative w-full h-56 mb-8">
                                 <div className="bg-yellow h-14 z-20 absolute w-3/5 top-1/3 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
                                     <span className="uppercase drop-shadow-under">Últimas</span>
@@ -177,26 +115,26 @@ export function Index() {
                                 <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 -bottom-2 right-10" />
                             </div>
                         </div>
-                        <div className="">
-                            <Coverages coverages={coverages}></Coverages>
-                        </div>
+                    </div>
+                    <div className="w-full">
+                        <Coverages coverages={coverages}></Coverages>
                     </div>
                 </section>
-                <section ref={scheduleRef} className="bg-dark-gray py-20">
-                    <div className="lg:max-w-7xl lg:flex lg:flex-row-reverse lg:justify-between lg:mx-auto bg-dots-design bg-no-repeat bg-righttop">
-                        <div className="relative w-full h-24 mb-8 lg:w-1/2 lg:top-12">
+                <section ref={scheduleRef} className="bg-dark-gray py-20 w-full">
+                    <div className="lg:mx-auto w-full">
+                        <div className="relative w-full h-24 mb-8 lg:top-12">
                             <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
                                 <span className="uppercase drop-shadow-under">Agenda</span>
                             </div>
                             <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
                         </div>
-                        <div className="bg-gray w-full flex-col gap-[1px] py-[1px] lg:w-1/4">
+                        <div className="bg-gray w-full mx-auto lg:mt-20 lg:w-6/12">
                             <Schedule schedule={schedule}></Schedule>
                         </div>
                     </div>
                 </section>
                 <section className="bg-gray pt-8 " ref={aboutRef}>
-                    <div className="lg:max-w-7xl lg:mx-auto pt-5">
+                    <div className="pt-5">
                         <div className="relative w-full h-24 mb-8 lg:w-1/2 lg:mx-auto">
                             <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
                                 <span className="uppercase drop-shadow-under">Contato</span>
