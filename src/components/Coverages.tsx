@@ -85,26 +85,26 @@ export function Coverages({ coverages }: ListProps) {
 
 
     return (
-        <>
-            <div className="bg-gray bg-opacity-40 h-12 px-6 rounded-3xl flex justify-start items-center shadow-sm">
-                <img src="" alt="" />
-                <input type="search" name="search-coverage-input" id="search-coverage-input" placeholder="Pesquisar evento..." className="bg-clip-text placeholder:text-dark-gray" />
+        <div className="w-full min-h-[325px] divide-y divide-gray">
+            <div className="bg-[#D9D9D9] h-12 w-full px-6 rounded-3xl flex justify-start items-center shadow-sm mb-3">
+                <img src="/search.svg" alt="Pesquisar" className="h-1/2"/>
+                <input type="search" name="search-coverage-input" id="search-coverage-input" placeholder="Pesquisar evento..." className="bg-clip-text placeholder:text-dark-gray w-full focus:outline-none" />
             </div>
-            <ul className="bg-purple">
+            <ul className="bg-purple divide-y divide-gray">
                 {coverages.slice((page - 1) * coveragesPerPage, (page * coveragesPerPage)).map((coverage: AgitoEvent, index: number) =>
                     <CoveragesItem {...coverage} key={index}></CoveragesItem>
                 )}
             </ul>
-            <ul className="flex justify-between text-black">
-                <CoveragesButton value={CarouselButtonAction.START} buttonClick={handlePage}>⬅️</CoveragesButton>
-                <CoveragesButton value={CarouselButtonAction.PREV} buttonClick={handlePage}>⬅️</CoveragesButton>
+            <ul className="flex justify-between text-black ">
+                <CoveragesButton value={CarouselButtonAction.START} buttonClick={handlePage}>|&lt;</CoveragesButton>
+                <CoveragesButton value={CarouselButtonAction.PREV} buttonClick={handlePage}>&lt;</CoveragesButton>
                 <CoveragesButton value={CarouselButtonAction.SELECT} buttonClick={handlePage}>{pageLabel(1)?.toString()}</CoveragesButton>
                 <CoveragesButton value={CarouselButtonAction.SELECT} buttonClick={handlePage}>{pageLabel(2)?.toString()}</CoveragesButton>
                 <CoveragesButton value={CarouselButtonAction.SELECT} buttonClick={handlePage}>{pageLabel(3)?.toString()}</CoveragesButton>
-                <CoveragesButton value={CarouselButtonAction.NEXT} buttonClick={handlePage}>➡️</CoveragesButton>
-                <CoveragesButton value={CarouselButtonAction.END} buttonClick={handlePage}>➡️</CoveragesButton>
+                <CoveragesButton value={CarouselButtonAction.NEXT} buttonClick={handlePage}>&gt;</CoveragesButton>
+                <CoveragesButton value={CarouselButtonAction.END} buttonClick={handlePage}>&gt;|</CoveragesButton>
             </ul>
-        </>
+        </div>
     )
 }
 

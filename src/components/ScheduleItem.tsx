@@ -41,10 +41,10 @@ export function ScheduleItem({ name, date, local }: ScheduleItemProps) {
             <div className="border-l-yellow border-l-4 w-full h-5/6 py-1 px-2 flex  items-center gap-4">
                 <div className="flex-col font-bold items-center justify-center text-center">
                     <span className="text-3xl block">{date.getDay()}</span>
-                    <span className="">{monthToReducedString(date.getUTCMonth())}</span>
+                    <span className="">{monthToReducedString(date.getUTCMonth()).toLowerCase()}</span>
                 </div>
                 <div className="flex-col font-title">
-                    <span className="block text-2xl font-bold">{name}</span>
+                    <span className="block text-2xl font-bold whitespace-nowrap overflow-hidden text-ellipsis">{name}</span>
                     <span className="text-gray text-sm">{local}</span>
                 </div>
             </div>

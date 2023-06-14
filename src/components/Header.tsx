@@ -12,7 +12,7 @@ export function Header({ handleButtonClick }: HeaderProps) {
                 <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
                 <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
                 <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
-                <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>sobre</Button>
+                <Button value={HeaderButtonEnum.ABOUT} buttonClick={handleButtonClick}>contato</Button>
             </div>
 
             <img src="/logo-placeholder.svg" alt="Logo do site" className="w-20 h-14" />

@@ -7,19 +7,19 @@ type ListItemProps = {
 
 export function CoveragesItem({ name, date, local, clicks }: ListItemProps) {
     return (
-        <li>
-            <button onClick={() => console.log('oi')} className="bg-white text-black border-dark-gray border w-full h-28 px-6 py-2 text-xl text-start hover:bg-purple/40 hover:text-white duration-200">
-                <div className="leading-none">
-                    <div className="capitalize font-semibold">{name.toLowerCase()}</div>
-                    <div className="font-light text-gray opacity-80">{local}</div>
+        <li className="w-full">
+            <button onClick={() => console.log('oi')} className="bg-white text-black w-full h-28 px-6 py-2 text-start  hover:duration-300 hover:border-l-8 hover:border-l-purple lg:max-w-[400px] lg:min-w-[400px]">
+                <div className="leading-none font-title w-full mb-2">
+                    <div className="capitalize font-bold text-2xl whitespace-nowrap text-ellipsis overflow-hidden max-w-[70%]">{name.toLowerCase()}</div>
+                    <div className="font-light text-gray opacity-80 text-base">{local}</div>
                 </div>
                 <div className="flex justify-between">
-                    <div className="flex">
-                        <img src="./calendar.svg" alt="calendar icon" />
+                    <div className="flex gap-1.5">
+                        <img src="/calendar-black.svg" alt="Data" />
                         {date.toLocaleString('pt-BR', { dateStyle: "short" })}
                     </div>
-                    <div className="flex">
-                        <img src="./views.svg" alt="eye icon" />
+                    <div className="flex gap-1.5">
+                        <img src="/views-gray.svg" alt="Visualizações"/>
                         {clicks}
                     </div>
                 </div>

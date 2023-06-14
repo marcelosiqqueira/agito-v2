@@ -177,29 +177,31 @@ export function Index() {
                                 <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 -bottom-2 right-10" />
                             </div>
                         </div>
-                        <div className="px-3">
+                        <div className="">
                             <Coverages coverages={coverages}></Coverages>
                         </div>
                     </div>
                 </section>
                 <section ref={scheduleRef} className="bg-dark-gray py-20">
-                    <div className="relative w-full h-24 mb-8">
-                        <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
-                            <span className="uppercase drop-shadow-under">Agenda</span>
+                    <div className="lg:max-w-7xl lg:flex lg:flex-row-reverse lg:justify-between lg:mx-auto bg-dots-design bg-no-repeat bg-righttop">
+                        <div className="relative w-full h-24 mb-8 lg:w-1/2 lg:top-12">
+                            <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
+                                <span className="uppercase drop-shadow-under">Agenda</span>
+                            </div>
+                            <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
                         </div>
-                        <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
-                    </div>
-                    <div className="bg-gray w-full flex-col gap-[1px] py-[1px]">
-                        <Schedule schedule={schedule}></Schedule>
+                        <div className="bg-gray w-full flex-col gap-[1px] py-[1px] lg:w-1/4">
+                            <Schedule schedule={schedule}></Schedule>
+                        </div>
                     </div>
                 </section>
                 <section className="bg-gray pt-8 " ref={aboutRef}>
-                    <div className="lg:max-w-7xl lg:mx-auto pt-5 bg-dots-design bg-no-repeat bg-righttop">
-                        <div className="relative w-full h-24 mb-8">
+                    <div className="lg:max-w-7xl lg:mx-auto pt-5">
+                        <div className="relative w-full h-24 mb-8 lg:w-1/2 lg:mx-auto">
                             <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
                                 <span className="uppercase drop-shadow-under">Contato</span>
                             </div>
-                            <div className="bg-yellow h-14 w-4/5 z-10 absolute bottom-0 left-0"></div>
+                            <div className="bg-yellow h-14 w-4/5 z-10 absolute bottom-0 left-0 "></div>
                         </div>
                         <div className="mt-10 ">
                             <img src="/foto-gabriel-agito.jpg" alt="Foto de perfil do Gabriel" className="w-1/2 h-1/2 sm:w-1/3 md:w-1/4 lg:w-2/12 rounded-full  mb-5 mx-auto" />

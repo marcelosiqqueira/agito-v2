@@ -7,7 +7,7 @@ type ScheduleProps = {
 
 export function Schedule({ schedule }: ScheduleProps) {
     return (
-        <ul>{schedule.map((event: AgitoEvent, index: number) =>
+        <ul className="divide-y divide-gray">{schedule.map((event: AgitoEvent, index: number) =>
             <ScheduleItem key={index} {...event}></ScheduleItem>)}
         </ul>
     )

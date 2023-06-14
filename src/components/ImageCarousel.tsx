@@ -80,7 +80,7 @@ export function ImageCarousel({ imagesUrl, autoPlay, multiple }: ImageCarouselPr
     }, [imagesUrl])
 
     return (
-            <div className="text-white bg-black/90 flex-col justify-center items-center relative lg:w-[720px] lg:h-[480px] w-full lg:rounded-lg lg:overflow-hidden object-contain" ref={divRef} tabIndex={1}>
+            <div className="text-white bg-black/90 flex-col justify-center items-center relative w-full min-h-[215px] lg:w-[720px] lg:min-h-[480px]  lg:rounded-lg lg:overflow-hidden object-contain" ref={divRef} tabIndex={1}>
                 <button className="flex items-center justify-center w-full h-full">
                     <img src={imagesUrl ? imagesUrl[index] ?? '/error' : '/error'} alt="Foto do evento" onClick={handleOpenModal} onLoad={imageTimerHandler} className=" aspect-[3-2] object-contain h-[215px] lg:h-[480px] w-full" />
                 </button>
