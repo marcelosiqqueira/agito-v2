@@ -25,7 +25,7 @@ export function Header({ handleButtonClick }: HeaderProps) {
             <div className="relative h-14 w-48 flex flex-col gap-y-2 items-end lg:hidden" onClick={handleMenuButtonClick}>
                 <img src="/menu.svg" alt="Menu" />
                 {selected &&
-                    <div className="flex flex-col w-full h-80 bg-purple rounded-md">
+                    <div className="flex flex-col w-full h-80 bg-purple/90 rounded-lg gap-5 py-5">
                         <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>
                         <Button value={HeaderButtonEnum.COVERAGES} buttonClick={handleButtonClick}>coberturas</Button>
                         <Button value={HeaderButtonEnum.SCHEDULE} buttonClick={handleButtonClick}>agenda</Button>
