@@ -102,63 +102,67 @@ export function Index() {
                         </div>
                     </div>
                 </section>
-                <section ref={coveragesRef} className="bg-white py-20 w-full lg:flex lg:flex-col lg:items-center ">
-                    <div className="lg:flex lg:justify-between lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop w-full">
-                        <div className="mb-10 w-full">
-                            <div className="relative w-full h-56 mb-8">
-                                <div className="bg-yellow h-14 z-20 absolute w-3/5 top-1/3 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
-                                    <span className="uppercase drop-shadow-under">Últimas</span>
+                <div className="flex flex-col lg:flex-row">
+                    <section ref={coveragesRef} className="bg-white py-20 w-full lg:flex lg:flex-col lg:items-center lg:w-3/4">
+                        <div className="lg:flex lg:justify-between lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop w-full">
+                            <div className="mb-10 w-full">
+                                <div className="relative w-full h-56 mb-8">
+                                    <div className="bg-yellow h-14 z-20 absolute w-3/5 top-1/3 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
+                                        <span className="uppercase drop-shadow-under">Últimas</span>
+                                    </div>
+                                    <div className="bg-black h-16 w-4/5 z-10 absolute bottom-10 right-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
+                                        <span className="uppercase drop-shadow-under">Coberturas</span>
+                                    </div>
+                                    <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 -bottom-2 right-10" />
                                 </div>
-                                <div className="bg-black h-16 w-4/5 z-10 absolute bottom-10 right-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
-                                    <span className="uppercase drop-shadow-under">Coberturas</span>
+                            </div>
+                        </div>
+                        <div className="w-full">
+                            <Coverages coverages={coverages}></Coverages>
+                        </div>
+                    </section>
+                    <div className="lg:flex-col lg:w-1/4">
+                        <section ref={scheduleRef} className="bg-dark-gray py-20 w-full">
+                            <div className="lg:mx-auto w-full">
+                                <div className="relative w-full h-24 mb-8 lg:top-12">
+                                    <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
+                                        <span className="uppercase drop-shadow-under">Agenda</span>
+                                    </div>
+                                    <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
                                 </div>
-                                <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 -bottom-2 right-10" />
+                                <div className="w-full mx-auto lg:mt-20 lg:w-full">
+                                    <Schedule schedule={schedule}></Schedule>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="w-full">
-                        <Coverages coverages={coverages}></Coverages>
-                    </div>
-                </section>
-                <section ref={scheduleRef} className="bg-dark-gray py-20 w-full">
-                    <div className="lg:mx-auto w-full">
-                        <div className="relative w-full h-24 mb-8 lg:top-12">
-                            <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
-                                <span className="uppercase drop-shadow-under">Agenda</span>
+                        </section>
+                        <section className="bg-gray pt-8 " ref={aboutRef}>
+                            <div className="pt-5 lg:pt-2">
+                                <div className="relative w-full h-24 mb-8">
+                                    <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
+                                        <span className="uppercase drop-shadow-under">Contato</span>
+                                    </div>
+                                    <div className="bg-yellow h-14 w-4/5 z-10 absolute bottom-0 left-0 "></div>
+                                </div>
+                                <div className="mt-10 ">
+                                    <img src="/foto-gabriel-agito.jpg" alt="Foto de perfil do Gabriel" className="w-1/2 h-1/2 sm:w-1/3 md:w-1/4 lg:w-1/3 rounded-full  mb-5 mx-auto" />
+                                    <div className="bg-black text-white w-full h-24 mx-auto flex items-center justify-center">
+                                        <a href="https://www.instagram.com/gabrielagito/" target="_blank" className="flex items-center justify-center gap-1.5">
+                                            <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-18 h-18" />
+                                            <span>@gabrielagito</span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
-                        </div>
-                        <div className="bg-gray w-full mx-auto lg:mt-20 lg:w-6/12">
-                            <Schedule schedule={schedule}></Schedule>
-                        </div>
+                        </section>
                     </div>
-                </section>
-                <section className="bg-gray pt-8 " ref={aboutRef}>
-                    <div className="pt-5">
-                        <div className="relative w-full h-24 mb-8 lg:w-1/2 lg:mx-auto">
-                            <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
-                                <span className="uppercase drop-shadow-under">Contato</span>
-                            </div>
-                            <div className="bg-yellow h-14 w-4/5 z-10 absolute bottom-0 left-0 "></div>
-                        </div>
-                        <div className="mt-10 ">
-                            <img src="/foto-gabriel-agito.jpg" alt="Foto de perfil do Gabriel" className="w-1/2 h-1/2 sm:w-1/3 md:w-1/4 lg:w-2/12 rounded-full  mb-5 mx-auto" />
-                            <div className="bg-black text-white w-full h-24 mx-auto flex items-center justify-center">
-                                <a href="https://www.instagram.com/gabrielagito/" target="_blank" className="flex items-center justify-center gap-1.5">
-                                    <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-18 h-18" />
-                                    <span>@gabrielagito</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </div>
             </main>
             <footer className="bg-purple h-12 lg:h-8 flex justify-center items-center text-center">
                 <span className="text-white text-sm lg:text-xs uppercase">© 2023 - Gabriel Agito - Todos os direitos reservados</span>
             </footer>
             <div className=" invisible lg:visible fixed bottom-4 right-4 p-3 ">
                 <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START} className="h-12 w-12 flex-col items-center justify-center text-white font-bold text-">
-                    <img src="/back-to-top.svg" alt="Voltar ao topo" className="select-" />
+                    <img src="/back-to-top.svg" alt="Voltar ao topo" className="select-none" />
                     <span className="select-none drop-shadow-default">TOPO</span>
                 </button>
             </div>

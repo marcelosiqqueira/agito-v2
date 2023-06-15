@@ -49,11 +49,11 @@ export function CoveragesItem({ id, name, date, local, photosIds, clicks }: List
                 </div>
                 <div className="flex justify-between">
                     <div className="flex gap-1.5">
-                        <img src="/calendar.svg" alt="Data" />
+                        <img src="/calendar-black.svg" alt="Data" />
                         {date.toLocaleString('pt-BR', { dateStyle: "short" })}
                     </div>
                     <div className="flex gap-1.5">
-                        <img src="/views.svg" alt="Visualizações" />
+                        <img src="/views-gray.svg" alt="Visualizações" />
                         {clicks}
                     </div>
                 </div>
