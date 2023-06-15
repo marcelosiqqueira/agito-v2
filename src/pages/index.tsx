@@ -89,39 +89,39 @@ export function Index() {
                 <section ref={homeRef} className="bg-black w-full pb-20 pt-10 lg:pb-36">
                     <div className="lg:mx-auto pt-20">
                         <div className="relative w-full h-24 mb-8">
-                            <div className="bg-orange h-14 z-20 absolute w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
-                                <span className="uppercase drop-shadow-under">Em destaque</span>
+                            <div className="bg-orange h-14 z-20 absolute w-4/5  flex items-center justify-center  drop-shadow-default">
                             </div>
+                            <span className="uppercase drop-shadow-under z-20 absolute right-1/3 lg:right-1/2 top-1 xl:top-0 font-bold font-title text-3xl xl:text-5xl text-white ">Em destaque</span>
                             <div className="bg-pink h-14 w-4/5 z-10  absolute top-6 right-0"></div>
                         </div>
                         <div className="relative mb-8">
                             <ImageCarousel event={mainEvent} autoPlay={true} ></ImageCarousel>
                         </div>
-                        <div className="relative bg-pink h-12 w-1/4">
-                            <div className="bg-black absolute transform rotate-45 h-8 w-8 -right-4 top-2"></div>
-                        </div>
+                        
                     </div>
                 </section>
                 <div className="flex flex-col lg:flex-row">
-                    <section ref={coveragesRef} className="bg-white py-20 w-full lg:flex lg:flex-col lg:items-center lg:w-3/4">
-                        <div className="lg:flex lg:justify-between lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop w-full">
-                            <div className="mb-10 w-full">
-                                <div className="relative w-full h-56 mb-8">
-                                    <div className="bg-yellow h-14 z-20 absolute w-3/5 top-1/3 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
-                                        <span className="uppercase drop-shadow-under">Últimas</span>
+                    <section ref={coveragesRef} className="bg-white py-20 w-full lg:flex lg:flex-col lg:items-center lg:w-3/4 2xl:w-4/5 relative">
+                        <div className="lg:flex lg:justify-between lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop w-full pb-2">
+                            <div className="mb-6 w-full">
+                                <div className="relative w-1/2 mx-auto h-50 mb-5">
+                                    <div className="text-4xl font-bold flex-col justify-center items-center">
+                                            <span className="uppercase select-none">Últimas coberturas</span>
+                                            <div className="bg-yellow h-6 w-full relative">
+                                                <img src="/hand-cursor.svg" alt="" className="h-16 w-14 select-none absolute z-20 -bottom-10 right-8" />
+                                            </div>
                                     </div>
-                                    <div className="bg-black h-16 w-4/5 z-10 absolute bottom-10 right-0 font-bold font-title text-3xl flex items-center justify-center text-white drop-shadow-default">
-                                        <span className="uppercase drop-shadow-under">Coberturas</span>
-                                    </div>
-                                    <img src="/hand-cursor.svg" alt="" className="h-16 w-14 absolute z-20 -bottom-2 right-10" />
                                 </div>
                             </div>
                         </div>
                         <div className="w-full">
                             <Coverages coverages={coverages}></Coverages>
                         </div>
+                        <div className="absolute bg-pink h-12 w-1/3 lg:bottom-64 left-0 bottom-3">
+                            <div className="bg-white absolute transform rotate-45 h-8 w-8 -right-4 top-2"></div>
+                        </div>
                     </section>
-                    <div className="lg:flex-col lg:w-1/4">
+                    <div className="lg:flex-col lg:w-1/4 2xl:w-1/5">
                         <section ref={scheduleRef} className="bg-dark-gray py-20 w-full">
                             <div className="lg:mx-auto w-full">
                                 <div className="relative w-full h-24 mb-8 lg:top-12">
@@ -160,7 +160,7 @@ export function Index() {
             <footer className="bg-purple h-12 lg:h-8 flex justify-center items-center text-center">
                 <span className="text-white text-sm lg:text-xs uppercase">© 2023 - Gabriel Agito - Todos os direitos reservados</span>
             </footer>
-            <div className=" invisible lg:visible fixed bottom-4 right-4 p-3 ">
+            <div className=" invisible lg:visible fixed bottom-4 right-4 p-3 z-30">
                 <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START} className="h-12 w-12 flex-col items-center justify-center text-white font-bold text-">
                     <img src="/back-to-top.svg" alt="Voltar ao topo" className="select-none" />
                     <span className="select-none drop-shadow-default">TOPO</span>

@@ -42,7 +42,7 @@ export function CoveragesItem({ id, name, date, local, photosIds, clicks }: List
 
     return (
         <li className="h-28 overflow-y-hidden">
-            <button onClick={handleButtonClick} className="bg-white text-black w-full h-28 px-6 py-2 text-start hover:duration-300 hover:border-l-8 hover:border-l-purple lg:max-w-[400px] lg:min-w-[400px]">
+            <button onClick={handleButtonClick} className="bg-white text-black w-full h-28 px-6 py-2 text-start border-b-gray border-b-[1px] hover:duration-300 hover:border-l-8 hover:border-l-purple lg:max-w-[400px] lg:min-w-[400px]">
                 <div className="leading-none font-title w-full mb-2">
                     <div className="capitalize font-bold text-2xl whitespace-nowrap text-ellipsis overflow-hidden max-w-[70%]">{name.toLowerCase()}</div>
                     <div className="font-light text-gray opacity-80 text-base">{local}</div>

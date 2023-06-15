@@ -44,7 +44,7 @@ export function ScheduleItem({ name, date, local }: ScheduleItemProps) {
                     <span className="">{monthToReducedString(date.getUTCMonth()).toLowerCase()}</span>
                 </div>
                 <div className="flex-col font-title">
-                    <span className="block text-2xl font-bold whitespace-nowrap overflow-hidden text-ellipsis">{name}</span>
+                    <span className="block text-xl font-bold whitespace-nowrap overflow-hidden text-ellipsis">{name}</span>
                     <span className="text-gray text-sm">{local}</span>
                 </div>
             </div>

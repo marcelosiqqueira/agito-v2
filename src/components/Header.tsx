@@ -14,7 +14,7 @@ export function Header({ handleButtonClick }: HeaderProps) {
     }
 
     return (
-        <header className="bg-purple drop-shadow-md h-20 w-full p-2 text-white flex items-center justify-between lg:justify-center fixed z-30 m-0">
+        <header className="bg-purple drop-shadow-md h-20 w-full p-2 text-white flex items-center justify-between lg:justify-center fixed z-40 m-0">
             <img src="/logo-placeholder.svg" alt="Logo do site" className="lg:absolute w-20 h-14 lg:left-0 lg:ml-2" />
             <nav className="hidden lg:flex lg:justify-between lg:max-w-7xl lg:h-full lg:w-8/12">
                 <Button value={HeaderButtonEnum.START} buttonClick={handleButtonClick}>início</Button>

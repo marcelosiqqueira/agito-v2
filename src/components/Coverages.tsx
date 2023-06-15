@@ -83,12 +83,12 @@ export function Coverages({ coverages }: ListProps) {
 
 
     return (
-        <div className="max-w-[56rem] lg:w-[56rem] mx-auto min-h-[325px] divide-y divide-pink">
-            <div className="bg-[#D9D9D9] h-12 w-full px-6 rounded-3xl flex justify-start items-center shadow-sm mb-5">
+        <div className="max-w-[56rem] lg:w-[56rem] mx-auto min-h-[325px] divide-y divide-gray">
+            <div className="bg-[#D9D9D9] h-12 w-full px-6 rounded-3xl flex gap-2 justify-start items-center shadow-sm mb-5">
                 <img src="/search.svg" alt="Pesquisar" className="h-1/2" />
                 <input type="search" name="search-coverage-input" id="search-coverage-input" placeholder="Pesquisar evento..." className="bg-clip-text placeholder:text-dark-gray w-full focus:outline-none" value={searchText} onChange={e => handleSearchBar(e.currentTarget.value)} />
             </div>
-            <ul className="divide-y divide-gray w-full lg:h-[36rem] lg:flex lg:flex-col lg:flex-wrap">
+            <ul className="w-full lg:h-[36rem] lg:flex lg:flex-col lg:flex-wrap">
                 {searchedEvents.slice((page - 1) * coveragesPerPage, (page * coveragesPerPage)).map((coverage: AgitoEvent, index: number) =>
                     <CoveragesItem {...coverage} key={index}></CoveragesItem>
                 )}
