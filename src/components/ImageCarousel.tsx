@@ -16,7 +16,7 @@ export function ImageCarousel({ autoPlay, multiple, event }: ImageCarouselProps)
     const [isHovered, setIsHovered] = useState<boolean>(false);
     const divRef = useRef<HTMLDivElement | null>(null)
 
-    let timer: undefined | number = undefined
+    let timer: undefined | NodeJS.Timeout = undefined
 
     const maxMultipleSize = (): number => {
         if (event?.photosIds) {
