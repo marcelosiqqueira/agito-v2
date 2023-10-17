@@ -92,57 +92,68 @@ export function ImageCarousel({ autoPlay, multiple, event }: ImageCarouselProps)
     }, [event?.photosIds])
 
     return (
-        <div className="text-white bg-black/90 mx-auto flex-col justify-center items-center relative min-h-[265px] w-full lg:max-w-[56rem] lg:rounded-lg lg:overflow-hidden object-contain" ref={divRef} tabIndex={1} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <button className="flex items-center justify-center w-full h-full">
-                <img src={event?.photosIds ? event?.photosIds[index] ?? '/error' : '/error'} alt="Event photo" onClick={handleOpenModal} onLoad={isOpen === false ? imageTimerHandler : undefined} className="aspect-[3/2] object-contain h-[265px] lg:h-[37rem] w-full" />
-            </button>
-            <div className="flex justify-evenly relative  lg:-bottom-28 bg-black/40">
-                {multiple && (event?.photosIds && event?.photosIds.slice(subIndex, maxMultipleSize() + subIndex).map((_, elementIndex) =>
-                    <button
-                        key={elementIndex}
-                        value={CarouselButtonAction.SELECT}
-                        onClick={(e) => handleIndex(e.currentTarget.value, elementIndex + subIndex)} className="bg-black/40">
-                        <img src={event?.photosIds[elementIndex + subIndex]}
-                            alt="Mini event photo" height={55} width={83} className="h-20 w-22 object-contain aspect-[3-2] max-w-full" />
-                    </button>))
-                }
-                {multiple &&
-                    <>
-                        <button value={CarouselButtonAction.PREV} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-10 w-10 absolute cursor-pointer top-1/3 left-2 bg-arrow bg-dark-gray/60 bg-center bg-contain rounded-full hover:bg-white/70 duration-200">
-                            {''}
-                        </button>
-                        <button value={CarouselButtonAction.NEXT} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-10 w-10 absolute cursor-pointer top-1/3 right-2 bg-dark-gray/60 bg-arrow-right bg-center bg-contain rounded-full hover:bg-white/70 duration-200">
-                            {''}
-                        </button>
-                    </>
-                }
-            </div>
-            {/* <button value={CarouselButtonAction.PREV} onClick={(e) => handleIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer left-0 top-[30%] lg:top-[40%] bg-arrow scale-x-[-1] bg-black/60 bg-center bg-no-repeat rounded-l-xl hover:bg-dark-gray/60 duration-200">{''}</button>
-                <button value={CarouselButtonAction.NEXT} onClick={(e) => handleIndex(e.currentTarget.value)} className="h-20 w-9 absolute cursor-pointer right-0 top-[30%] lg:top-[40%] bg-black/60 bg-arrow bg-no-repeat bg-center rounded-l-xl hover:bg-dark-gray/60 duration-200">{''}</button> */}
-            {isOpen && <Modal handleIndex={handleIndex} handleOpenModal={handleOpenModal} index={index} imagesUrl={event?.photosIds ?? []}></Modal>}
-            <div className={` text-white absolute w-full h-1/3 bg-gradient-to-b from-black/0 to-black/90 flex items-end px-3 py-2 lg:transition-opacity lg:duration-500 bottom-0 ${isHovered ? 'lg:opacity-1' : 'lg:opacity-0'}`}>
-                <div className="flex-col w-full">
-                    <div className="font-bold text-2xl capitalize">
-                        <span>{event?.name}</span>
-                    </div>
-                    <div className="flex gap-3">
-                        <div className="flex gap-1.5 pl-0.5">
-                            <img src="/location.svg" alt="Location icon" />
-                            <span>{event?.local}</span>
+        <>
+            <div className="text-white bg-black/90 mx-auto flex-col justify-center items-center relative min-h-[265px] w-full lg:max-w-[56rem] lg:rounded-lg lg:overflow-hidden object-contain"
+                ref={divRef} tabIndex={1} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                {event ? <>
+                    <button className="flex items-center justify-center w-full h-full">
+                        <img src={event?.photosIds ? event?.photosIds[index] ?? '/error' : '/error'} alt="Event photo" onClick={handleOpenModal}
+                            onLoad={isOpen === false ? imageTimerHandler : undefined} className="aspect-[3/2] object-contain h-[265px] lg:h-[37rem] w-full" />
+                    </button>
+                    {multiple && <div className="flex justify-evenly relative  lg:-bottom-28 bg-black/40">
+                        {multiple && (event?.photosIds && event?.photosIds.slice(subIndex, maxMultipleSize() + subIndex).map((_, elementIndex) =>
+                            <button
+                                key={elementIndex}
+                                value={CarouselButtonAction.SELECT}
+                                onClick={(e) => handleIndex(e.currentTarget.value, elementIndex + subIndex)} className="bg-black/40">
+                                <img src={event?.photosIds[elementIndex + subIndex]}
+                                    alt="Mini event photo" height={55} width={83} className="h-20 w-22 object-contain aspect-[3-2] max-w-full" />
+                            </button>))
+                        }
+                        {multiple &&
+                            <>
+                                <button value={CarouselButtonAction.PREV} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-10 w-10 absolute cursor-pointer top-1/3 left-2 bg-arrow
+                             bg-dark-gray/60 bg-center bg-contain rounded-full hover:bg-white/70 duration-200">
+                                    {''}
+                                </button>
+                                <button value={CarouselButtonAction.NEXT} onClick={(e) => handleSubIndex(e.currentTarget.value)} className="h-10 w-10 absolute cursor-pointer top-1/3 right-2 bg-dark-gray/60 bg-arrow-right bg-center 
+                            bg-contain rounded-full hover:bg-white/70 duration-200">
+                                    {''}
+                                </button>
+                            </>
+                        }
+                    </div>}
+                    {isOpen && <Modal handleIndex={handleIndex} handleOpenModal={handleOpenModal} index={index} imagesUrl={event?.photosIds ?? []}></Modal>}
+                    <div className={` text-white absolute w-full h-1/3 bg-gradient-to-b from-black/0 to-black/90 flex items-end px-3 py-2 lg:transition-opacity lg:duration-500 bottom-0 
+                    ${isHovered ? 'lg:opacity-1' : 'lg:opacity-0'}`}>
+                        <div className="flex-col w-full">
+                            <div className="font-bold text-2xl capitalize">
+                                <span>{event?.name}</span>
+                            </div>
+                            <div className="flex gap-3">
+                                <div className="flex gap-1.5 pl-0.5">
+                                    <img src="/location.svg" alt="Location icon" />
+                                    <span>{event?.local}</span>
+                                </div>
+                                <div className="flex gap-1.5">
+                                    <img src="/calendar.svg" alt="Calendar icon" />
+                                    <span>{event?.date.toLocaleString('pt-BR', { dateStyle: "short" })}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex gap-1.5">
-                            <img src="/calendar.svg" alt="Calendar icon" />
-                            <span>{event?.date.toLocaleString('pt-BR', { dateStyle: "short" })}</span>
+                        <div className="absolute bottom-2 right-0">
+                            <div className="flex gap-1.5 pr-3">
+                                <img src="/views.svg" alt="Eye icon" />
+                                <span>{event?.clicks}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="absolute bottom-0 right-0">
-                    <div className="flex gap-1.5 pr-3">
-                        <img src="/views.svg" alt="Eye icon" />
-                        <span>{event?.clicks}</span>
+                </> :
+                    <div className="flex items-center justify-center min-w-full min-h-[265px] h-full">
+                        <img src="loading.svg" alt="Loading icon" />
                     </div>
-                </div>
-            </div>
-        </div >
+                }
+            </div >
+        </>
     )
 }
