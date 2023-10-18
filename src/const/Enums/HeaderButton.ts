@@ -1,4 +1,4 @@
-export enum HeaderButtonEnum {
+export enum HeaderButton {
   START = "start",
   COVERAGES = "coverages",
   SCHEDULE = "schedule",

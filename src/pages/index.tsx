@@ -5,7 +5,7 @@ import { miniFetch } from "../functions/util";
 import { URL } from "../const/Enums/URL";
 import { AgitoEvent, ResponseEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
-import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
+import { HeaderButton } from "../const/Enums/HeaderButton";
 import { Schedule } from "../components/Schedule";
 import { Header } from "../components/Header";
 
@@ -24,16 +24,16 @@ export function Index() {
 
     function handleButtonClick(value: string) {
         switch (value) {
-            case HeaderButtonEnum.START:
+            case HeaderButton.START:
                 homeRef.current?.scrollIntoView(true)
                 break;
-            case HeaderButtonEnum.COVERAGES:
+            case HeaderButton.COVERAGES:
                 coveragesRef.current?.scrollIntoView(true)
                 break;
-            case HeaderButtonEnum.SCHEDULE:
+            case HeaderButton.SCHEDULE:
                 scheduleRef.current?.scrollIntoView(true)
                 break;
-            case HeaderButtonEnum.ABOUT:
+            case HeaderButton.ABOUT:
                 aboutRef.current?.scrollIntoView(true)
                 break;
         }
@@ -156,7 +156,7 @@ export function Index() {
                 <span className="text-white text-sm lg:text-xs uppercase">© 2023 - Gabriel Agito - Todos os direitos reservados</span>
             </footer>
             <div className=" invisible lg:visible fixed bottom-4 right-4 p-3 z-30">
-                <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButtonEnum.START} className="h-12 w-12 flex-col items-center justify-center text-white font-bold text-">
+                <button ref={returnRef} onClick={(e) => handleButtonClick(e.currentTarget.value)} value={HeaderButton.START} className="h-12 w-12 flex-col items-center justify-center text-white font-bold text-">
                     <img src="/back-to-top.svg" alt="Voltar ao topo" className="select-none" />
                     <span className="select-none drop-shadow-default">TOPO</span>
                 </button>
