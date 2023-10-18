@@ -1,4 +1,4 @@
-export enum EventsEnum {
+export enum Events {
   COVERAGES = "coverages",
   SCHEDULE = "schedule",
 }
