@@ -1,5 +1,5 @@
 import { CoveragesButton } from "./CoveragesButton"
-import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
+import { CarouselButtonAction } from "../const/Enums/CarouselButtonAction"
 import { CoveragesItem } from "./CoveragesItem"
 import { AgitoEvent } from "../interfaces/event"
 import { useDeferredValue, useState } from "react"

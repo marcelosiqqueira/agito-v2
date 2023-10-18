@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Modal } from "./Modal"
-import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
+import { CarouselButtonAction } from "../const/Enums/CarouselButtonAction"
 import { AgitoEvent } from "../interfaces/event"
 
 type ImageCarouselProps = {

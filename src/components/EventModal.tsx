@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
+import { CarouselButtonAction } from "../const/Enums/CarouselButtonAction"
 
 type EventModalProps = {
     imagesUrl: string[],

@@ -1,4 +1,4 @@
-import { CarouselButtonAction } from "../const/Enums/carouselButtonAction"
+import { CarouselButtonAction } from "../const/Enums/CarouselButtonAction"
 
 type ListButtonProps = {
     children: string,
