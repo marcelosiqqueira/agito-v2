@@ -14,10 +14,10 @@ export function Index() {
     const [coverages, setCoverages] = useState<AgitoEvent[]>([])
     const [schedule, setSchedule] = useState<AgitoEvent[]>([])
 
-    const homeRef = useRef<HTMLHeadingElement | null>(null)
-    const coveragesRef = useRef<HTMLButtonElement | null>(null)
-    const scheduleRef = useRef<HTMLButtonElement | null>(null)
-    const aboutRef = useRef<HTMLButtonElement | null>(null)
+    const homeRef = useRef<HTMLDivElement | null>(null)
+    const coveragesRef = useRef<HTMLDivElement | null>(null)
+    const scheduleRef = useRef<HTMLDivElement | null>(null)
+    const aboutRef = useRef<HTMLDivElement | null>(null)
     const returnRef = useRef<HTMLButtonElement | null>(null)
 
     const mainEvent = coverages.length ? coverages[0] : null
@@ -86,7 +86,7 @@ export function Index() {
         <>
             <Header handleButtonClick={handleButtonClick}></Header>
             <main className="bg-black overflow-hidden">
-                <section ref={homeRef} className="w-full lg:py-28 pt-20">
+                <div ref={homeRef} className="w-full lg:py-28 pt-20">
                     <div className="lg:mx-auto bg-black">
                         <div className="relative w-full h-24">
                             <div className="bg-orange h-14 z-20 absolute w-4/5  flex items-center justify-center  drop-shadow-default">
@@ -101,8 +101,8 @@ export function Index() {
                         <div className="bg-black absolute transform rotate-45 h-8 w-8 -right-4 top-2"></div>
                     </div>
 
-                </section>
-                <section ref={coveragesRef} className="bg-white py-14 w-full lg:flex lg:flex-col lg:items-center relative">
+                </div>
+                <div ref={coveragesRef} className="bg-white py-14 w-full lg:flex lg:flex-col lg:items-center relative">
                     <div className="lg:flex lg:justify-between lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop  w-full pb-1">
                         <div className="mb-6 w-full">
                             <div className="relative w-1/2 mx-auto h-50 mb-5">
@@ -118,8 +118,8 @@ export function Index() {
                     <div className="w-full my-2">
                         <Coverages coverages={coverages}></Coverages>
                     </div>
-                </section>
-                <section ref={scheduleRef} className="bg-dark-gray py-20 w-full">
+                </div>
+                <div ref={scheduleRef} className="bg-dark-gray py-20 w-full">
                     <div className="lg:mx-auto w-full">
                         <div className="relative w-full h-24 mb-8 lg:top-12">
                             <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl text-white  drop-shadow-default">
@@ -131,8 +131,8 @@ export function Index() {
                             <Schedule schedule={schedule}></Schedule>
                         </div>
                     </div>
-                </section>
-                <section className="bg-gray pt-8 " ref={aboutRef}>
+                </div>
+                <div className="bg-gray pt-8 " ref={aboutRef}>
                     <div className="pt-5 lg:pt-2">
                         <div className="relative w-full h-24 mb-8">
                             <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl text-white  drop-shadow-default">
@@ -150,7 +150,7 @@ export function Index() {
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </main>
             <footer className="bg-purple h-12 lg:h-8 flex justify-center items-center text-center">
                 <span className="text-white text-sm lg:text-xs uppercase">© 2023 - Gabriel Agito - Todos os direitos reservados</span>
