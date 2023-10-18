@@ -85,77 +85,72 @@ export function Index() {
     return (
         <>
             <Header handleButtonClick={handleButtonClick}></Header>
-            <main className="bg-black">
-                <section ref={homeRef} className="bg-black w-full pb-20 pt-10 lg:pb-36">
-                    <div className="lg:mx-auto pt-20">
-                        <div className="relative w-full h-24 mb-8">
+            <main className="bg-black overflow-hidden">
+                <section ref={homeRef} className="w-full lg:py-28 pt-20">
+                    <div className="lg:mx-auto bg-black">
+                        <div className="relative w-full h-24">
                             <div className="bg-orange h-14 z-20 absolute w-4/5  flex items-center justify-center  drop-shadow-default">
                             </div>
                             <span className="uppercase drop-shadow-under z-20 absolute right-1/3 lg:right-1/2 top-1 xl:top-0 font-bold font-title text-3xl xl:text-5xl text-white ">Em destaque</span>
                             <div className="bg-pink h-14 w-4/5 z-10  absolute top-6 right-0"></div>
                         </div>
-                        <div className="relative mb-8">
-                            <ImageCarousel event={mainEvent} autoPlay={true} ></ImageCarousel>
+                        <ImageCarousel event={mainEvent} autoPlay={true} ></ImageCarousel>
+                    </div>
+
+                    <div className="relative bg-pink h-12 w-2/3 top-0 my-4 lg:top-20">
+                        <div className="bg-black absolute transform rotate-45 h-8 w-8 -right-4 top-2"></div>
+                    </div>
+
+                </section>
+                <section ref={coveragesRef} className="bg-white py-14 w-full lg:flex lg:flex-col lg:items-center relative">
+                    <div className="lg:flex lg:justify-between lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop  w-full pb-1">
+                        <div className="mb-6 w-full">
+                            <div className="relative w-1/2 mx-auto h-50 mb-5">
+                                <div className="text-4xl font-bold flex-col justify-center items-center">
+                                    <span className="uppercase select-none">Últimas coberturas</span>
+                                    <div className="bg-yellow h-6 w-full relative">
+                                        <img src="/hand-cursor.svg" alt="Hand cursor" className="h-16 w-14 select-none absolute z-20 -bottom-10 right-8" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        
+                    </div>
+                    <div className="w-full my-2">
+                        <Coverages coverages={coverages}></Coverages>
                     </div>
                 </section>
-                <div className="flex flex-col lg:flex-row">
-                    <section ref={coveragesRef} className="bg-white py-20 w-full lg:flex lg:flex-col lg:items-center lg:w-3/4 2xl:w-4/5 relative">
-                        <div className="lg:flex lg:justify-between lg:mx-auto lg:gap-7 bg-dots-design bg-no-repeat bg-lefttop w-full pb-2">
-                            <div className="mb-6 w-full">
-                                <div className="relative w-1/2 mx-auto h-50 mb-5">
-                                    <div className="text-4xl font-bold flex-col justify-center items-center">
-                                            <span className="uppercase select-none">Últimas coberturas</span>
-                                            <div className="bg-yellow h-6 w-full relative">
-                                                <img src="/hand-cursor.svg" alt="" className="h-16 w-14 select-none absolute z-20 -bottom-10 right-8" />
-                                            </div>
-                                    </div>
-                                </div>
+                <section ref={scheduleRef} className="bg-dark-gray py-20 w-full">
+                    <div className="lg:mx-auto w-full">
+                        <div className="relative w-full h-24 mb-8 lg:top-12">
+                            <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl text-white  drop-shadow-default">
+                                <span className="uppercase drop-shadow-under align-middle ml-[30%]">Agenda</span>
                             </div>
+                            <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
                         </div>
-                        <div className="w-full">
-                            <Coverages coverages={coverages}></Coverages>
+                        <div className="w-full mx-auto lg:mt-20 lg:w-full">
+                            <Schedule schedule={schedule}></Schedule>
                         </div>
-                        <div className="absolute bg-pink h-12 w-1/3 lg:bottom-64 left-0 bottom-3">
-                            <div className="bg-white absolute transform rotate-45 h-8 w-8 -right-4 top-2"></div>
-                        </div>
-                    </section>
-                    <div className="lg:flex-col lg:w-1/4 2xl:w-1/5">
-                        <section ref={scheduleRef} className="bg-dark-gray py-20 w-full">
-                            <div className="lg:mx-auto w-full">
-                                <div className="relative w-full h-24 mb-8 lg:top-12">
-                                    <div className="bg-black h-14 z-20 absolute top-0 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
-                                        <span className="uppercase drop-shadow-under">Agenda</span>
-                                    </div>
-                                    <div className="bg-pink h-14 w-1/2 z-10 absolute top-6 left-0"></div>
-                                </div>
-                                <div className="w-full mx-auto lg:mt-20 lg:w-full">
-                                    <Schedule schedule={schedule}></Schedule>
-                                </div>
-                            </div>
-                        </section>
-                        <section className="bg-gray pt-8 " ref={aboutRef}>
-                            <div className="pt-5 lg:pt-2">
-                                <div className="relative w-full h-24 mb-8">
-                                    <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
-                                        <span className="uppercase drop-shadow-under">Contato</span>
-                                    </div>
-                                    <div className="bg-yellow h-14 w-4/5 z-10 absolute bottom-0 left-0 "></div>
-                                </div>
-                                <div className="mt-10 ">
-                                    <img src="/foto-gabriel-agito.jpg" alt="Foto de perfil do Gabriel" className="w-1/2 h-1/2 sm:w-1/3 md:w-1/4 lg:w-1/3 rounded-full  mb-5 mx-auto" />
-                                    <div className="bg-black text-white w-full h-24 mx-auto flex items-center justify-center">
-                                        <a href="https://www.instagram.com/gabrielagito/" target="_blank" className="flex items-center justify-center gap-1.5">
-                                            <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-18 h-18" />
-                                            <span>@gabrielagito</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
                     </div>
-                </div>
+                </section>
+                <section className="bg-gray pt-8 " ref={aboutRef}>
+                    <div className="pt-5 lg:pt-2">
+                        <div className="relative w-full h-24 mb-8">
+                            <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
+                                <span className="uppercase drop-shadow-under">Contato</span>
+                            </div>
+                            <div className="bg-yellow h-14 w-4/5 z-10 absolute bottom-0 left-0 "></div>
+                        </div>
+                        <div className="mt-10 ">
+                            <img src="/foto-gabriel-agito.jpg" alt="Foto de perfil do Gabriel" className="w-1/2 h-1/2 sm:w-1/3 md:w-1/4 lg:w-1/3 rounded-full  mb-5 mx-auto" />
+                            <div className="bg-black text-white w-full h-24 mx-auto flex items-center justify-center">
+                                <a href="https://www.instagram.com/gabrielagito/" target="_blank" className="flex items-center justify-center gap-1.5">
+                                    <img src="/instagram-logo.svg" alt="Ícone do Instagram" className="w-18 h-18" />
+                                    <span>@gabrielagito</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </main>
             <footer className="bg-purple h-12 lg:h-8 flex justify-center items-center text-center">
                 <span className="text-white text-sm lg:text-xs uppercase">© 2023 - Gabriel Agito - Todos os direitos reservados</span>
