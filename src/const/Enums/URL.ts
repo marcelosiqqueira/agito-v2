@@ -1,4 +1,4 @@
-export enum UrlEnum {
+export enum URL {
   BASE = "http://localhost:8080/",
   // BASE = "https://gabrielagito.com.br/server-agito/",
 

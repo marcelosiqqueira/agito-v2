@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { EventModal } from "./EventModal"
 import { miniFetch } from "../functions/util"
-import { UrlEnum } from "../const/Enums/urlEnum"
+import { URL } from "../const/Enums/URL"
 
 type ListItemProps = {
     id: string,
@@ -30,7 +30,7 @@ export function CoveragesItem({ id, name, date, local, photosIds, clicks }: List
             body: JSON.stringify(newDataEvent)
         };
         try {
-            miniFetch(UrlEnum.CLICKS, options)
+            miniFetch(URL.CLICKS, options)
         } catch (error) {
             console.error(error);
         }

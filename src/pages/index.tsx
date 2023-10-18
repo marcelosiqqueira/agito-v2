@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Coverages } from "../components/Coverages";
 import { miniFetch } from "../functions/util";
-import { UrlEnum } from "../const/Enums/urlEnum";
+import { URL } from "../const/Enums/URL";
 import { AgitoEvent, ResponseEvent } from "../interfaces/event";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { HeaderButtonEnum } from "../const/Enums/headerButtonEnum";
@@ -56,7 +56,7 @@ export function Index() {
         }
 
         const getData = async () => {
-            const data: ResponseEvent[] = await miniFetch(UrlEnum.EVENTS)
+            const data: ResponseEvent[] = await miniFetch(URL.EVENTS)
             const eventArray: AgitoEvent[] = []
             data.forEach((element: ResponseEvent) => {
                 const clicks = element.clicks ? element.clicks : 0;
@@ -69,7 +69,7 @@ export function Index() {
                         time: stringArray[1].replace(/\./g, ':'),
                         name: stringArray[2],
                         local: stringArray[3],
-                        photosIds: element.photosIds.map((element: string) => UrlEnum.IMAGE + element),
+                        photosIds: element.photosIds.map((element: string) => URL.IMAGE + element),
                         clicks: clicks
                     }
                     eventArray.push(event)
