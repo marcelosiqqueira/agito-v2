@@ -135,8 +135,8 @@ export function Index() {
                 <section className="bg-gray pt-8 " ref={aboutRef}>
                     <div className="pt-5 lg:pt-2">
                         <div className="relative w-full h-24 mb-8">
-                            <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl flex items-center justify-center text-white  drop-shadow-default">
-                                <span className="uppercase drop-shadow-under">Contato</span>
+                            <div className="bg-purple h-14 z-20 absolute top-5 right-0 w-4/5 font-bold font-title text-3xl text-white  drop-shadow-default">
+                                <span className="uppercase drop-shadow-under align-middle ml-[30%]">Contato</span>
                             </div>
                             <div className="bg-yellow h-14 w-4/5 z-10 absolute bottom-0 left-0 "></div>
                         </div>
